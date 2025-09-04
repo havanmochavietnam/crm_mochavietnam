@@ -556,6 +556,34 @@
         margin-top: 1rem;
         grid-column: 1 / -1;
     }
+    
+    /* Bảng đẹp hơn: header dính, zebra rows, hover và cuộn mềm mại */
+    .table-container {
+        max-height: 70vh;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+
+    table thead th {
+        position: sticky;
+        top: 0;
+        background-color: #f9fafb;
+        z-index: 2;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #fafafa;
+    }
+
+    table tbody tr:hover {
+        background-color: #f3f4f6;
+    }
+
+    table th, table td {
+        vertical-align: middle;
+        white-space: nowrap;
+    }
 </style>
 <div id="wrapper">
     <div class="content">
@@ -660,7 +688,7 @@
             </div>
 
             <div class="tw-bg-white tw-shadow-md tw-rounded-lg tw-overflow-hidden">
-                <div class="tw-overflow-x-auto">
+                <div class="tw-overflow-x-auto table-container">
                     <table class="tw-w-full tw-min-w-max tw-text-sm tw-text-left tw-text-gray-700 tw-border tw-border-gray-300">
                         <thead class="tw-text-xs tw-text-gray-800 tw-uppercase tw-bg-gray-50">
                             <tr>
