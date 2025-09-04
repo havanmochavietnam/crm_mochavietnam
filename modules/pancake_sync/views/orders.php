@@ -1067,6 +1067,18 @@
         float: none !important;
     }
 
+    /* Văn bảng */
+    .truncate-text {
+        max-width: 200px;
+        /* Đặt độ rộng tối đa cho cột */
+        white-space: nowrap;
+        /* Ngăn không cho văn bản xuống dòng */
+        overflow: hidden;
+        /* Ẩn phần văn bản bị thừa */
+        text-overflow: ellipsis;
+        /* Hiển thị dấu "..." */
+    }
+
     /* --- END: REFINED PAGINATION CSS --- */
 </style>
 <div id="wrapper">
@@ -1164,6 +1176,7 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Nhân viên cập nhật</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Thời gian CSKH</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Đơn vị VC</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Trạng thái VC</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ngày đẩy đơn sang đvvc (Ngày tháng)</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Lý do hoàn/hủy đơn hàng từ ĐVVC</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Lý do hoàn</th>
@@ -1232,10 +1245,16 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Mã khuyến mãi (Tóm tắt)</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Số đơn của khách</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Delay giao</th>
-
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Số lượng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tổng Tiền</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 tw-text-center">Hành động</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Cấp độ khách hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Thẻ Pancake</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ghi chú DVVC</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Dòng thời gian cập nhật trạng thái</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Mã bài viết</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Lịch sử đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Lịch sử NV xử lý đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Liên kết theo dõi đơn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Thông tin chuyển hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ngày hoàn đơn</th>
                             </tr>
                         </thead>
                         <?php if (!empty($orders)) : ?>
@@ -1326,70 +1345,129 @@
                                 $total_fee_seller_transaction_fee = $order['advanced_platform_fee']['seller_transaction_fee'] ?? 0;
                                 $total_fee_service_fee = $order['advanced_platform_fee']['service_fee'] ?? 0;
                                 $buyer_total_amount =  $order['buyer_total_amount'] ?? 0;
-
-
+                                $extendCode = $order['histories'][2]['extend_code']['new'] ?? null;
+                                $firststaffconfirm = $order['status_history'][0]['editor']['name'] ?? null;
+                                $staffconfirm = $order['status_history'][1]['editor']['name'] ?? null;
+                                $reconciliationTime = null; // Biến để lưu kết quả
+                                $extendUpdateHistory = $order['partner']['extend_update'] ?? [];
+                                $tagPancake = $order['customer']['conversation_tags'] ?? [];
+                                foreach ($extendUpdateHistory as $update) {
+                                    if (isset($update['status']) && $update['status'] === 'Đã đối soát') {
+                                        // Lấy thời gian và dừng vòng lặp
+                                        $reconciliationTime = $update['update_at'] ?? null;
+                                        break;
+                                    }
+                                }
+                                $promotionName = $order['activated_promotion_advances'][0]['promotion_advance_info']['name'] ?? '';
+                                $totalOrders = $order['customer']['order_count'] ?? 0;
+                                $extendCodeVCLink = $order['histories'][1]['extend_code']['new'] ?? null;
                                 ?>
                                 <tbody x-data="{ open: false }">
                                     <tr class="hover:tw-bg-gray-50">
-                                        <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= $index + 1 ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['id'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= isset($order['inserted_at']) ? date('d/m/Y H:i', strtotime($order['inserted_at'])) : 'N/A' ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['partner']['extend_code'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>">
+                                        <!-- stt -->
+                                        <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= $index + 1 ?></td>
+                                        <!-- Mã đơn -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['id'] ?? '') ?></td>
+                                        <!-- Ngày tạo đơn -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= isset($order['inserted_at']) ? date('d/m/Y', strtotime($order['inserted_at'])) : 'N/A' ?></td>
+                                        <!-- Mã vận đơn -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($extendCode) ?></td>
+                                        <!-- Thẻ -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= !empty($order['tags']) ? html_escape(implode(', ', array_column($order['tags'], 'name'))) : '' ?>
                                         </td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['customer']['name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>">
+                                        <!-- Khách hàng -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['customer']['name'] ?? '') ?></td>
+                                        <!-- SĐT -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <div><?php $phone = $order['customer']['phone_numbers'][0] ?? '';
                                                     echo html_escape($phone); ?> </div>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>">
+                                        </td>
+                                        <!-- Nhà mạng -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?php
                                             $phone = $order['customer']['phone_numbers'][0] ?? '';
                                             $carrier = get_mobile_network($phone);
                                             echo html_escape($carrier);
                                             ?>
                                         </td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= '' ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle" title="<?= html_escape($firstItem['variation_info']['name'] ?? 'N/A') ?>">
+                                        <!-- Khách mới/cũ -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= '' ?> Cũ </td>
+                                        <!-- Gồm các SP -->
+                                        <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle text-center" title="<?= html_escape($firstItem['variation_info']['name'] ?? 'N/A') ?>">
                                             <?= html_escape($firstItem['variation_info']['name'] ?? '') ?>
                                         </td>
-                                        <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle">
+                                        <!-- Tổng số lượng SP -->
+                                        <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle text-center">
                                             <?= $firstItem['quantity'] ?? 0 ?>
                                         </td>
-                                        <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle">
+                                        <!-- Số lượng đổi -->
+                                        <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle text-center">
                                             <?= html_escape($firstItem['exchange_count'] ?? 0) ?>
                                         </td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['customer']['returned_order_count'] ?? 0) ?></td>
+                                        <!-- Số lượng đơn hàng hoàn của khách hàng -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['customer']['returned_order_count'] ?? 0) ?></td>
+                                        <!-- Phường/Xã -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['commune_name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['district_name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['province_name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['assigning_seller']['name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['assigning_care']['name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['marketer']['name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>">
-                                            <span class="tw-inline-block tw-px-2 tw-py-1 tw-text-xs tw-font-medium tw-rounded-full <?= $statusInfo['class'] ?>">
+                                        <!-- Quận/Huyện -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['district_name'] ?? '') ?></td>
+                                        <!-- Tỉnh thành phố -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['province_name'] ?? '') ?></td>
+                                        <!-- Người xử lý -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['assigning_seller']['name'] ?? '') ?></td>
+                                        <!-- Nhân viên CSKH -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['assigning_care']['name'] ?? '') ?></td>
+                                        <!-- Marketer -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['marketer']['name'] ?? '') ?></td>
+                                        <!-- Trạng thái -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <span class="tw-inline-block tw-px-2 tw-py-1 tw-text-xs tw-font-medium tw-rounded-fu    ll <?= $statusInfo['class'] ?>">
                                                 <?= $statusInfo['text'] ?>
                                             </span>
                                         </td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['page_id'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['ad_id'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['ads_source'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['order_sources_name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['account_name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['page']['name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape('') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['creator']['name'] ?? 'Hệ thống') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['last_editor']['name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['last_editor']['name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['creator']['name'] ?? 'Hệ thống') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= isset($order['time_assign_care']) ? date('d/m/Y H:i', strtotime($order['time_assign_care'])) : '' ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['partner']['partner_name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= isset($order['time_send_partner']) ? date('d/m', strtotime($order['time_send_partner'])) : '' ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['extend_update']['note'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['returnedreason'] ?? '') ?></td>
+                                        <!-- Page ID -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['page_id'] ?? '') ?></td>
+                                        <!-- Ad Id -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['ad_id'] ?? '') ?></td>
+                                        <!-- Nguồn quảng cáo -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['ads_source'] ?? '') ?></td>
+                                        <!-- Nguồn đơn hàng -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['order_sources_name'] ?? '') ?></td>
+                                        <!-- Nguồn chi tiết -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['account_name'] ?? '') ?></td>
+                                        <!-- Thời gian khách nhắn tin đầu tiên đến page -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['page']['name'] ?? '') ?></td>
+                                        <!-- Chat page -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape('') ?></td>
+                                        <!-- Người tạo -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['creator']['name'] ?? 'Hệ thống') ?></td>
+                                        <!-- NV xác nhận -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($staffconfirm) ?></td>
+                                        <!-- NV đầu tiên xác nhận đơn -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($firststaffconfirm ?? '') ?></td>
+                                        <!-- Nhân viên cập nhật -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['last_editor']['name'] ?? 'Hệ thống') ?></td>
+                                        <!-- Thời gian CSKH -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= isset($order['time_assign_care']) ? date('d/m/Y', strtotime($order['time_assign_care'])) : '' ?></td>
+                                        <!-- Đơn vị VC -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['partner']['partner_name'] ?? '') ?></td>
+                                        <!-- Trạng thái VC -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['partner']['extend_update'][0]['status'] ?? '') ?>
+                                        </td>
+                                        <!-- Ngày đẩy đơn sang đvvc (Ngày tháng) -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= isset($order['time_send_partner']) ? date('d/m/Y', strtotime($order['time_send_partner'])) : '' ?></td>
+                                        <!-- Lý do hoàn/hủy đơn hàng từ ĐVVC -->
+                                        <td class=" tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['partner']['extend_update'][0]['note'] ?? '') ?></td>
+                                        <!-- Lý do hoàn -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['returnedreason'] ?? '') ?></td>
+                                        <!-- COD -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= number_format($cod) ?></td>
+                                        <!-- Phí trả cho đơn vị VC -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= number_format($partner_fee) ?></td>
+                                        <!-- COD đối soát -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= number_format($codDoiSoat) ?></td>
+                                        <!-- Tổng tiền đơn hàng (trừ chiết khấu) -->
                                         <td class="tw-px-6 tw-py-4 text-center" rowspan="<?= $itemsCount ?>">
                                             <?php
                                             $total = 0;
@@ -1401,18 +1479,23 @@
                                             echo number_format($total, 0, ',', '.');
                                             ?>
                                         </td>
+                                        <!-- Tổng tiền đơn hàng (trừ phí ship) -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($totalPrice - $shipping_fee) ?>
                                         </td>
+                                        <!-- Doanh số -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format(($order['status_name'] == 'returned' || $order['status_name'] == 'canceled') ? 0 : ($totalPrice ?? 0)) ?>
                                         </td>
+                                        <!-- Doanh số trước hoàn -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format(($order['status_name'] == 'returned' || $order['status_name'] == 'canceled') ? 0 : ($totalPrice ?? 0)) ?>
                                         </td>
+                                        <!-- Doanh thu đơn hàng -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format(($order['status_name'] == 'returned' || $order['status_name'] == 'canceled') ? 0 : ($total_price_after_sub_discount ?? 0)) ?>
                                         </td>
+                                        <!-- Doanh thu chưa trừ phí sàn -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?=
                                             number_format(
@@ -1427,9 +1510,11 @@
                                             )
                                             ?>
                                         </td>
+                                        <!-- Phụ thu -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($surcharge) ?>
                                         </td>
+                                        <!-- Giảm giá -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?=
                                             number_format(
@@ -1441,15 +1526,19 @@
                                             )
                                             ?>
                                         </td>
+                                        <!-- Phí sàn -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($fee_marketplace) ?>
                                         </td>
+                                        <!-- Giảm giá trực tiếp trên đơn hàng -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($total_discount) ?>
                                         </td>
+                                        <!-- Trị giá đơn hàng -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($totalPrice) ?>
                                         </td>
+                                        <!-- Trị giá đơn hàng đã chiết khấu -->
                                         <td class="tw-px-6 tw-py-4 text-center" rowspan="<?= $itemsCount ?>">
                                             <?php
                                             $total = 0;
@@ -1461,106 +1550,198 @@
                                             echo number_format($total, 0, ',', '.');
                                             ?>
                                         </td>
+                                        <!-- Phí VC thu của khách -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($shipping_fee) ?>
                                         </td>
+                                        <!-- Tổng tiền đơn hàng -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($totalPrice) ?>
                                         </td>
+                                        <!-- Thực thu từ ĐVVC -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($money_to_collect) ?>
                                         </td>
+                                        <!-- Tổng phí đối soát -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($total_fee_partner) ?>
                                         </td>
+                                        <!-- Tiền trả trước -->
                                         <td></td>
+                                        <!-- Chuyển khoản -->
                                         <td></td>
+                                        <!-- Tiền khách đưa -->
                                         <td></td>
+                                        <!-- Tiền mặt -->
                                         <td></td>
+                                        <!-- Quẹt thẻ -->
                                         <td></td>
+                                        <!-- MoMo -->
                                         <td></td>
+                                        <!-- VNPAY -->
                                         <td></td>
+                                        <!-- ONEPAY -->
                                         <td></td>
+                                        <!-- QRPay -->
                                         <td></td>
+                                        <!-- Tiền chuyển khoản trả khách -->
                                         <td></td>
+                                        <!-- Tiền cần thu -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($cod) ?>
                                         </td>
-                                        <td class="tw-px-6 tw-py-4 text-center" rowspan="<?= $itemsCount ?>">
-                                            <?php
-                                            $total = 0;
-                                            foreach ($order['items'] as $item) {
-                                                $price = ($item['variation_info']['retail_price'] ?? 0) * ($item['quantity'] ?? 0);
-                                                $discount = $item['total_discount'] ?? 0;
-                                                $total += $price - $discount;
-                                            }
-                                            echo number_format($total, 0, ',', '.');
-                                            ?>
+                                        <!-- Giảm giá trước khi hoàn -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format($total_discount) ?>
                                         </td>
+                                        <!-- Phí hoàn đơn hàng -->
                                         <td></td>
+                                        <!-- Tổng số tiền -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($totalPrice) ?>
                                         </td>
+                                        <!-- Xác thực CK -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($totalPrice) ?>
                                         </td>
+                                        <!-- Hình ảnh xác thực CK -->
                                         <td></td>
+                                        <!-- Chênh lệch phí vận chuyển (Sàn TMĐT) -->
                                         <td></td>
+                                        <!-- Sàn trợ giá -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($total_fee_marketplace_voucher) ?? 0 ?>
                                         </td>
+                                        <!-- Phí cố định, giao dịch (Sàn TMĐT) -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($total_fee_paymentFee) ?? 0 ?>
                                         </td>
+                                        <!-- Phí hoa hồng nền tảng (Sàn TMĐT) -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($total_fee_platform_commission) ?? 0 ?>
                                         </td>
+                                        <!-- Phí hoa hồng (Sàn TMĐT) -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($total_fee_platform_affiliate_commission) ?? 0 ?>
                                         </td>
+                                        <!-- Phí dịch vụ SFP (Sàn TMĐT) -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($total_fee_sfp_service_fee) ?? 0 ?>
                                         </td>
+                                        <!-- Phí thanh toán (Sàn TMĐT) -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($total_fee_seller_transaction_fee) ?? 0 ?>
                                         </td>
-                                        </td>
+                                        <!-- Phí dịch vụ (Sàn TMĐT) -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($total_fee_service_fee) ?? 0 ?>
                                         </td>
+                                        <!-- Tiền thanh toán thực tế -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($buyer_total_amount) ?? 0 ?>
                                         </td>
                                         <td></td>
+                                        <!-- Lợi nhuận đơn hàng -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format($cod) ?>
+                                        </td>
+                                        <!-- Số tiền khách hàng đã chi -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format($cod) ?>
+                                        </td>
+                                        <!-- Vùng miền -->
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle">Online</td>
+                                        <!-- Ngày đối soát -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= isset($reconciliationTime) ? date('d/m/Y', strtotime($reconciliationTime)) : '' ?>
+                                        </td>
+                                        <!-- Bán tại quầy -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>">Online</td>
+                                        <!-- Kho hàng -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['warehouse_info']['name'] ?? '') ?></td>
+                                        <!-- Vị trí lô  -->
                                         <td></td>
+                                        <!-- Vị trí kệ  -->
                                         <td></td>
+                                        <!-- Dự kiến nhận hàng -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= isset($order['estimate_delivery_date']) ? date('d/m/Y', strtotime($order['estimate_delivery_date'])) : '' ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['note_print'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['note'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['notes']['message'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['notes']['message'] ?? '') ?></td>
+                                        <!-- Ghi chú để in -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['note_print'] ?? '') ?>
+                                        </td>
+                                        <!-- Ghi chú nội bộ -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['note'] ?? '') ?>
+                                        </td>
+                                        <!-- Ghi trú trao đổi -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['notes']['messager'] ?? '') ?>
+                                        </td>
+                                        <!-- Ghi chú trao đổi (Theo đơn hàng) -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['notes']['messager'] ?? '') ?>
+                                        </td>
+                                        <!-- Affiliate -->
                                         <td></td>
+                                        <!-- Tiền hàng đổi -->
                                         <td></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= isset($order['customer']['date_of_birth']) ? date('d/m', strtotime($order['customer']['date_of_birth'])) : '' ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['promotion_advance_info']['name'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['notes']['message'] ?? '') ?></td>
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['notes']['message'] ?? '') ?></td>
+                                        <!-- Sinh nhật -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= isset($order['customer']['date_of_birth']) ? date('d/m', strtotime($order['customer']['date_of_birth'])) : '' ?></td>
+                                        <!-- Mã khuyến mãi -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?php if (!empty($promotionName) && $promotionName !== ''): ?>
+                                                Mã khuyến mãi nâng cao: <?= html_escape($promotionName) ?>
+                                            <?php endif; ?>
+                                        </td>
+                                        <!-- Mã khuyến mãi(rút gọn) -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($promotionName) ?></td>
+                                        <!-- Số đơn của khách  -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format($totalOrders) ?>
+                                        </td>
+                                        <!-- Delay giao -->
+                                        <td></td>
+                                        <!-- Cấp độ khách hàng -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['customer']['level']['name'] ?? '') ?>
+                                        </td>
+                                        <!-- Thẻ Pancake -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape(implode(', ', $tagPancake)) ?>
+                                        </td>
+                                        <!-- Ghi chú DVVC -->
+                                        <td></td>
+                                        <!-- Dòng thời gian cập nhật trạng thái -->
+                                        <td></td>
+                                        <!-- Mã bài viết -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['post_id']) ?>
+                                        </td>
+                                        <!-- Lịch sử đơn hàng -->
+                                        <td></td>
+                                        <!-- Lịch sử NV xử lý đơn hàng -->
+                                        <td></td>
+                                        <!-- Liên kết theo dõi đơn -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($extendCodeVCLink) ?>
+                                        </td>
+                                        <!-- Thông tin chuyển hàng -->
+                                        <td></td>
+
+
+
+
+
                                     </tr>
 
                                     <?php if ($itemsCount > 1) : ?>
                                         <?php for ($i = 1; $i < $itemsCount; $i++) : ?>
                                             <?php $item = $items[$i]; ?>
                                             <tr class="hover:tw-bg-gray-50">
-                                                <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle" title="<?= html_escape($item['variation_info']['name'] ?? 'N/A') ?>">
+                                                <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle text-center" title="<?= html_escape($item['variation_info']['name'] ?? 'N/A') ?>">
                                                     <?= html_escape($item['variation_info']['name'] ?? 'N/A') ?>
                                                 </td>
-                                                <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle"><?= $item['quantity'] ?? 0 ?></td>
+                                                <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle text-center"><?= $item['quantity'] ?? 0 ?></td>
                                             </tr>
                                         <?php endfor; ?>
                                     <?php endif; ?>

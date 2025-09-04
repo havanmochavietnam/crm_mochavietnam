@@ -670,22 +670,6 @@ a.text-danger:hover,
     --tw-ring-color: rgb(55 65 81 / var(--tw-ring-opacity, 1));
     --tw-ring-offset-width: 2px;
 }
-
-  .\!open > .dropdown-toggle.btn-secondary {
-    --tw-border-opacity: 1;
-    border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-    background-image: none;
-    --tw-text-opacity: 1;
-    color: rgb(17 24 39 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(55 65 81 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
 .btn-secondary:active:hover,
   .btn-secondary.active:hover,
   .open > .dropdown-toggle.btn-secondary:hover,
@@ -695,23 +679,6 @@ a.text-danger:hover,
   .btn-secondary:active.focus,
   .btn-secondary.active.focus,
   .open > .dropdown-toggle.btn-secondary.focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-    --tw-text-opacity: 1;
-    color: rgb(17 24 39 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(55 65 81 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
-
-  .\!open > .dropdown-toggle.btn-secondary:hover,
-  .\!open > .dropdown-toggle.btn-secondary:focus,
-  .\!open > .dropdown-toggle.btn-secondary.focus {
     --tw-border-opacity: 1;
     border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
     --tw-bg-opacity: 1;
@@ -797,22 +764,6 @@ a.text-danger:hover,
     --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1));
     --tw-ring-offset-width: 2px;
 }
-
-  .\!open > .dropdown-toggle.btn-default {
-    --tw-border-opacity: 1;
-    border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-    background-image: none;
-    --tw-text-opacity: 1;
-    color: rgb(31 41 55 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
 .btn-default:active:hover,
   .btn-default.active:hover,
   .open > .dropdown-toggle.btn-default:hover,
@@ -822,23 +773,6 @@ a.text-danger:hover,
   .btn-default:active.focus,
   .btn-default.active.focus,
   .open > .dropdown-toggle.btn-default.focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-    --tw-text-opacity: 1;
-    color: rgb(31 41 55 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
-
-  .\!open > .dropdown-toggle.btn-default:hover,
-  .\!open > .dropdown-toggle.btn-default:focus,
-  .\!open > .dropdown-toggle.btn-default.focus {
     --tw-border-opacity: 1;
     border-color: rgb(209 213 219 / var(--tw-border-opacity, 1));
     --tw-bg-opacity: 1;
@@ -921,22 +855,6 @@ a.text-danger:hover,
     --tw-ring-color: rgb(14 165 233 / var(--tw-ring-opacity, 1));
     --tw-ring-offset-width: 2px;
 }
-
-  .\!open > .dropdown-toggle.btn-info {
-    --tw-border-opacity: 1;
-    border-color: rgb(2 132 199 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(3 105 161 / var(--tw-bg-opacity, 1));
-    background-image: none;
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(14 165 233 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
 .btn-info:active:hover,
   .btn-info.active:hover,
   .open > .dropdown-toggle.btn-info:hover,
@@ -946,23 +864,6 @@ a.text-danger:hover,
   .btn-info:active.focus,
   .btn-info.active.focus,
   .open > .dropdown-toggle.btn-info.focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(2 132 199 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(3 105 161 / var(--tw-bg-opacity, 1));
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(14 165 233 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
-
-  .\!open > .dropdown-toggle.btn-info:hover,
-  .\!open > .dropdown-toggle.btn-info:focus,
-  .\!open > .dropdown-toggle.btn-info.focus {
     --tw-border-opacity: 1;
     border-color: rgb(2 132 199 / var(--tw-border-opacity, 1));
     --tw-bg-opacity: 1;
@@ -1045,22 +946,6 @@ a.text-danger:hover,
     --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1));
     --tw-ring-offset-width: 2px;
 }
-
-  .\!open > .dropdown-toggle.btn-primary {
-    --tw-border-opacity: 1;
-    border-color: rgb(17 24 39 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
-    background-image: none;
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
 .btn-primary:active:hover,
   .btn-primary.active:hover,
   .open > .dropdown-toggle.btn-primary:hover,
@@ -1070,23 +955,6 @@ a.text-danger:hover,
   .btn-primary:active.focus,
   .btn-primary.active.focus,
   .open > .dropdown-toggle.btn-primary.focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(17 24 39 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
-
-  .\!open > .dropdown-toggle.btn-primary:hover,
-  .\!open > .dropdown-toggle.btn-primary:focus,
-  .\!open > .dropdown-toggle.btn-primary.focus {
     --tw-border-opacity: 1;
     border-color: rgb(17 24 39 / var(--tw-border-opacity, 1));
     --tw-bg-opacity: 1;
@@ -1173,22 +1041,6 @@ a.text-danger:hover,
     --tw-ring-color: rgb(74 222 128 / var(--tw-ring-opacity, 1));
     --tw-ring-offset-width: 2px;
 }
-
-  .\!open > .dropdown-toggle.btn-success {
-    --tw-border-opacity: 1;
-    border-color: rgb(34 197 94 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1));
-    background-image: none;
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(74 222 128 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
 .btn-success:active:hover,
   .btn-success.active:hover,
   .open > .dropdown-toggle.btn-success:hover,
@@ -1198,23 +1050,6 @@ a.text-danger:hover,
   .btn-success:active.focus,
   .btn-success.active.focus,
   .open > .dropdown-toggle.btn-success.focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(34 197 94 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1));
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(74 222 128 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
-
-  .\!open > .dropdown-toggle.btn-success:hover,
-  .\!open > .dropdown-toggle.btn-success:focus,
-  .\!open > .dropdown-toggle.btn-success.focus {
     --tw-border-opacity: 1;
     border-color: rgb(34 197 94 / var(--tw-border-opacity, 1));
     --tw-bg-opacity: 1;
@@ -1301,22 +1136,6 @@ a.text-danger:hover,
     --tw-ring-color: rgb(234 179 8 / var(--tw-ring-opacity, 1));
     --tw-ring-offset-width: 2px;
 }
-
-  .\!open > .dropdown-toggle.btn-warning {
-    --tw-border-opacity: 1;
-    border-color: rgb(202 138 4 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(161 98 7 / var(--tw-bg-opacity, 1));
-    background-image: none;
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(234 179 8 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
 .btn-warning:active:hover,
   .btn-warning.active:hover,
   .open > .dropdown-toggle.btn-warning:hover,
@@ -1326,23 +1145,6 @@ a.text-danger:hover,
   .btn-warning:active.focus,
   .btn-warning.active.focus,
   .open > .dropdown-toggle.btn-warning.focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(202 138 4 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(161 98 7 / var(--tw-bg-opacity, 1));
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(234 179 8 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
-
-  .\!open > .dropdown-toggle.btn-warning:hover,
-  .\!open > .dropdown-toggle.btn-warning:focus,
-  .\!open > .dropdown-toggle.btn-warning.focus {
     --tw-border-opacity: 1;
     border-color: rgb(202 138 4 / var(--tw-border-opacity, 1));
     --tw-bg-opacity: 1;
@@ -1429,22 +1231,6 @@ a.text-danger:hover,
     --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity, 1));
     --tw-ring-offset-width: 2px;
 }
-
-  .\!open > .dropdown-toggle.btn-danger {
-    --tw-border-opacity: 1;
-    border-color: rgb(220 38 38 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(185 28 28 / var(--tw-bg-opacity, 1));
-    background-image: none;
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
 .btn-danger:active:hover,
   .btn-danger.active:hover,
   .open > .dropdown-toggle.btn-danger:hover,
@@ -1454,23 +1240,6 @@ a.text-danger:hover,
   .btn-danger:active.focus,
   .btn-danger.active.focus,
   .open > .dropdown-toggle.btn-danger.focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(220 38 38 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(185 28 28 / var(--tw-bg-opacity, 1));
-    --tw-text-opacity: 1;
-    color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-    --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-    --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-    box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-    --tw-ring-opacity: 1;
-    --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity, 1));
-    --tw-ring-offset-width: 2px;
-}
-
-  .\!open > .dropdown-toggle.btn-danger:hover,
-  .\!open > .dropdown-toggle.btn-danger:focus,
-  .\!open > .dropdown-toggle.btn-danger.focus {
     --tw-border-opacity: 1;
     border-color: rgb(220 38 38 / var(--tw-border-opacity, 1));
     --tw-bg-opacity: 1;
@@ -2371,14 +2140,6 @@ ul.tagit-autocomplete .ui-menu-item-wrapper.ui-state-active,
     --tw-bg-opacity: 1;
     background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
 }
-.nav .\!open>a,
-  .nav .\!open>a:hover,
-  .nav .\!open>a:focus {
-    --tw-border-opacity: 1;
-    border-color: rgb(37 99 235 / var(--tw-border-opacity, 1));
-    --tw-bg-opacity: 1;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
-}
 .nav .nav-divider {
     --tw-bg-opacity: 1;
     background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
@@ -2744,17 +2505,6 @@ ul.tagit-autocomplete .ui-menu-item-wrapper.ui-state-active,
   .nav-tabs-segmented .open>a,
   .nav-tabs-segmented .open>a:hover,
   .nav-tabs-segmented .open>a:focus {
-    border-radius: 0.5rem;
-    --tw-bg-opacity: 1;
-    background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-    --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-  .nav-tabs-segmented .\!open>a,
-  .nav-tabs-segmented .\!open>a:hover,
-  .nav-tabs-segmented .\!open>a:focus {
     border-radius: 0.5rem;
     --tw-bg-opacity: 1;
     background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
@@ -3446,6 +3196,9 @@ a.disabled {
 .tw-left-1\/2 {
     left: 50%;
 }
+.tw-right-0 {
+    right: 0px;
+}
 .tw-right-10 {
     right: 2.5rem;
 }
@@ -3568,6 +3321,10 @@ a.disabled {
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
 }
+.tw-my-6 {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
 .tw-my-8 {
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -3682,6 +3439,9 @@ a.disabled {
 }
 .tw-ml-2 {
     margin-left: 0.5rem;
+}
+.tw-ml-2\.5 {
+    margin-left: 0.625rem;
 }
 .tw-ml-3 {
     margin-left: 0.75rem;
@@ -4298,6 +4058,9 @@ a.disabled {
 .\!tw-rounded-xl {
     border-radius: 0.75rem !important;
 }
+.tw-rounded {
+    border-radius: 0.25rem;
+}
 .tw-rounded-full {
     border-radius: 9999px;
 }
@@ -4326,6 +4089,9 @@ a.disabled {
 }
 .tw-border-0 {
     border-width: 0px;
+}
+.tw-border-2 {
+    border-width: 2px;
 }
 .tw-border-b {
     border-bottom-width: 1px;
@@ -4379,6 +4145,10 @@ a.disabled {
 }
 .tw-border-neutral-900\/20 {
     border-color: rgb(17 24 39 / 0.2);
+}
+.tw-border-primary-600 {
+    --tw-border-opacity: 1;
+    border-color: rgb(37 99 235 / var(--tw-border-opacity, 1));
 }
 .tw-border-transparent {
     border-color: transparent;
@@ -16661,6 +16431,9 @@ form.dropzone input[type="file"] {
     .md\:tw-max-w-64 {
         max-width: 16rem;
     }
+    .md\:tw-flex-1 {
+        flex: 1 1 0%;
+    }
     .md\:tw-grid-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -16689,6 +16462,11 @@ form.dropzone input[type="file"] {
         --tw-space-y-reverse: 0;
         margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
         margin-bottom: calc(0px * var(--tw-space-y-reverse));
+    }
+    .md\:tw-divide-y-0 > :not([hidden]) ~ :not([hidden]) {
+        --tw-divide-y-reverse: 0;
+        border-top-width: calc(0px * calc(1 - var(--tw-divide-y-reverse)));
+        border-bottom-width: calc(0px * var(--tw-divide-y-reverse));
     }
     .md\:tw-border-r {
         border-right-width: 1px;
