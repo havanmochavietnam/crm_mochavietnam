@@ -1143,118 +1143,139 @@
                     <table class="tw-w-full tw-min-w-max tw-text-sm tw-text-left tw-text-gray-700 tw-border tw-border-gray-300">
                         <thead class="tw-text-xs tw-text-gray-800 tw-uppercase tw-bg-gray-50">
                             <tr>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">STT</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Mã Đơn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ngày Tạo</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Mã vận đơn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Thẻ</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Khách Hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Số điện thoại</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Nhà mạng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Khách Mới / Cũ</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Gồm Sản phẩm</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Số lượng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Số lượng đổi</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">SL đơn hoàn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phường/Xã</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Quận/Huyện</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tỉnh/TP</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Người xử lý</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Nhân viên CSKH</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Marketer</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Trạng thái</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Page Id</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ad Id</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Nguồn quảng cáo</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Nguồn đơn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Nguồn chi tiết</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Chat page</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Thời gian khách nhắn tin đầu tiên đến page</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Người tạo</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">NV xác nhận</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Nhân viên đầu tiên xác nhận</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Nhân viên cập nhật</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Thời gian CSKH</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Đơn vị VC</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Trạng thái VC</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ngày đẩy đơn sang đvvc (Ngày tháng)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Lý do hoàn/hủy đơn hàng từ ĐVVC</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Lý do hoàn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">COD</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí trả cho đơn vị VC</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">COD đối soát</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tổng tiền đơn hàng (trừ chiết khấu)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tổng tiền đơn hàng (trừ phí ship)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Doanh số</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Doanh số trước hoàn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Doanh thu đơn hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Doanh thu chưa trừ phí sàn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phụ thu</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Giảm giá</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí sàn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Giảm giá trực tiếp trên đơn hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Trị giá đơn hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Trị giá đơn hàng đã chiết khấu</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí VC thu của khách</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tổng tiền đơn hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Thực thu từ đơn vị VC</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tổng phí đối soát</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tiền trả trước</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Chuyển trước</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tiền khách đưa</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tiền mặt</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Quẹt thẻ</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">MoMo</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">VNPAY</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">ONEPAY</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">QRPay</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tiền chuyển khoản trả khách</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tiền cần thu</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Giảm giá trước khi hoàn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí hoàn đơn hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tổng số tiền</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Xác thực CK</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Hình ảnh xác thực CK</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Chênh lệch phí vận chuyển (Sàn TMĐT)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Sàn trợ giá</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí cố định, giao dịch (Sàn TMĐT)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí hoa hồng nền tảng (Sàn TMĐT)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí hoa hồng (Sàn TMĐT)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí dịch vụ SFP (Sàn TMĐT)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí thanh toán (Sàn TMĐT)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phí dịch vụ (Sàn TMĐT)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tiền thanh toán thực tế</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Lợi nhuận đơn hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Số tiền khách hàng đã chi</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Phương thức thanh toán</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Vùng miền</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ngày đối soát</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Bán tại quầy</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Kho hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Vị trí lô</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Vị trí kệ</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Dự kiến nhận hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ghi chú để in</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ghi chú nội bộ</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ghi trú trao đổi</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ghi chú trao đổi (Theo đơn hàng)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Affiliate</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Tiền hàng đổi</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Sinh nhật</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Mã khuyến mãi</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Mã khuyến mãi (Tóm tắt)</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Số đơn của khách</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Delay giao</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Cấp độ khách hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Thẻ Pancake</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ghi chú DVVC</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Dòng thời gian cập nhật trạng thái</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Mã bài viết</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Lịch sử đơn hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Lịch sử NV xử lý đơn hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Liên kết theo dõi đơn</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Thông tin chuyển hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300">Ngày hoàn đơn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">STT</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã Đơn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày Tạo</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã vận đơn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thẻ</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Khách Hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Số điện thoại</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Nhà mạng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Khách Mới / Cũ</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Gồm Sản phẩm</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Sản phẩm chi tiết</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Hình ảnh sản phẩm</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Số lượng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Số lượng đổi</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">SL đơn hoàn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phường/Xã</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Quận/Huyện</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tỉnh/TP</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Người xử lý</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Nhân viên CSKH</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Marketer</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Trạng thái</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Page Id</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ad Id</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Nguồn quảng cáo</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Nguồn đơn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Nguồn chi tiết</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Chat page</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời gian khách nhắn tin đầu tiên đến page</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Người tạo</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">NV xác nhận</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Nhân viên đầu tiên xác nhận</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Nhân viên cập nhật</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời gian CSKH</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Đơn vị VC</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Trạng thái VC</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày đẩy đơn sang đvvc (Ngày tháng)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Lý do hoàn/hủy đơn hàng từ ĐVVC</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Lý do hoàn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">COD</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí trả cho đơn vị VC</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">COD đối soát</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tổng tiền đơn hàng (trừ chiết khấu)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tổng tiền đơn hàng (trừ phí ship)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Doanh số</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Doanh số trước hoàn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Doanh thu đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Doanh thu chưa trừ phí sàn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phụ thu</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Giảm giá</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí sàn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Giảm giá trực tiếp trên đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Trị giá đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Trị giá đơn hàng đã chiết khấu</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí VC thu của khách</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tổng tiền đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thực thu từ đơn vị VC</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tổng phí đối soát</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tiền trả trước</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Chuyển trước</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tiền khách đưa</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tiền mặt</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Quẹt thẻ</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">MoMo</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">VNPAY</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">ONEPAY</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">QRPay</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tiền chuyển khoản trả khách</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tiền cần thu</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Giảm giá trước khi hoàn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí hoàn đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tổng số tiền</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Xác thực CK</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Hình ảnh xác thực CK</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Chênh lệch phí vận chuyển (Sàn TMĐT)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Sàn trợ giá</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí cố định, giao dịch (Sàn TMĐT)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí hoa hồng nền tảng (Sàn TMĐT)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí hoa hồng (Sàn TMĐT)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí dịch vụ SFP (Sàn TMĐT)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí thanh toán (Sàn TMĐT)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí dịch vụ (Sàn TMĐT)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tiền thanh toán thực tế</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Lợi nhuận đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Số tiền khách hàng đã chi</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phương thức thanh toán</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Vùng miền</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày đối soát</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Bán tại quầy</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Kho hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Vị trí lô</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Vị trí kệ</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Dự kiến nhận hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ghi chú để in</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ghi chú nội bộ</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ghi trú trao đổi</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ghi chú trao đổi (Theo đơn hàng)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Affiliate</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tiền hàng đổi</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Sinh nhật</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã khuyến mãi</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã khuyến mãi (Tóm tắt)</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Số đơn của khách</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Delay giao</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Cấp độ khách hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thẻ Pancake</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ghi chú DVVC</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Dòng thời gian cập nhật trạng thái</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã bài viết</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Lịch sử đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Lịch sử NV xử lý đơn hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Liên kết theo dõi đơn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thông tin chuyển hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày hoàn đơn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày nhận</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">UTM source</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">UTM medium</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">UTM campaign</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">UTM term</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">UTM content</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">UTM ID</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thẻ khách hàng</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Link</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">FFM ID</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã đơn hàng đầy đủ</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tài khoản đẩy đơn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">NV gửi hàng đi</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm tạo đơn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Sản phẩm chi tiết rút gọn</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thuộc tính từng sản phẩm</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thuộc tính từng sản phẩm</th>
                             </tr>
                         </thead>
                         <?php if (!empty($orders)) : ?>
@@ -1323,6 +1344,7 @@
                                 $items = $order['items'] ?? ($order['products'] ?? []);
                                 $itemsCount = !empty($items) ? count($items) : 1;
                                 $firstItem = $items[0] ?? null;
+                                $secondItem = $items[1] ?? null;
                                 $statusKey = $order['status_name'] ?? 'new';
                                 $statusInfo = $statusMap[$statusKey] ?? ['text' => 'Không xác định', 'class' => 'tw-bg-gray-100 tw-text-gray-800'];
                                 $totalPrice = $order['total_price'] ?? 0;
@@ -1361,6 +1383,28 @@
                                 $promotionName = $order['activated_promotion_advances'][0]['promotion_advance_info']['name'] ?? '';
                                 $totalOrders = $order['customer']['order_count'] ?? 0;
                                 $extendCodeVCLink = $order['histories'][1]['extend_code']['new'] ?? null;
+                                $p_utm_source = $order['histories'][0]['p_utm_source']['new'] ?? null;
+                                $p_utm_medium = $order['histories'][0]['p_utm_medium']['new'] ?? null;
+                                $p_utm_campaign = $order['histories'][0]['p_utm_campaign']['new'] ?? null;
+                                $p_utm_term = $order['histories'][0]['p_utm_term']['new'] ?? null;
+                                $p_utm_content = $order['histories'][0]['p_utm_content']['new'] ?? null;
+                                $p_utm_id = $order['histories'][0]['p_utm_id']['new'] ?? null;
+                                $tracking_id = $order['partner']['extend_code'] ?? null;
+                                $products_to_display = [];
+                                if (
+                                    !empty($order['items']) &&
+                                    isset($order['items'][0]['is_composite']) &&
+                                    $order['items'][0]['is_composite'] === true &&
+                                    !empty($order['items'][0]['components'])
+                                ) {
+                                    // Nếu là combo, ta sẽ lặp qua các 'components'
+                                    $products_to_display = $order['items'][0]['components'];
+                                } else {
+                                    // Nếu là sản phẩm thường, ta lặp qua 'items' như bình thường
+                                    $products_to_display = $order['items'] ?? []; // Dùng ?? [] để đảm bảo đây luôn là một mảng
+                                }
+                                $productsCount = count($products_to_display);
+
                                 ?>
                                 <tbody x-data="{ open: false }">
                                     <tr class="hover:tw-bg-gray-50">
@@ -1397,13 +1441,33 @@
                                         <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle text-center" title="<?= html_escape($firstItem['variation_info']['name'] ?? 'N/A') ?>">
                                             <?= html_escape($firstItem['variation_info']['name'] ?? '') ?>
                                         </td>
+                                        <!-- Sản phẩm chi tiết -->
+                                        <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle text-center" title="<?= html_escape($firstItem['variation_info']['detail'] ?? 'N/A') ?>">
+                                            <?= html_escape($firstItem['variation_info']['detail'] ?? '') ?>
+                                        </td>
+                                        <!-- Hình ảnh sản phẩm-->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center">
+                                            <?php
+                                            // Giữ nguyên logic lấy link của bạn
+                                            $imageUrlString = implode($item['variation_info']['images'] ?? []);
+
+                                            // Chỉ hiển thị ảnh nếu link không rỗng
+                                            if (!empty($imageUrlString)) :
+                                            ?>
+                                                <img src="<?= html_escape($imageUrlString) ?>"
+                                                    alt="Ảnh sản phẩm"
+                                                    style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin: auto;">
+                                            <?php
+                                            endif;
+                                            ?>
+                                        </td>
                                         <!-- Tổng số lượng SP -->
                                         <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle text-center">
                                             <?= $firstItem['quantity'] ?? 0 ?>
                                         </td>
                                         <!-- Số lượng đổi -->
                                         <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle text-center">
-                                            <?= html_escape($firstItem['exchange_count'] ?? 0) ?>
+                                            <?= $firstItem['exchange_count'] ?? 0 ?>
                                         </td>
                                         <!-- Số lượng đơn hàng hoàn của khách hàng -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['customer']['returned_order_count'] ?? 0) ?></td>
@@ -1727,24 +1791,122 @@
                                         </td>
                                         <!-- Thông tin chuyển hàng -->
                                         <td></td>
-
-
-
-
-
+                                        <!-- Ngày hoàn Đơn -->
+                                        <td></td>
+                                        <!-- Ngày nhận -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?php // Kiểm tra trực tiếp sự tồn tại của key 'updated_at' lồng bên trong 
+                                            ?>
+                                            <?= isset($order['partner']['extend_update'][0]['updated_at']) ? date('d/m/Y', strtotime($order['partner']['extend_update'][0]['updated_at'])) : '' ?>
+                                        </td>
+                                        <!-- UTM Source -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($p_utm_source) ?>
+                                        </td>
+                                        <!-- UTM medium -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($p_utm_medium) ?>
+                                        </td>
+                                        <!-- UTM campaign -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($p_utm_campaign) ?>
+                                        </td>
+                                        <!-- UTM term -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($p_utm_term) ?>
+                                        </td>
+                                        <!-- UTM content -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($p_utm_content) ?>
+                                        </td>
+                                        <!-- UTM ID -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($p_utm_id) ?>
+                                        </td>
+                                        <!-- Thẻ khách hàng -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= implode($order['customer']['tags'] ?? []) ?>
+                                        </td>
+                                        <!-- Link -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['link'] ?? '') ?>
+                                        </td>
+                                        <!-- FFM ID -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['warehouse_info']['ffm_id'] ?? '') ?>
+                                        </td>
+                                        <!-- Mã đơn hàng đầy đủ -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($tracking_id) ?>
+                                        </td>
+                                        <!-- Tài khoản đẩy đơn -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
+                                        </td>
+                                        <!-- NV gửi hàng đi -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
+                                        </td>
+                                        <!-- Thời điểm tạo đơn -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= isset($order['inserted_at']) ? date('d/m/Y', strtotime($order['inserted_at'])) : 'N/A' ?></td>
+                                        <!-- Ngày cập nhập -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= isset($order['updated_at']) ? date('d/m/Y', strtotime($order['updated_at'])) : 'N/A' ?></td>
+                                        <!-- Thời điểm cập nhật trạng thái -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= isset($order['customer']['last_order_at']) ? date('d/m/Y', strtotime($order['customer']['last_order_at'])) : 'N/A' ?></td>
+                                        <!-- Sản phẩm -->
+                                        <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle text-center" title="<?= html_escape($firstItem['variation_info']['name'] ?? 'N/A') ?>">
+                                            <?= html_escape($firstItem['variation_info']['name'] ?? '') ?>
+                                        </td>
+                                        <!-- Sản phẩm chi tiết -->
+                                        <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle text-center" title="<?= html_escape($firstItem['variation_info']['detail'] ?? '') ?>">
+                                            <?= html_escape($firstItem['variation_info']['detail'] ?? '') ?>
+                                        </td>
+                                        <!-- Sản phẩm chi tiết rút gọn -->
+                                        <td></td>
+                                        <!-- Thuộc tính từng sản phẩm -->
+                                        <td></td>
                                     </tr>
+
 
                                     <?php if ($itemsCount > 1) : ?>
                                         <?php for ($i = 1; $i < $itemsCount; $i++) : ?>
                                             <?php $item = $items[$i]; ?>
                                             <tr class="hover:tw-bg-gray-50">
+
+                                                <!-- Cột Tên Sản Phẩm -->
                                                 <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle text-center" title="<?= html_escape($item['variation_info']['name'] ?? 'N/A') ?>">
                                                     <?= html_escape($item['variation_info']['name'] ?? 'N/A') ?>
                                                 </td>
+
+                                                <!-- Cột Chi Tiết Sản Phẩm -->
+                                                <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle text-center" title="<?= html_escape($item['variation_info']['detail'] ?? '') ?>">
+                                                    <?= html_escape($item['variation_info']['detail'] ?? $item['variation_info']['name'] ?? '') ?>
+                                                </td>
+
+                                                <!-- === CỘT HÌNH ẢNH (ĐÃ SỬA LẠI) === -->
+                                                <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center">
+                                                    <?php
+                                                    // Lấy ra link ảnh ĐẦU TIÊN [0] từ trong mảng 'images'
+                                                    $imageUrl = $item['variation_info']['images'][0] ?? '';
+
+                                                    // Chỉ hiển thị thẻ <img> nếu thực sự có link ảnh
+                                                    if (!empty($imageUrl)) :
+                                                    ?>
+                                                        <img src="<?= html_escape($imageUrl) ?>"
+                                                            alt="Ảnh sản phẩm"
+                                                            style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin: auto;">
+                                                    <?php
+                                                    endif; // Kết thúc câu lệnh if
+                                                    ?>
+                                                </td>
+
+                                                <!-- Cột Số Lượng -->
                                                 <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle text-center"><?= $item['quantity'] ?? 0 ?></td>
+
+                                                <!-- Cột Số Lượng Đổi -->
+                                                <td class="tw-px-4 tw-py-3 tw-text-center tw-border tw-border-gray-300 align-middle text-center"><?= $item['exchange_count'] ?? 0 ?></td>
                                             </tr>
                                         <?php endfor; ?>
                                     <?php endif; ?>
+
 
                                     <tr x-show="open" class="tw-bg-gray-100" style="display: none;">
                                         <td colspan="9" class="tw-p-4 tw-border-t tw-border-gray-300">

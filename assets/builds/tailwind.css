@@ -3196,9 +3196,6 @@ a.disabled {
 .tw-left-1\/2 {
     left: 50%;
 }
-.tw-right-0 {
-    right: 0px;
-}
 .tw-right-10 {
     right: 2.5rem;
 }
@@ -3321,10 +3318,6 @@ a.disabled {
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
 }
-.tw-my-6 {
-    margin-top: 1.5rem;
-    margin-bottom: 1.5rem;
-}
 .tw-my-8 {
     margin-top: 2rem;
     margin-bottom: 2rem;
@@ -3439,9 +3432,6 @@ a.disabled {
 }
 .tw-ml-2 {
     margin-left: 0.5rem;
-}
-.tw-ml-2\.5 {
-    margin-left: 0.625rem;
 }
 .tw-ml-3 {
     margin-left: 0.75rem;
@@ -4058,9 +4048,6 @@ a.disabled {
 .\!tw-rounded-xl {
     border-radius: 0.75rem !important;
 }
-.tw-rounded {
-    border-radius: 0.25rem;
-}
 .tw-rounded-full {
     border-radius: 9999px;
 }
@@ -4089,9 +4076,6 @@ a.disabled {
 }
 .tw-border-0 {
     border-width: 0px;
-}
-.tw-border-2 {
-    border-width: 2px;
 }
 .tw-border-b {
     border-bottom-width: 1px;
@@ -4145,10 +4129,6 @@ a.disabled {
 }
 .tw-border-neutral-900\/20 {
     border-color: rgb(17 24 39 / 0.2);
-}
-.tw-border-primary-600 {
-    --tw-border-opacity: 1;
-    border-color: rgb(37 99 235 / var(--tw-border-opacity, 1));
 }
 .tw-border-transparent {
     border-color: transparent;
@@ -16431,9 +16411,6 @@ form.dropzone input[type="file"] {
     .md\:tw-max-w-64 {
         max-width: 16rem;
     }
-    .md\:tw-flex-1 {
-        flex: 1 1 0%;
-    }
     .md\:tw-grid-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -16462,11 +16439,6 @@ form.dropzone input[type="file"] {
         --tw-space-y-reverse: 0;
         margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
         margin-bottom: calc(0px * var(--tw-space-y-reverse));
-    }
-    .md\:tw-divide-y-0 > :not([hidden]) ~ :not([hidden]) {
-        --tw-divide-y-reverse: 0;
-        border-top-width: calc(0px * calc(1 - var(--tw-divide-y-reverse)));
-        border-bottom-width: calc(0px * var(--tw-divide-y-reverse));
     }
     .md\:tw-border-r {
         border-right-width: 1px;
