@@ -1138,7 +1138,7 @@
             </div>
 
 
-            <div class="tw-bg-white tw-shadow-md tw-rounded-lg tw-overflow-hidden">
+            <div class="tw-bg-white tw-shadow-md tw-rounded-lg">
                 <div class="tw-overflow-x-auto table-container">
                     <table class="tw-w-full tw-min-w-max tw-text-sm tw-text-left tw-text-gray-700 tw-border tw-border-gray-300">
                         <thead class="tw-text-xs tw-text-gray-800 tw-uppercase tw-bg-gray-50">
@@ -2867,24 +2867,6 @@
                                             }
                                             ?>
                                         </td>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                         <?php if ($itemsCount > 1) : ?>
                                             <?php for ($i = 1; $i < $itemsCount; $i++) : ?>
                                                 <?php $item = $items[$i]; ?>
@@ -2978,7 +2960,7 @@
                         <?php endif; ?>
                     </table>
                 </div>
-                <div class="tw-p-4 tw-border-t tw-border-gray-200">
+                <div class="tw-p-4 tw-border-t tw-border-gray-200 pagination">
                     <?= $pagination ?>
                 </div>
             </div>
@@ -3037,5 +3019,4 @@
         stylePagination();
     });
 </script>
-
 <?php init_tail(); ?>
