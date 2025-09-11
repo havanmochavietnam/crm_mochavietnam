@@ -479,7 +479,6 @@
     }
 
     button {
-        -webkit-appearance: button;
         background-color: transparent;
         background-image: none;
         cursor: pointer
@@ -1365,6 +1364,7 @@
                                 'returning'     => ['text' => 'Đang hoàn', 'class' => 'tw-bg-orange-100 tw-text-orange-800'],
                                 'returned'      => ['text' => 'Đã hoàn', 'class' => 'tw-bg-lime-100 tw-text-lime-800'],
                                 'canceled'      => ['text' => 'Đã huỷ', 'class' => 'tw-bg-red-100 tw-text-red-800'],
+                                'pending'      => ['text' => 'Đang chuyển hàng', 'class' => 'tw-bg-orange-100 tw-text-orange-800'],
                                 'removed'       => ['text' => 'Đã xoá', 'class' => 'tw-bg-gray-100 tw-text-gray-800'],
                             ];
                             ?>
@@ -1489,7 +1489,7 @@
                                         <!-- Ngày tạo đơn -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= isset($order['inserted_at']) ? date('d/m/Y', strtotime($order['inserted_at'])) : 'N/A' ?></td>
                                         <!-- Mã vận đơn -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($extendCode) ?></td>
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['partner']['extend_code'] ?? '') ?></td>
                                         <!-- Thẻ -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= !empty($order['tags']) ? html_escape(implode(', ', array_column($order['tags'], 'name'))) : '' ?>
@@ -1593,8 +1593,10 @@
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['ad_id'] ?? '') ?></td>
                                         <!-- Nguồn quảng cáo -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['ads_source'] ?? '') ?></td>
-                                        <!-- Nguồn đơn hàng -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['order_sources_name'] ?? '') ?></td>
+                                        <!-- Nguồn đơn-->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= (($order['order_sources_name'] ?? '') === 'Affiliate') ? 'CTV' : html_escape($order['order_sources_name'] ?? '') ?>
+                                        </td>
                                         <!-- Nguồn chi tiết -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['account_name'] ?? '') ?></td>
                                         <!-- Thời gian khách nhắn tin đầu tiên đến page -->
@@ -2960,9 +2962,9 @@
                         <?php endif; ?>
                     </table>
                 </div>
-                <div class="tw-p-4 tw-border-t tw-border-gray-200 pagination">
-                    <?= $pagination ?>
-                </div>
+            </div>
+            <div class="tw-p-4 tw-border-t tw-border-gray-200 pagination">
+                <?= $pagination ?>
             </div>
         </div>
     </div>

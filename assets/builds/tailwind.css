@@ -3786,6 +3786,9 @@ a.disabled {
 .tw-grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+.tw-grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
 .tw-flex-col {
     flex-direction: column;
 }
@@ -3947,10 +3950,20 @@ a.disabled {
     margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
+.tw-space-y-4 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
 .tw-space-y-5 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
     margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
+.tw-space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 .tw-space-y-8 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-y-reverse: 0;
@@ -15964,6 +15977,10 @@ form.dropzone input[type="file"] {
 }
 .hover\:tw-bg-neutral-900\/5:hover {
     background-color: rgb(17 24 39 / 0.05);
+}
+.hover\:tw-text-black:hover {
+    --tw-text-opacity: 1;
+    color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 .hover\:tw-text-danger-700:hover {
     --tw-text-opacity: 1;
