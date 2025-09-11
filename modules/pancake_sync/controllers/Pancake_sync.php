@@ -39,7 +39,7 @@ class Pancake_sync extends AdminController
         $data['total']  = isset($response['total']) ? (int)$response['total'] : 0;
 
         // Chỉ khởi tạo phân trang nếu có dữ liệu và điều kiện hợp lệ
-        if ($data['total'] > 0 && $pageSize > 0 && $data['total'] > $pageSize) {
+        if ($data['total'] > 0 && $pageSize > 0 && ceil($data['total'] / $pageSize) > 1) {
             $this->load->library('pagination');
 
             $config['base_url']             = admin_url('pancake_sync');
