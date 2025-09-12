@@ -1351,26 +1351,9 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Email</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã đối tác</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Remarks</th>
-
-
                             </tr>
                         </thead>
                         <?php if (!empty($orders)) : ?>
-                            <?php
-                            $statusMap = [
-                                'new'           => ['text' => 'Mới', 'class' => 'tw-bg-blue-100 tw-text-blue-800'],
-                                'wait_submit' => ['text' => 'Chờ xác nhận', 'class' => 'tw-bg-yellow-100 tw-text-yellow-800'],
-                                'submitted'     => ['text' => 'Đã xác nhận', 'class' => 'tw-bg-indigo-100 tw-text-indigo-800'],
-                                'packing'       => ['text' => 'Đang đóng hàng', 'class' => 'tw-bg-purple-100 tw-text-purple-800'],
-                                'shipped'       => ['text' => 'Đã gửi hàng', 'class' => 'tw-bg-cyan-100 tw-text-cyan-800'],
-                                'delivered'     => ['text' => 'Đã nhận', 'class' => 'tw-bg-green-100 tw-text-green-800'],
-                                'returning'     => ['text' => 'Đang hoàn', 'class' => 'tw-bg-orange-100 tw-text-orange-800'],
-                                'returned'      => ['text' => 'Đã hoàn', 'class' => 'tw-bg-lime-100 tw-text-lime-800'],
-                                'canceled'      => ['text' => 'Đã huỷ', 'class' => 'tw-bg-red-100 tw-text-red-800'],
-                                'pending'      => ['text' => 'Đang chuyển hàng', 'class' => 'tw-bg-orange-100 tw-text-orange-800'],
-                                'removed'       => ['text' => 'Đã xoá', 'class' => 'tw-bg-gray-100 tw-text-gray-800'],
-                            ];
-                            ?>
                             <?php
                             if (!function_exists('get_mobile_network')) {
                                 /**
@@ -1419,6 +1402,19 @@
                             ?>
                             <?php foreach ($orders as $index => $order) : ?>
                                 <?php
+                                $statusMap = [
+                                    'new'           => ['text' => 'Mới', 'class' => 'tw-bg-blue-100 tw-text-blue-800'],
+                                    'wait_submit'   => ['text' => 'Chờ xác nhận', 'class' => 'tw-bg-yellow-100 tw-text-yellow-800'],
+                                    'submitted'     => ['text' => 'Đã xác nhận', 'class' => 'tw-bg-indigo-100 tw-text-indigo-800'],
+                                    'packing'       => ['text' => 'Đang đóng hàng', 'class' => 'tw-bg-purple-100 tw-text-purple-800'],
+                                    'shipped'       => ['text' => 'Đã gửi hàng', 'class' => 'tw-bg-cyan-100 tw-text-cyan-800'],
+                                    'delivered'     => ['text' => 'Đã nhận', 'class' => 'tw-bg-green-100 tw-text-green-800'],
+                                    'returning'     => ['text' => 'Đang hoàn', 'class' => 'tw-bg-orange-100 tw-text-orange-800'],
+                                    'returned'      => ['text' => 'Đã hoàn', 'class' => 'tw-bg-lime-100 tw-text-lime-800'],
+                                    'canceled'      => ['text' => 'Đã huỷ', 'class' => 'tw-bg-red-100 tw-text-red-800'],
+                                    'pending'       => ['text' => 'Đang chuyển hàng', 'class' => 'tw-bg-orange-100 tw-text-orange-800'],
+                                    'removed'       => ['text' => 'Đã xoá', 'class' => 'tw-bg-gray-100 tw-text-gray-800'],
+                                ];
                                 $items = $order['items'] ?? ($order['products'] ?? []);
                                 $itemsCount = !empty($items) ? count($items) : 1;
                                 $firstItem = $items[0] ?? null;
@@ -1600,8 +1596,8 @@
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['marketer']['name'] ?? '') ?></td>
                                         <!-- Trạng thái -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <span class="tw-inline-block tw-px-2 tw-py-1 tw-text-xs tw-font-medium tw-rounded-fu    ll <?= $statusInfo['class'] ?>">
-                                                <?= $statusInfo['text'] ?>
+                                            <span class="tw-inline-block tw-px-2 tw-py-1 tw-text-xs tw-font-medium tw-rounded-full <?= $statusInfo['class'] ?>">
+                                                <?= html_escape($statusInfo['text']) ?>
                                             </span>
                                         </td>
                                         <!-- Page ID -->
@@ -1891,43 +1887,37 @@
                                         <!-- Dòng thời gian cập nhật trạng thái -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text text-center" rowspan="<?= $itemsCount ?>">
                                             <?php
-                                            // Mảng để ánh xạ từ mã trạng thái sang tên trạng thái
-                                            $statusMap = [
+                                            // ĐỔI TÊN BIẾN Ở ĐÂY
+                                            $statusHistoryMap = [
                                                 0 => 'Mới',
                                                 1 => 'Đã xác nhận',
                                                 8 => 'Đang đóng hàng',
                                                 2 => 'Đã gửi hàng',
-                                                3 => 'Đã giao hàng', // Thêm các trạng thái khác nếu có
+                                                3 => 'Đã giao hàng',
                                                 4 => 'Hoàn thành',
                                                 5 => 'Đã hủy',
                                                 6 => 'Đang chuyển hoàn',
                                                 7 => 'Đã chuyển hoàn',
                                             ];
 
-                                            $historyDisplay = []; // Mảng để lưu các chuỗi lịch sử
+                                            $historyDisplay = [];
 
-                                            // Kiểm tra xem có lịch sử trạng thái không
                                             if (!empty($order['status_history'])) {
-                                                // Lặp qua từng mục trong lịch sử
                                                 foreach ($order['status_history'] as $history) {
                                                     $statusId = $history['status'];
                                                     $updatedAt = $history['updated_at'];
 
-                                                    // Lấy tên trạng thái từ mảng ánh xạ
-                                                    // Dùng '??' để gán giá trị mặc định nếu không tìm thấy
-                                                    $statusName = $statusMap[$statusId] ?? 'Không xác định';
+                                                    // VÀ SỬ DỤNG BIẾN MỚI Ở ĐÂY
+                                                    $statusName = $statusHistoryMap[$statusId] ?? 'Không xác định';
 
-                                                    // Định dạng ngày và cộng 7 tiếng
                                                     $date = new DateTime($updatedAt, new DateTimeZone('UTC'));
                                                     $date->setTimezone(new DateTimeZone('Asia/Ho_Chi_Minh'));
                                                     $formattedDate = $date->format('d/m/Y');
 
-                                                    // Thêm vào mảng hiển thị
                                                     $historyDisplay[] = "{$statusName} - {$formattedDate}";
                                                 }
                                             }
 
-                                            // Nối các chuỗi lịch sử lại với nhau, phân tách bằng dấu chấm phẩy và xuống dòng
                                             echo implode(";<br>", $historyDisplay);
                                             ?>
                                         </td>
