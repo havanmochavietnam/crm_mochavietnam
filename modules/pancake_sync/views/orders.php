@@ -3228,13 +3228,6 @@
     </div>
 </div>
 
-<div class="tw-p-4 tw-border-t tw-border-gray-200 pagination">
-    <?= $pagination ?>
-</div>
-</div>
-</div>
-</div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Tự động focus vào ô tìm kiếm
@@ -3242,48 +3235,63 @@
         if (searchInput) {
             searchInput.focus();
         }
-
         // Đặt giá trị mặc định cho ngày nếu chưa có
         const startDateInput = document.querySelector('input[name="startDateTime"]');
         const endDateInput = document.querySelector('input[name="endDateTime"]');
-
         if (!startDateInput.value) {
             const sevenDaysAgo = new Date();
             sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
             startDateInput.value = sevenDaysAgo.toISOString().slice(0, 16);
         }
-
         if (!endDateInput.value) {
             endDateInput.value = new Date().toISOString().slice(0, 16);
         }
-
         // --- Improved function to style pagination and add icons ---
         function stylePagination() {
             const paginationContainer = document.querySelector('.pagination');
-            if (!paginationContainer) return;
 
+            if (!paginationContainer) return;
             const paginationLinks = paginationContainer.querySelectorAll('.page-link');
+
             if (paginationLinks.length === 0) return;
 
             // SVG icons for previous and next arrows
+
             const prevIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>`;
             const nextIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>`;
 
+
+
             paginationLinks.forEach(link => {
+
                 const content = link.innerHTML.trim();
+
                 // Replace text symbols with SVG icons
+
                 if (content.includes('&lt;') || content.includes('«')) {
+
                     link.innerHTML = prevIcon;
+
                     link.setAttribute('aria-label', 'Previous');
+
                 } else if (content.includes('&gt;') || content.includes('»')) {
+
                     link.innerHTML = nextIcon;
+
                     link.setAttribute('aria-label', 'Next');
+
                 }
+
             });
+
         }
 
+
+
         // Call the styling function once the DOM is ready
+
         stylePagination();
     });
 </script>
+
 <?php init_tail(); ?>

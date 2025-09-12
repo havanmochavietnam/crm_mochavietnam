@@ -242,3 +242,581 @@ ERROR - 2025-09-12 11:19:42 --> Severity: Warning --> Undefined array key "shipp
 ERROR - 2025-09-12 11:19:42 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
 ERROR - 2025-09-12 11:19:42 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
 ERROR - 2025-09-12 11:19:42 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:00 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:27:00 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:27:00 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:03 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:18 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:27:18 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:27:18 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:19 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:26 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:27:26 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:27:26 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:27:27 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:27 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:27 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:27 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:27 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:27 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:27 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:27:27 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:24 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:28:24 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:28:24 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:28:26 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:26 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:26 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:26 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:26 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:26 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:26 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:26 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:32 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:28:32 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:28:32 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:28:34 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:13 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:34:13 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:34:13 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:15 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:27 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:34:27 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:34:27 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:28 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:29 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:36 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:34:36 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:34:37 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:38 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:46 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:34:46 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:34:46 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:49 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:55 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:34:55 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:34:55 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:34:57 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:02 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:35:02 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:35:02 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:04 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:11 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-12 11:35:11 --> Could not find the language line "merged"
+ERROR - 2025-09-12 11:35:11 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Undefined array key "shipping_address" C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
+ERROR - 2025-09-12 11:35:13 --> Severity: Warning --> Trying to access array offset on null C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 2007
