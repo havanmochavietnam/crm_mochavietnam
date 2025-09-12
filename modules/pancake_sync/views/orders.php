@@ -1980,14 +1980,16 @@
                                                             ];
 
                                                             // --- Hàm trợ giúp ---
-                                                            function formatAddress($addressObj)
-                                                            {
-                                                                if (empty($addressObj) || !is_array($addressObj)) return '';
-                                                                $parts = [];
-                                                                if (!empty($addressObj['full_address'])) $parts[] = $addressObj['full_address'];
-                                                                if (!empty($addressObj['full_name'])) $parts[] = $addressObj['full_name'];
-                                                                if (!empty($addressObj['phone_number'])) $parts[] = $addressObj['phone_number'];
-                                                                return implode(' / ', $parts);
+                                                            if (!function_exists('formatAddress')) {
+                                                                function formatAddress($addressObj)
+                                                                {
+                                                                    if (empty($addressObj) || !is_array($addressObj)) return '';
+                                                                    $parts = [];
+                                                                    if (!empty($addressObj['full_address'])) $parts[] = $addressObj['full_address'];
+                                                                    if (!empty($addressObj['full_name'])) $parts[] = $addressObj['full_name'];
+                                                                    if (!empty($addressObj['phone_number'])) $parts[] = $addressObj['phone_number'];
+                                                                    return implode(' / ', $parts);
+                                                                }
                                                             }
 
                                                             $logEntries = []; // Mảng chứa các cụm log
@@ -3224,6 +3226,13 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="tw-p-4 tw-border-t tw-border-gray-200 pagination">
+    <?= $pagination ?>
+</div>
+</div>
+</div>
 </div>
 
 <script>

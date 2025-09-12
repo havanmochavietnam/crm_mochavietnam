@@ -16,3 +16,5 @@ $lang['sync_type'] = 'Sync Type';
 $lang['records_synced'] = 'Records Synced';
 $lang['pancake_sync_success'] = 'Successfully synced %s records';
 $lang['pancake_sync_error'] = 'Sync failed: %s';
+$lang['pancake_sync'] = 'Đồng bộ Pancake';
+$lang['merged'] = 'Đã gộp';
