@@ -1144,7 +1144,7 @@
 
             <div class="tw-bg-white tw-shadow-md tw-rounded-lg">
                 <div class="tw-overflow-x-auto table-container">
-                    <table class="tw-w-full tw-min-w-max tw-text-sm tw-text-left tw-text-gray-700 tw-border tw-border-gray-300">
+                    <table class="tw-w-full tw-min-w-max tw-text-sm tw-text-left tw-text-gray-700 tw-border tw-border-gray-300 tw-overflow-x-auto">
                         <thead class="tw-text-xs tw-text-gray-800 tw-uppercase tw-bg-gray-50">
                             <tr>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">STT</th>
