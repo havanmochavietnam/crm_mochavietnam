@@ -28,9 +28,23 @@ class Pancake_sync extends AdminController
             'filter_status'   => $this->input->get('filter_status'),
             'include_removed' => $this->input->get('include_removed'),
             'updateStatus'    => $this->input->get('updateStatus'),
-            'startDateTime'   => $this->input->get('startDateTime') ? strtotime($this->input->get('startDateTime')) : null,
-            'endDateTime'     => $this->input->get('endDateTime') ? strtotime($this->input->get('endDateTime')) : null
         ];
+        // --- Sửa lại logic xử lý ngày tháng ở đây ---
+        $vietnamTimezone = new DateTimeZone('Asia/Ho_Chi_Minh');
+
+        if ($this->input->get('startDateTime')) {
+            // Tạo đối tượng DateTime cho ngày bắt đầu lúc 00:00:00 giờ Việt Nam
+            $startDateTime = new DateTime($this->input->get('startDateTime') . ' 00:00:00', $vietnamTimezone);
+            // Lấy timestamp UTC để gửi cho API
+            $params['startDateTime'] = $startDateTime->getTimestamp();
+        }
+
+        if ($this->input->get('endDateTime')) {
+            // Tạo đối tượng DateTime cho ngày kết thúc lúc 23:59:59 giờ Việt Nam
+            $endDateTime = new DateTime($this->input->get('endDateTime') . ' 23:59:59', $vietnamTimezone);
+            // Lấy timestamp UTC để gửi cho API
+            $params['endDateTime'] = $endDateTime->getTimestamp();
+        }
 
         $response = $this->getOrdersFromApi($params);
 
@@ -53,7 +67,7 @@ class Pancake_sync extends AdminController
             // Thêm các tham số tìm kiếm vào URL phân trang
             $queryParams = $this->input->get();
             unset($queryParams['page_number']); // Loại bỏ page_number để tránh trùng lặp
-            
+
             if (!empty($queryParams)) {
                 $config['suffix'] = '&' . http_build_query($queryParams);
                 $config['first_url'] = $config['base_url'] . '?' . http_build_query($queryParams);
@@ -99,7 +113,7 @@ class Pancake_sync extends AdminController
         if ($status !== 200) {
             return ['success' => false, 'message' => "API Error: HTTP {$status}", 'data' => [], 'total' => 0];
         }
-        
+
         $jsonData = json_decode($response, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {

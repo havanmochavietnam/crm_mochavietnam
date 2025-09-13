@@ -1108,10 +1108,12 @@
                     <div class="form-group">
                         <label class="form-label">Số lượng / trang</label>
                         <select name="page_size" class="form-select">
-                            <option value="10" <?= ($this->input->get('page_size') == 10) ? 'selected' : '' ?>>10</option>
                             <option value="30" <?= ($this->input->get('page_size') == 30 || !$this->input->get('page_size')) ? 'selected' : '' ?>>30</option>
                             <option value="50" <?= ($this->input->get('page_size') == 50) ? 'selected' : '' ?>>50</option>
                             <option value="100" <?= ($this->input->get('page_size') == 100) ? 'selected' : '' ?>>100</option>
+                            <option value="150" <?= ($this->input->get('page_size') == 150) ? 'selected' : '' ?>>150</option>
+                            <option value="200" <?= ($this->input->get('page_size') == 200) ? 'selected' : '' ?>>200</option>
+                            <option value="500" <?= ($this->input->get('page_size') == 500) ? 'selected' : '' ?>>500</option>
                         </select>
                     </div>
 
@@ -1224,7 +1226,6 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí hoàn đơn hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tổng số tiền</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Xác thực CK</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Hình ảnh xác thực CK</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Chênh lệch phí vận chuyển (Sàn TMĐT)</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Sàn trợ giá</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Phí cố định, giao dịch (Sàn TMĐT)</th>
@@ -1260,7 +1261,6 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ghi chú DVVC</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Dòng thời gian cập nhật trạng thái</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã bài viết</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Lịch sử đơn hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Lịch sử NV xử lý đơn hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Liên kết theo dõi đơn</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thông tin chuyển hàng</th>
@@ -1275,7 +1275,6 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thẻ khách hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Link</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">FFM ID</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã đơn hàng đầy đủ</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tài khoản đẩy đơn</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">NV gửi hàng đi</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm tạo đơn</th>
@@ -1314,8 +1313,6 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngảy cập nhật trạng thái Đã huỷ</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Chờ chuyển hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Chờ chuyển hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Đơn Webcake</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Đơn Webcake</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Chờ hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Chờ hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Hoàn một phần</th>
@@ -1330,17 +1327,9 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Đã đổi</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Đã đặt hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Đã đặt hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Đơn Storecake</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Đơn Storecake</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tình trạng kho</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ghi chú sản phẩm</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã rút gọn GHTK</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Người nhận</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Địa chỉ</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">TT Phường/Xã, Quận/Huyện</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Số nhà, ngõ/ngách, hẻm</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã tỉnh</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">ZIP CODE</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Đơn vị tiền tệ</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Địa chỉ kho</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">SĐT kho</th>
@@ -1350,7 +1339,8 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Username</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Email</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã đối tác</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Remarks</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã đơn hàng đổi</th>
+                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã đơn hàng gốc</th>
                             </tr>
                         </thead>
                         <?php if (!empty($orders)) : ?>
@@ -1523,7 +1513,9 @@
                                             ?>
                                         </td>
                                         <!-- Khách mới/cũ -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= '' ?> Cũ </td>
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= (in_array($order['customer']['level']['name'] ?? null, [null, 'Mua lần 1'])) ? 'Mới' : 'Cũ' ?>
+                                        </td>
                                         <!-- Gồm các SP -->
                                         <td class="tw-px-4 tw-py-3 tw-max-w-xs tw-truncate tw-border tw-border-gray-300 align-middle text-center" title="<?= html_escape($firstItem['variation_info']['name'] ?? 'N/A') ?>">
                                             <?= html_escape($firstItem['variation_info']['name'] ?? '') ?>
@@ -1772,8 +1764,6 @@
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= number_format($totalPrice) ?>
                                         </td>
-                                        <!-- Hình ảnh xác thực CK -->
-                                        <td></td>
                                         <!-- Chênh lệch phí vận chuyển (Sàn TMĐT) -->
                                         <td></td>
                                         <!-- Sàn trợ giá -->
@@ -1814,12 +1804,117 @@
                                         </td>
                                         <!-- Số tiền khách hàng đã chi -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <?= number_format($cod) ?>
+                                            <?= ($order['status'] == 3) ? number_format($cod) : 0 ?>
                                         </td>
                                         <!-- Phương thức thanh toán -->
                                         <td></td>
                                         <!-- Vùng miền -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?php
+                                            // --- DANH SÁCH CÁC TỈNH THEO VÙNG MIỀN ---
+                                            $mienBac = [
+                                                'Hà Nội',
+                                                'Hải Phòng',
+                                                'Quảng Ninh',
+                                                'Hà Giang',
+                                                'Cao Bằng',
+                                                'Bắc Kạn',
+                                                'Lạng Sơn',
+                                                'Tuyên Quang',
+                                                'Thái Nguyên',
+                                                'Phú Thọ',
+                                                'Bắc Giang',
+                                                'Lào Cai',
+                                                'Yên Bái',
+                                                'Điện Biên',
+                                                'Hoà Bình',
+                                                'Lai Châu',
+                                                'Sơn La',
+                                                'Bắc Ninh',
+                                                'Hà Nam',
+                                                'Hải Dương',
+                                                'Hưng Yên',
+                                                'Nam Định',
+                                                'Ninh Bình',
+                                                'Thái Bình',
+                                                'Vĩnh Phúc'
+                                            ];
+                                            $mienTrung = [
+                                                'Thanh Hóa',
+                                                'Nghệ An',
+                                                'Hà Tĩnh',
+                                                'Quảng Bình',
+                                                'Quảng Trị',
+                                                'Thừa Thiên Huế',
+                                                'Đà Nẵng',
+                                                'Quảng Nam',
+                                                'Quảng Ngãi',
+                                                'Bình Định',
+                                                'Phú Yên',
+                                                'Khánh Hòa',
+                                                'Ninh Thuận',
+                                                'Bình Thuận',
+                                                'Kon Tum',
+                                                'Gia Lai',
+                                                'Đắk Lắk',
+                                                'Đắk Nông',
+                                                'Lâm Đồng'
+                                            ];
+                                            $mienNam = [
+                                                'Hồ Chí Minh',
+                                                'Cần Thơ',
+                                                'Bình Phước',
+                                                'Bình Dương',
+                                                'Đồng Nai',
+                                                'Tây Ninh',
+                                                'Bà Rịa - Vũng Tàu',
+                                                'Long An',
+                                                'Đồng Tháp',
+                                                'Tiền Giang',
+                                                'An Giang',
+                                                'Bến Tre',
+                                                'Vĩnh Long',
+                                                'Trà Vinh',
+                                                'Hậu Giang',
+                                                'Kiên Giang',
+                                                'Sóc Trăng',
+                                                'Bạc Liêu',
+                                                'Cà Mau'
+                                            ];
+
+                                            // --- LOGIC XÁC ĐỊNH VÙNG MIỀN ---
+                                            $province = $order['shipping_address']['province_name'] ?? '';
+
+                                            // Chuẩn hóa tên tỉnh để loại bỏ "Tỉnh " hoặc "Thành phố " cho việc so sánh chính xác hơn
+                                            $normalizedProvince = str_replace(['Tỉnh ', 'Thành phố '], '', $province);
+
+                                            $region = ''; // Giá trị mặc định
+
+                                            if (in_array($normalizedProvince, $mienBac)) {
+                                                $region = 'Miền Bắc';
+                                            } elseif (in_array($normalizedProvince, $mienTrung)) {
+                                                $region = 'Miền Trung';
+                                            } elseif (in_array($normalizedProvince, $mienNam)) {
+                                                $region = 'Miền Nam';
+                                            }
+
+                                            // --- Tùy chọn: Thêm màu sắc cho từng vùng miền ---
+                                            $class = '';
+                                            switch ($region) {
+                                                case 'Miền Bắc':
+                                                    $class = 'tw-text-blue-600 tw-font-bold';
+                                                    break;
+                                                case 'Miền Trung':
+                                                    $class = 'tw-text-green-600 tw-font-bold';
+                                                    break;
+                                                case 'Miền Nam':
+                                                    $class = 'tw-text-red-600 tw-font-bold';
+                                                    break;
+                                            }
+
+                                            echo "<span class='{$class}'>" . html_escape($region) . "</span>";
+                                            ?>
+                                        </td>
                                         <!-- Ngày đối soát -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= isset($reconciliationTime) ? date('d/m/Y', strtotime($reconciliationTime)) : '' ?>
@@ -1878,7 +1973,43 @@
                                         </td>
                                         <!-- Thẻ Pancake -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text text-center" rowspan="<?= $itemsCount ?>">
-                                            <?= html_escape(implode(', ', $tagPancake)) ?>
+                                            <?php if (!empty($tagPancake)): ?>
+                                                <div x-data="{ open: false }">
+                                                    <button @click="open = true" class="tw-bg-gray-200 hover:tw-bg-gray-300 tw-text-black tw-font-bold tw-py-2 tw-px-4 tw-rounded tw-text-xs">
+                                                        Xem Tags (<?= count($tagPancake) ?>)
+                                                    </button>
+
+                                                    <div x-show="open"
+                                                        x-transition:enter="tw-ease-out tw-duration-300"
+                                                        x-transition:enter-start="tw-opacity-0"
+                                                        x-transition:enter-end="tw-opacity-100"
+                                                        x-transition:leave="tw-ease-in tw-duration-200"
+                                                        x-transition:leave-start="tw-opacity-100"
+                                                        x-transition:leave-end="tw-opacity-0"
+                                                        class="tw-fixed tw-inset-0 tw-z-50 tw-flex tw-items-center tw-justify-center tw-bg-black tw-bg-opacity-75"
+                                                        style="display: none;">
+
+                                                        <div @click.away="open = false" class="tw-bg-white tw-rounded-lg tw-shadow-xl tw-w-full tw-max-w-md">
+                                                            <div class="tw-p-4 tw-border-b tw-flex tw-justify-between tw-items-center">
+                                                                <h3 class="tw-text-lg tw-font-semibold">Tags Pancake của Đơn #<?= html_escape($order['id'] ?? '') ?></h3>
+                                                                <button @click="open = false" class="tw-text-gray-500 hover:tw-text-gray-800">&times;</button>
+                                                            </div>
+
+                                                            <div class="tw-p-4 tw-text-left">
+                                                                <div class="tw-flex tw-flex-wrap tw-gap-2">
+                                                                    <?php foreach ($tagPancake as $tag): ?>
+                                                                        <span class="tw-bg-green-100 tw-text-green-800 tw-text-sm tw-font-semibold tw-px-3 tw-py-1 tw-rounded-full">
+                                                                            <?= html_escape($tag) ?>
+                                                                        </span>
+                                                                    <?php endforeach; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php else: ?>
+                                                <span class="tw-text-gray-400"></span>
+                                            <?php endif; ?>
                                         </td>
                                         <!-- Ghi chú DVVC -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 truncate-text align-middle text-center" rowspan="<?= $itemsCount ?>">
@@ -1924,148 +2055,6 @@
                                         <!-- Mã bài viết -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= html_escape($order['post_id']) ?>
-                                        </td>
-                                        <!-- Lịch sử đơn hàng -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-
-                                            <div x-data="{ open: false }">
-                                                <button @click="open = true" class="tw-bg-red-100 tw-hover:bg-blue-700 tw-text-black tw-font-bold tw-py-2 tw-px-4 tw-rounded tw-text-xs">
-                                                    Xem lịch sử
-                                                </button>
-
-                                                <div x-show="open"
-                                                    x-transition:enter="tw-ease-out tw-duration-300"
-                                                    x-transition:enter-start="tw-opacity-0"
-                                                    x-transition:enter-end="tw-opacity-100"
-                                                    x-transition:leave="tw-ease-in tw-duration-200"
-                                                    x-transition:leave-start="tw-opacity-100"
-                                                    x-transition:leave-end="tw-opacity-0"
-                                                    class="tw-fixed tw-inset-0 tw-z-50 tw-flex tw-items-center tw-justify-center tw-bg-black tw-bg-opacity-75"
-                                                    style="display: none;">
-
-                                                    <div @click.away="open = false" class="tw-bg-white tw-rounded-lg tw-shadow-xl tw-w-full tw-max-w-2xl tw-max-h-[80vh] tw-overflow-y-auto">
-                                                        <div class="tw-p-4 tw-border-b tw-flex tw-justify-between tw-items-center">
-                                                            <h3 class="tw-text-lg tw-font-semibold">Lịch sử đơn hàng #<?= $order['id'] ?? '' ?></h3>
-                                                            <button @click="open = false" class="tw-text-gray-500 hover:tw-text-gray-800">&times;</button>
-                                                        </div>
-                                                        <div class="tw-p-4 tw-text-left tw-text-sm">
-                                                            <?php
-                                                            // --- Dữ liệu ánh xạ ---
-                                                            $statusMap = [
-                                                                0 => 'Mới',
-                                                                1 => 'Đã xác nhận',
-                                                                2 => 'Đã gửi hàng',
-                                                                3 => 'Đã giao hàng',
-                                                                4 => 'Hoàn thành',
-                                                                5 => 'Đã hủy',
-                                                                6 => 'Đang chuyển hoàn',
-                                                                7 => 'Đã chuyển hoàn',
-                                                                8 => 'Đang đóng hàng'
-                                                            ];
-
-                                                            $editorMap = [
-                                                                'c4cbd731-5372-48b3-9642-1d46ede83863' => 'Nguyễn Mỹ Trai',
-                                                                '98a65772-fcc4-4c89-a3f4-e6febb23acc8' => 'Phương Liên',
-                                                                '2b6efbcd-5bb6-4257-9982-e108c7bbd473' => 'Phan Thái Yến Nhi',
-                                                            ];
-
-                                                            // --- Hàm trợ giúp ---
-                                                            if (!function_exists('formatAddress')) {
-                                                                function formatAddress($addressObj)
-                                                                {
-                                                                    if (empty($addressObj) || !is_array($addressObj)) return '';
-                                                                    $parts = [];
-                                                                    if (!empty($addressObj['full_address'])) $parts[] = $addressObj['full_address'];
-                                                                    if (!empty($addressObj['full_name'])) $parts[] = $addressObj['full_name'];
-                                                                    if (!empty($addressObj['phone_number'])) $parts[] = $addressObj['phone_number'];
-                                                                    return implode(' / ', $parts);
-                                                                }
-                                                            }
-
-                                                            $logEntries = []; // Mảng chứa các cụm log
-
-                                                            // --- Bắt đầu xử lý ---
-                                                            if (!empty($order['histories'])) {
-                                                                foreach ($order['histories'] as $index => $history) {
-                                                                    $commitChanges = []; // Các thay đổi trong 1 lần cập nhật
-
-                                                                    // --- Xử lý các trường hợp thay đổi ---
-
-                                                                    // Trường hợp đặc biệt cho lần cập nhật đầu tiên để khớp với output
-                                                                    if ($index === 0) {
-                                                                        $commitChanges[] = "Xóa thẻ";
-                                                                        $commitChanges[] = "Thêm nhận hàng " . formatAddress($history['shipping_address']['new']);
-                                                                        $commitChanges[] = "Xóa nhận hàng tại Nhà riêng";
-                                                                    }
-                                                                    if (isset($history['note'])) {
-                                                                        $noteText = str_replace("\r\n", ",<br>", htmlspecialchars($history['note']['new']));
-                                                                        $commitChanges[] = "Thêm ghi chú nội bộ " . $noteText;
-                                                                    }
-                                                                    if (isset($history['inserted_at'])) {
-                                                                        $oldDate = date('d/m/Y', strtotime($history['inserted_at']['old']));
-                                                                        $newDate = date('d/m/Y', strtotime($history['inserted_at']['new']));
-                                                                        $commitChanges[] = "Sửa ngày tạo đơn từ '{$oldDate}' thành '{$newDate}'";
-                                                                    }
-                                                                    if (isset($history['bill_phone_number']['new'])) $commitChanges[] = "Thêm sđt khách hàng {$history['bill_phone_number']['new']}";
-                                                                    if (isset($history['bill_full_name']['new'])) $commitChanges[] = "Thêm tên khách hàng {$history['bill_full_name']['new']}";
-                                                                    // Bỏ điều kiện `!==` để luôn hiển thị thay đổi địa chỉ
-                                                                    if (isset($history['shipping_address']) && $index > 0) {
-                                                                        $oldAddress = formatAddress($history['shipping_address']['old']);
-                                                                        $newAddress = formatAddress($history['shipping_address']['new']);
-                                                                        if (!empty($oldAddress)) {
-                                                                            $commitChanges[] = "Sửa nhận hàng từ '{$oldAddress}' thành '{$newAddress}'";
-                                                                        }
-                                                                    }
-                                                                    if (isset($history['status'])) {
-                                                                        $oldStatus = $statusMap[$history['status']['old']] ?? 'N/A';
-                                                                        $newStatus = $statusMap[$history['status']['new']] ?? 'N/A';
-                                                                        $commitChanges[] = "Sửa trạng thái từ '{$oldStatus}' thành '{$newStatus}'";
-                                                                    }
-                                                                    if (isset($history['tags'])) {
-                                                                        $oldTags = array_map(fn($t) => $t['name'], $history['tags']['old'] ?? []);
-                                                                        $newTags = array_map(fn($t) => $t['name'], $history['tags']['new'] ?? []);
-                                                                        $added = array_diff($newTags, $oldTags);
-                                                                        $removed = array_diff($oldTags, $newTags);
-                                                                        if (!empty($added)) $commitChanges[] = "Thêm thẻ " . implode(', ', $added);
-                                                                        if (!empty($removed) && !empty($newTags)) $commitChanges[] = "Sửa thẻ từ '" . implode(', ', $oldTags) . "' thành '" . implode(', ', $newTags) . "'";
-                                                                    }
-                                                                    if (isset($history['items'])) {
-                                                                        foreach ($history['items'] as $itemChange) {
-                                                                            if (empty($itemChange['old']) && !empty($itemChange['new'])) {
-                                                                                $item = $itemChange['new'];
-                                                                                $name = $item['variation_info']['name'] ?? 'N/A';
-                                                                                $weight = $item['variation_info']['weight'] ?? 0.0;
-                                                                                $price = $item['variation_info']['retail_price'] ?? 0;
-                                                                                $quantity = $item['quantity'] ?? 0;
-                                                                                $commitChanges[] = "Thêm Sản phẩm {$name} / {$weight} g / " . number_format($price) . " x {$quantity}";
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    if (isset($history['is_free_shipping'])) $commitChanges[] = "Sửa miễn phí giao hàng từ 'false' thành 'true'";
-                                                                    if (isset($history['total_discount'])) $commitChanges[] = "Sửa giảm giá từ '" . number_format($history['total_discount']['old']) . "' thành '" . number_format($history['total_discount']['new']) . "'";
-                                                                    if (isset($history['partner_id'])) $commitChanges[] = "Thêm đơn vị VC Giao hàng tiết kiệm";
-                                                                    if (isset($history['partner_fee'])) $commitChanges[] = "Sửa phí vận chuyển ĐVVC từ '" . number_format($history['partner_fee']['old']) . "' thành '" . number_format($history['partner_fee']['new']) . "'";
-                                                                    // --- Thêm Người cập nhật và Thời gian ---
-                                                                    $editorId = $history['editor_id'] ?? null;
-                                                                    $editorName = $editorMap[$editorId] ?? null;
-                                                                    if ($editorName) {
-                                                                        $commitChanges[] = "Người cập nhật: {$editorName}";
-                                                                    }
-                                                                    $date = new DateTime($history['updated_at'], new DateTimeZone('UTC'));
-                                                                    $date->setTimezone(new DateTimeZone('Asia/Ho_Chi_Minh'));
-                                                                    $formattedDate = $date->format('d/m/Y');
-                                                                    $commitChanges[] = "Thời điểm cập nhật: {$formattedDate}";
-
-                                                                    $logEntries[] = implode("<br>", $commitChanges);
-                                                                }
-                                                            }
-                                                            // --- In kết quả ---
-                                                            echo implode("<br><br>", $logEntries);
-                                                            ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </td>
                                         <!-- Lịch sử NV xử lý đơn hàng -->
                                         <td></td>
@@ -2178,10 +2167,6 @@
                                         <!-- FFM ID -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text text-center" rowspan="<?= $itemsCount ?>">
                                             <?= html_escape($order['warehouse_info']['ffm_id'] ?? '') ?>
-                                        </td>
-                                        <!-- Mã đơn hàng đầy đủ -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
-                                            <?= html_escape($tracking_id) ?>
                                         </td>
                                         <!-- Tài khoản đẩy đơn -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text" rowspan="<?= $itemsCount ?>">
@@ -2796,10 +2781,6 @@
                                             echo isset($pendingTime) ? date('d/m/Y', strtotime($pendingTime)) : '';
                                             ?>
                                         </td>
-                                        <!-- Thời điểm cập nhật trạng thái Đơn Webcake -->
-                                        <td></td>
-                                        <!-- Ngày cập nhật trạng thái Đơn Webcake -->
-                                        <td></td>
                                         <!-- Thời điểm cập nhật trạng thái Chờ hàng -->
                                         <td></td>
                                         <!-- Ngày cập nhật trạng thái Chờ hàng -->
@@ -2942,10 +2923,6 @@
                                         <td></td>
                                         <!-- Ngày cập nhật trạng thái Đã đặt hàng -->
                                         <td></td>
-                                        <!-- Thời điểm cập nhật trạng thái Đơn Storecake -->
-                                        <td></td>
-                                        <!-- Ngày cập nhật trạng thái Đơn Storecake -->
-                                        <td></td>
                                         <!-- Tình trạng kho -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= '' ?> Đủ hàng </td>
                                         <!-- Ghi chú sản phẩm -->
@@ -2993,64 +2970,6 @@
                                             echo $shortCode;
                                             ?>
                                         </td>
-                                        <!-- Người nhận -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['full_name'] ?? '') ?></td>
-                                        <!-- Địa chỉ -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <?php
-                                            $fullAddress = null; // Tạo biến để lưu địa chỉ
-
-                                            // Kiểm tra xem có thông tin địa chỉ giao hàng và trường full_address không
-                                            if (!empty($order['shipping_address']['full_address'])) {
-
-                                                // Lấy ra chuỗi địa chỉ đầy đủ
-                                                $fullAddress = $order['shipping_address']['full_address'];
-                                            }
-
-                                            // In ra địa chỉ đã tìm thấy
-                                            echo $fullAddress;
-                                            ?>
-                                        </td>
-                                        <!-- TT Phường/Xã, Quận/Huyện -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <?php
-                                            $addressString = ''; // Tạo chuỗi rỗng để chứa kết quả
-
-                                            // Lấy ra các thành phần của địa chỉ
-                                            $commune = $order['data']['shipping_address']['commune_name'] ?? null;
-                                            $district = $order['data']['shipping_address']['district_name'] ?? null;
-                                            $province = $order['data']['shipping_address']['province_name'] ?? null;
-
-                                            // Kiểm tra xem các thành phần có tồn tại không
-                                            if ($commune && $district && $province) {
-                                                // Ghép các thành phần lại với nhau theo định dạng mong muốn
-                                                $addressString = "{$commune}, {$district}, {$province}";
-                                            }
-
-                                            // In ra chuỗi địa chỉ đã ghép
-                                            echo $addressString;
-                                            ?>
-                                        </td>
-                                        <!-- Số nhà, ngõ/ngách, hẻm -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <?php
-                                            $streetAddress = null; // Tạo biến để lưu địa chỉ chi tiết
-
-                                            // Kiểm tra xem có trường address trong shipping_address không
-                                            if (!empty($order['data']['shipping_address']['address'])) {
-
-                                                // Lấy ra chuỗi địa chỉ chi tiết
-                                                $streetAddress = $order['data']['shipping_address']['address'];
-                                            }
-
-                                            // In ra kết quả
-                                            echo $streetAddress;
-                                            ?>
-                                        </td>
-                                        <!-- Mã Tỉnh -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['province_name'] ?? '') ?></td>
-                                        <!-- ZIP CODE -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['commune_id'] ?? '') ?></td>
                                         <!-- Đơn vị tiền tệ -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= '' ?> VND</td>
                                         <!-- Địa chỉ kho -->
@@ -3086,37 +3005,17 @@
                                         </td>
                                         <!-- Mã đối tác -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($extendCode) ?></td>
-                                        <!-- Remarks -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <?php
-                                            $productList = []; // Tạo mảng để chứa danh sách sản phẩm
 
-                                            // Sửa đổi chính: Bỏ ['data'] để truy cập trực tiếp vào mảng 'items'
-                                            if (!empty($order['items']) && is_array($order['items'])) {
-
-                                                // Lặp qua từng sản phẩm trong mảng 'items'
-                                                foreach ($order['items'] as $item) {
-
-                                                    // Lấy các thông tin cần thiết từ mỗi sản phẩm
-                                                    $quantity = $item['quantity'] ?? 0;
-                                                    // Ưu tiên dùng display_id, nếu không có thì dùng barcode
-                                                    $code = $item['variation_info']['display_id'] ?? $item['variation_info']['barcode'] ?? 'N/A';
-                                                    $name = $item['variation_info']['name'] ?? 'Không có tên';
-
-                                                    // Tạo chuỗi theo định dạng bạn yêu cầu
-                                                    $productLine = "{$quantity} x {$code}-{$name}";
-
-                                                    // Thêm chuỗi đã định dạng vào mảng
-                                                    $productList[] = $productLine;
-                                                }
-                                            }
-
-                                            // In ra danh sách, mỗi sản phẩm trên một dòng và kết thúc bằng dấu chấm phẩy
-                                            if (!empty($productList)) {
-                                                echo implode(';<br>', $productList);
-                                            }
-                                            ?>
+                                        <!-- Mã đơn hàng đổi -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['id']) ?>
                                         </td>
+
+                                        <!-- Mã đơn hàng gốc -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= html_escape($order['change_by_orders'][0]['order']['id'] ?? '') ?>
+                                        </td>
+
                                         <?php if ($itemsCount > 1) : ?>
                                             <?php for ($i = 1; $i < $itemsCount; $i++) : ?>
                                                 <?php $item = $items[$i]; ?>
