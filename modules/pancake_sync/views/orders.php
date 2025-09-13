@@ -1724,7 +1724,7 @@
                                         <td></td>
                                         <!-- Chuyển trước -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <?= number_format($order['transfer_money']) ?>
+                                            <?= number_format(($order['transfer_money'])?? 0) ?>
                                         </td>
                                         <!-- Tiền khách đưa -->
                                         <td></td>
@@ -1732,11 +1732,11 @@
                                         <td></td>
                                         <!-- Quẹt thẻ -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <?= number_format($order['charged_by_card']) ?>
+                                            <?= number_format(($order['charged_by_card'])?? 0) ?>
                                         </td>
                                         <!-- MoMo -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <?= number_format($order['charged_by_momo']) ?>
+                                            <?= number_format(($order['charged_by_momo'])?? 0) ?>
                                         </td>
                                         <!-- VNPAY -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
@@ -1748,7 +1748,7 @@
                                         </td>
                                         <!-- QRPay -->
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
-                                            <?= number_format($order['charged_by_qrpay']) ?>
+                                            <?= number_format(($order['charged_by_qrpay'])?? 0) ?>
                                         </td>
                                         <!-- Tiền chuyển khoản trả khách -->
                                         <td></td>

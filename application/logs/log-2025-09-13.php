@@ -1358,3 +1358,19 @@ ERROR - 2025-09-13 13:03:47 --> Could not find the language line "pancake_sync"
 ERROR - 2025-09-13 13:06:32 --> Could not find the language line "date_subscribed"
 ERROR - 2025-09-13 13:06:32 --> Could not find the language line "merged"
 ERROR - 2025-09-13 13:06:32 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-13 13:12:07 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-13 13:12:07 --> Could not find the language line "merged"
+ERROR - 2025-09-13 13:12:07 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-13 13:15:05 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-13 13:15:05 --> Could not find the language line "merged"
+ERROR - 2025-09-13 13:15:05 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-13 13:15:13 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-13 13:15:13 --> Could not find the language line "merged"
+ERROR - 2025-09-13 13:15:13 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-13 13:26:33 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-13 13:26:33 --> Could not find the language line "merged"
+ERROR - 2025-09-13 13:26:33 --> Could not find the language line "pancake_sync"
+ERROR - 2025-09-13 13:26:35 --> Severity: 8192 --> number_format(): Passing null to parameter #1 ($num) of type float is deprecated C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 1739
+ERROR - 2025-09-13 13:26:35 --> Severity: 8192 --> number_format(): Passing null to parameter #1 ($num) of type float is deprecated C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 1751
+ERROR - 2025-09-13 13:26:35 --> Severity: 8192 --> number_format(): Passing null to parameter #1 ($num) of type float is deprecated C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 1739
+ERROR - 2025-09-13 13:26:35 --> Severity: 8192 --> number_format(): Passing null to parameter #1 ($num) of type float is deprecated C:\CRM_Mocha\CRMMocha\modules\pancake_sync\views\orders.php 1751
