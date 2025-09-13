@@ -1261,7 +1261,6 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ghi chú DVVC</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Dòng thời gian cập nhật trạng thái</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã bài viết</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Lịch sử NV xử lý đơn hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Liên kết theo dõi đơn</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thông tin chuyển hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày hoàn đơn</th>
@@ -1280,9 +1279,6 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm tạo đơn</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Tổng giá nhập SP</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Giá nhập đơn hàng</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Giá nhập đơn hàng hoàn</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Miễn phí ship</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Mã tuỳ chỉnh đơn hàng</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật sang đã nhận</th>
@@ -1321,8 +1317,6 @@
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Đã thu tiền</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Chờ xác nhận</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Chờ xác nhận</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Đang đổi</th>
-                                <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Đang đổi</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Đã đổi</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Ngày cập nhật trạng thái Đã đổi</th>
                                 <th scope="col" class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 text-center">Thời điểm cập nhật trạng thái Đã đặt hàng</th>
@@ -1728,22 +1722,34 @@
                                         </td>
                                         <!-- Tiền trả trước -->
                                         <td></td>
-                                        <!-- Chuyển khoản -->
-                                        <td></td>
+                                        <!-- Chuyển trước -->
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format($order['transfer_money']) ?>
+                                        </td>
                                         <!-- Tiền khách đưa -->
                                         <td></td>
                                         <!-- Tiền mặt -->
                                         <td></td>
                                         <!-- Quẹt thẻ -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format($order['charged_by_card']) ?>
+                                        </td>
                                         <!-- MoMo -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format($order['charged_by_momo']) ?>
+                                        </td>
                                         <!-- VNPAY -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format(($order['charged_by_vnpay'])?? 0) ?>
+                                        </td>
                                         <!-- ONEPAY -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format(($order['charged_by_onepay'])?? 0) ?>
+                                        </td>
                                         <!-- QRPay -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?= number_format($order['charged_by_qrpay']) ?>
+                                        </td>
                                         <!-- Tiền chuyển khoản trả khách -->
                                         <td></td>
                                         <!-- Tiền cần thu -->
@@ -1807,7 +1813,19 @@
                                             <?= ($order['status'] == 3) ? number_format($cod) : 0 ?>
                                         </td>
                                         <!-- Phương thức thanh toán -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?php
+                                            // Kiểm tra nếu giá trị 'prepaid' tồn tại và lớn hơn 0
+                                            $isPrepaid = !empty($order['prepaid']) && $order['prepaid'] > 0;
+
+                                            // Gán tên phương thức thanh toán tương ứng
+                                            $paymentMethod = $isPrepaid ? 'Chuyển khoản' : 'COD';
+
+                                            // In ra kết quả (có thể thêm màu sắc để phân biệt)
+                                            $class = $isPrepaid ? 'tw-text-green-600 tw-font-bold' : 'tw-text-orange-600 tw-font-bold';
+                                            echo "<span class='{$class}'>" . $paymentMethod . "</span>";
+                                            ?>
+                                        </td>
                                         <!-- Vùng miền -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?php
@@ -2056,8 +2074,6 @@
                                         <td class="tw-px-4 tw-py-3 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?= html_escape($order['post_id']) ?>
                                         </td>
-                                        <!-- Lịch sử NV xử lý đơn hàng -->
-                                        <td></td>
                                         <!-- Liên kết theo dõi đơn -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle truncate-text text-center" rowspan="<?= $itemsCount ?>">
                                             <?= html_escape($order['link_confirm_order'] ?? '') ?>
@@ -2213,12 +2229,6 @@
                                             echo isset($deliveryDate) ? date('d/m/Y', strtotime($deliveryDate)) : '';
                                             ?>
                                         </td>
-                                        <!-- Tổng giá nhập SP -->
-                                        <td></td>
-                                        <!-- Giá nhập đơn hàng -->
-                                        <td></td>
-                                        <!-- Giá nhập đơn hàng hoàn -->
-                                        <td></td>
                                         <!-- Miễn phí ship -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?php if ($order['is_free_shipping'] ?? false) : ?>
@@ -2414,8 +2424,28 @@
                                         </td>
                                         <!-- Thời gian phân công NV -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= isset($order['time_assign_seller']) ? date('d/m/Y', strtotime($order['time_assign_seller'])) : '' ?></td>
-                                        <!-- Nhân viên cập nhập chờ hàng -->
-                                        <td></td>
+                                        <!-- Nhân viên đầu tiên cập nhập chờ hàng -->
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?php
+                                            $editorName = ''; // Giá trị mặc định
+
+                                            // Kiểm tra xem mảng status_history có tồn tại không
+                                            if (!empty($order['status_history'])) {
+                                                // Lặp qua từng mục lịch sử
+                                                foreach ($order['status_history'] as $history) {
+                                                    // Nếu status của mục này là 11
+                                                    if (isset($history['status']) && $history['status'] == 11) {
+                                                        // Lấy tên của người chỉnh sửa và thoát khỏi vòng lặp
+                                                        if (!empty($history['editor']['name'])) {
+                                                            $editorName = $history['editor']['name'];
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            echo html_escape($editorName); // In ra: Lê Thị Trúc Phương
+                                            ?>
+                                        </td>
                                         <!-- NV xử lý SP -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['assigning_seller']['name'] ?? '') ?></td>
                                         <!-- Dịch vụ vận chuyển -->
@@ -2828,9 +2858,47 @@
                                             ?>
                                         </td>
                                         <!-- Thời điểm cập nhật trạng thái Đã thu tiền -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?php
+                                            $confirmationDate = null; // Tạo biến để lưu ngày xác nhận đơn
+
+                                            // Kiểm tra xem có lịch sử trạng thái không
+                                            if (!empty($order['status_history'])) {
+                                                // Lặp qua từng mục trong lịch sử
+                                                foreach ($order['status_history'] as $history) {
+                                                    // Kiểm tra nếu trạng thái là 1 (tức là 'đã xác nhận' / 'đang xử lý')
+                                                    if (isset($history['status']) && $history['status'] == 16) {
+                                                        $confirmationDate = $history['updated_at']; // Lấy ngày và giờ cập nhật
+                                                        break; // Thoát khỏi vòng lặp vì đã tìm thấy
+                                                    }
+                                                }
+                                            }
+
+                                            // Hiển thị ngày đã tìm thấy hoặc để trống nếu không có
+                                            echo isset($confirmationDate) ? date('d/m/Y', strtotime($confirmationDate)) : '';
+                                            ?>
+                                        </td>
                                         <!-- Ngày cập nhật trạng thái Đã thu tiền -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?php
+                                            $confirmationDate = null; // Tạo biến để lưu ngày xác nhận đơn
+
+                                            // Kiểm tra xem có lịch sử trạng thái không
+                                            if (!empty($order['status_history'])) {
+                                                // Lặp qua từng mục trong lịch sử
+                                                foreach ($order['status_history'] as $history) {
+                                                    // Kiểm tra nếu trạng thái là 1 (tức là 'đã xác nhận' / 'đang xử lý')
+                                                    if (isset($history['status']) && $history['status'] == 16) {
+                                                        $confirmationDate = $history['updated_at']; // Lấy ngày và giờ cập nhật
+                                                        break; // Thoát khỏi vòng lặp vì đã tìm thấy
+                                                    }
+                                                }
+                                            }
+
+                                            // Hiển thị ngày đã tìm thấy hoặc để trống nếu không có
+                                            echo isset($confirmationDate) ? date('d/m/Y', strtotime($confirmationDate)) : '';
+                                            ?>
+                                        </td>
                                         <!-- Thời điểm cập nhật trạng thái Chờ xác nhận -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?php
@@ -2873,10 +2941,6 @@
                                             echo isset($waitingConfirmationTime) ? date('d/m/Y', strtotime($waitingConfirmationTime)) : '';
                                             ?>
                                         </td>
-                                        <!-- Thời điểm cập nhật trạng thái Đang đổi -->
-                                        <td></td>
-                                        <!-- Ngày cập nhật trạng thái Đang đổi -->
-                                        <td></td>
                                         <!-- Thời điểm cập nhật trạng thái Đã đổi -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?php
@@ -2887,7 +2951,7 @@
                                                 // Lặp qua từng mục trong lịch sử
                                                 foreach ($order['status_history'] as $history) {
                                                     // Kiểm tra nếu trạng thái là 5 (tức là 'Đã hoàn'/'Đã đổi')
-                                                    if (isset($history['status']) && $history['status'] == 5) {
+                                                    if (isset($history['status']) && $history['status'] == 5  && $order['status_name'] == 'returned') {
                                                         $exchangeTime = $history['updated_at']; // Lấy ngày và giờ cập nhật
                                                         break; // Dừng vòng lặp vì đã tìm thấy
                                                     }
@@ -2908,7 +2972,7 @@
                                                 // Lặp qua từng mục trong lịch sử
                                                 foreach ($order['status_history'] as $history) {
                                                     // Kiểm tra nếu trạng thái là 5 (tức là 'Đã hoàn'/'Đã đổi')
-                                                    if (isset($history['status']) && $history['status'] == 5) {
+                                                    if (isset($history['status']) && $history['status'] == 5  && $order['status_name'] == 'returned') {
                                                         $exchangeTime = $history['updated_at']; // Lấy ngày và giờ cập nhật
                                                         break; // Dừng vòng lặp vì đã tìm thấy
                                                     }
@@ -2920,9 +2984,47 @@
                                             ?>
                                         </td>
                                         <!-- Thời điểm cập nhật trạng thái Đã đặt hàng -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?php
+                                            $exchangeTime = null; // Tạo biến để lưu thời gian đã đổi
+
+                                            // Kiểm tra xem có lịch sử trạng thái không
+                                            if (!empty($order['status_history'])) {
+                                                // Lặp qua từng mục trong lịch sử
+                                                foreach ($order['status_history'] as $history) {
+                                                    // Kiểm tra nếu trạng thái là 5 (tức là 'Đã hoàn'/'Đã đổi')
+                                                    if (isset($history['status']) && $history['status'] == 20) {
+                                                        $exchangeTime = $history['updated_at']; // Lấy ngày và giờ cập nhật
+                                                        break; // Dừng vòng lặp vì đã tìm thấy
+                                                    }
+                                                }
+                                            }
+
+                                            // Hiển thị thời gian đã tìm thấy và định dạng lại
+                                            echo isset($exchangeTime) ? date('d/m/Y', strtotime($exchangeTime)) : '';
+                                            ?>
+                                        </td>
                                         <!-- Ngày cập nhật trạng thái Đã đặt hàng -->
-                                        <td></td>
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
+                                            <?php
+                                            $exchangeTime = null; // Tạo biến để lưu thời gian đã đổi
+
+                                            // Kiểm tra xem có lịch sử trạng thái không
+                                            if (!empty($order['status_history'])) {
+                                                // Lặp qua từng mục trong lịch sử
+                                                foreach ($order['status_history'] as $history) {
+                                                    // Kiểm tra nếu trạng thái là 5 (tức là 'Đã hoàn'/'Đã đổi')
+                                                    if (isset($history['status']) && $history['status'] == 20) {
+                                                        $exchangeTime = $history['updated_at']; // Lấy ngày và giờ cập nhật
+                                                        break; // Dừng vòng lặp vì đã tìm thấy
+                                                    }
+                                                }
+                                            }
+
+                                            // Hiển thị thời gian đã tìm thấy và định dạng lại
+                                            echo isset($exchangeTime) ? date('d/m/Y', strtotime($exchangeTime)) : '';
+                                            ?>
+                                        </td>
                                         <!-- Tình trạng kho -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= '' ?> Đủ hàng </td>
                                         <!-- Ghi chú sản phẩm -->
