@@ -48,25 +48,61 @@ hooks()->add_action('admin_init', function () {
     $CI = &get_instance();
 
     if (has_permission('pancake_sync', '', 'view')) {
-        $CI->app_menu->add_sidebar_menu_item('pancake-sync', [
-            'name'     => _l('pancake_sync'),
-            'href'     => admin_url('pancake_sync'),
+        // Tạo menu cha
+        $CI->app_menu->add_sidebar_menu_item('pancake-sync-parent', [
+            'name'     => _l('POS Pancake'),
             'icon'     => 'fa fa-sync',
             'position' => 30,
+        ]);
+
+        // Menu con: Dashboard -> Trỏ đến controller Pancake_dashboard
+        $CI->app_menu->add_sidebar_children_item('pancake-sync-parent', [
+            'slug'     => 'pancake-sync-dashboard',
+            'name'     => _l('Tổng quan đơn hàng'),
+            'href'     => admin_url('pancake_dashboard'), // <-- THAY ĐỔI
+            'position' => 5,
+        ]);
+
+        // Menu con: Đơn hàng -> Trỏ đến controller Pancake_sync (của bạn)
+        $CI->app_menu->add_sidebar_children_item('pancake-sync-parent', [
+            'slug'     => 'pancake-sync-orders',
+            'name'     => _l('Đơn hàng'),
+            'href'     => admin_url('pancake_sync'), // <-- GIỮ NGUYÊN
+            'position' => 10,
+        ]);
+
+        // Menu con: Sản phẩm -> Trỏ đến controller Pancake_dashboard
+        $CI->app_menu->add_sidebar_children_item('pancake-sync-parent', [
+            'slug'     => 'pancake-sync-products',
+            'name'     => _l('Sản phẩm'),
+            'href'     => admin_url('pancake_sync/pancake_sync_products'), // <-- ĐÃ THAY ĐỔI
+            'position' => 15,
+        ]);
+        // Menu con: Khách hàng -> Trỏ đến controller Pancake_dashboard
+        $CI->app_menu->add_sidebar_children_item('pancake-sync-parent', [
+            'slug'     => 'pancake-sync-customers',
+            'name'     => _l('Khách hàng'),
+            'href'     => admin_url('customers'), // <-- THAY ĐỔI
+            'position' => 20,
         ]);
     }
 });
 
-// Thêm quyền
-hooks()->add_filter('staff_permissions', function ($permissions) {
+/**
+ * Đăng ký quyền truy cập cho module
+ */
+hooks()->add_action('staff_permissions', 'pancake_sync_add_permissions');
+
+function pancake_sync_add_permissions($permissions)
+{
     $permissions['pancake_sync'] = [
-        'name' => _l('pancake_sync_permissions'),
+        'name'         => 'Pancake Sync',
         'capabilities' => [
-            'view'   => _l('permission_view'),
-            'create' => _l('permission_create'),
-            'edit'   => _l('permission_edit'),
-            'delete' => _l('permission_delete'),
+            'view'   => 'Xem',
+            'create' => 'Thêm',
+            'edit'   => 'Sửa',
+            'delete' => 'Xóa',
         ],
     ];
     return $permissions;
-});
+}
