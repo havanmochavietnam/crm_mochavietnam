@@ -82,7 +82,7 @@ hooks()->add_action('admin_init', function () {
         $CI->app_menu->add_sidebar_children_item('pancake-sync-parent', [
             'slug'     => 'pancake-sync-customers',
             'name'     => _l('Khách hàng'),
-            'href'     => admin_url('customers'), // <-- THAY ĐỔI
+            'href'     => admin_url('pancake_sync/pancake_sync_customers'), // <-- THAY ĐỔI
             'position' => 20,
         ]);
     }

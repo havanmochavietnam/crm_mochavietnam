@@ -1,41 +1,128 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php init_head(); ?>
-<div id="wrapper">
-    <div class="content">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="tw-mb-2">
-                    <a href="<?php echo admin_url('custom_fields/field'); ?>" class="btn btn-primary">
-                        <i class="fa-regular fa-plus tw-mr-1"></i>
-                        <?php echo _l('new_custom_field'); ?>
-                    </a>
-                </div>
-                <div class="panel_s">
-                    <div class="panel-body panel-table-full">
+<?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
-                        <?php render_datatable(
-    [
-                            _l('id'),
-                            _l('custom_field_dt_field_name'),
-                            _l('custom_field_dt_field_to'),
-                            _l('custom_field_dt_field_type'),
-                            _l('kb_article_slug'),
-                            _l('custom_field_add_edit_active'),
-                            ],
-    'custom-fields'
-); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<?php init_tail(); ?>
-<script>
-$(function() {
-    initDataTable('.table-custom-fields', window.location.href);
-});
-</script>
-</body>
+class Pancake_sync_customers extends AdminController
+{
+    private $apiUrl;
+    private $shopId;
+    private $apiKey;
 
-</html>
+    private const PANCAKE_URL_OPTION = 'pancake_url';
+    private const PANCAKE_SHOP_ID_OPTION = 'pancake_shop_id';
+    private const PANCAKE_API_KEY_OPTION = 'api_key';
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->library('pagination');
+
+        $this->apiUrl = get_option(self::PANCAKE_URL_OPTION) ?: "https://pos.pages.fm/api/v1";
+        $this->shopId = get_option(self::PANCAKE_SHOP_ID_OPTION) ?: "1720001063";
+        $this->apiKey = get_option(self::PANCAKE_API_KEY_OPTION) ?: "fde1951a7d0e4c3b976aedb1776e731e";
+    }
+
+    public function index()
+    {
+        // ĐƠN GIẢN HÓA: Chỉ lấy các tham số cần thiết
+        $filters = [
+            'page_number' => (int)($this->input->get('page_number') ?: 1),
+            'page_size'   => (int)($this->input->get('page_size') ?: 30),
+            'search_ids'  => trim($this->input->get('search_ids', true) ?? ''), // Đổi tên cho rõ nghĩa
+        ];
+
+        $response = $this->getCustomersFromApi($filters);
+
+        $data = [
+            'customers'     => [],
+            'total'         => 0,
+            'pagination'    => '',
+            'error_message' => '',
+            'title'         => 'Tìm kiếm khách hàng Pancake theo ID',
+        ];
+        $data = array_merge($data, $filters);
+
+        if (!$response['success']) {
+            $data['error_message'] = "Lỗi API: " . $response['message'];
+        } else {
+            $data['customers'] = $this->getUniqueCustomers($response['data'] ?? []);
+            $data['total']     = $response['total'];
+
+            if ($data['total'] > 0 && $filters['page_size'] > 0) {
+                $data['pagination'] = $this->setupPagination($data['total'], $filters['page_size']);
+            }
+        }
+
+        $this->load->view('pancake_sync/customers', $data);
+    }
+
+    private function getCustomersFromApi(array $filters = []): array
+    {
+        if (empty($this->apiKey) || empty($this->shopId)) {
+            return ['success' => false, 'message' => "Chưa cấu hình API Key hoặc Shop ID.", 'data' => [], 'total' => 0];
+        }
+
+        $queryParams = [
+            'api_key'     => $this->apiKey,
+            'page_number' => $filters['page_number'] ?? 1,
+            'page_size'   => $filters['page_size'] ?? 30,
+        ];
+
+        // ĐƠN GIẢN HÓA: Chỉ xử lý tìm kiếm theo 'customer_ids'
+        if (!empty($filters['search_ids'])) {
+            $queryParams['search'] = $filters['search_ids'];
+        }
+
+        $url = "{$this->apiUrl}/shops/{$this->shopId}/customers?" . http_build_query($queryParams);
+
+        // Phần cURL giữ nguyên...
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true, CURLOPT_HTTPHEADER => ["Accept: application/json"],
+            CURLOPT_TIMEOUT => 30, CURLOPT_CONNECTTIMEOUT => 10
+        ]);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        if ($response === false || $httpCode !== 200) {
+            return ['success' => false, 'message' => "Lỗi API, mã HTTP: {$httpCode}", 'data' => [], 'total' => 0];
+        }
+
+        $jsonData = json_decode($response, true);
+        return [
+            'success' => $jsonData['success'] ?? false,
+            'message' => $jsonData['message'] ?? 'Thành công',
+            'data'    => $jsonData['data'] ?? [],
+            'total'   => (int)($jsonData['total_entries'] ?? 0)
+        ];
+    }
+
+    // Các hàm getUniqueCustomers và setupPagination giữ nguyên, không cần thay đổi
+    private function getUniqueCustomers(array $customers): array
+    {
+        $unique_customers = [];
+        $processed_ids    = [];
+        foreach ($customers as $customer) {
+            if (isset($customer['customer_id']) && !isset($processed_ids[$customer['customer_id']])) {
+                $unique_customers[] = $customer;
+                $processed_ids[$customer['customer_id']] = true;
+            }
+        }
+        return $unique_customers;
+    }
+
+    private function setupPagination(int $totalRows, int $pageSize): string
+    {
+        $config = [
+            'base_url'             => admin_url('pancake_sync/pancake_sync_customers'),
+            'total_rows'           => $totalRows,
+            'per_page'             => $pageSize,
+            'page_query_string'    => true,
+            'query_string_segment' => 'page_number',
+            'use_page_numbers'     => true,
+            'reuse_query_string'   => true,
+        ];
+        $this->pagination->initialize($config);
+        return $this->pagination->create_links();
+    }
+}
