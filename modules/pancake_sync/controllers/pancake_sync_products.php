@@ -106,7 +106,7 @@ class pancake_sync_products extends AdminController
             set_alert('info', 'Không tìm thấy sản phẩm nào từ Pancake để đồng bộ.');
         }
 
-        redirect(admin_url('pancake_sync_products'));
+        redirect(admin_url('pancake_sync/pancake_sync_products'));
     }
 
     /**

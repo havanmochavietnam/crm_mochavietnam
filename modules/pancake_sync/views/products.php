@@ -116,7 +116,7 @@
                                     <span class="search-icon"><i class="fa fa-search"></i></span>
                                     <input type="text" id="productSearchInput" class="form-control" placeholder="Tìm trên trang hiện tại...">
                                 </div>
-                                <a href="<?php echo admin_url('pancake_sync_products/sync'); ?>" class="btn btn-success"><i class="fa fa-refresh"></i> Đồng bộ về Database</a>
+                                <a href="<?php echo admin_url('pancake_sync/pancake_sync_products/sync'); ?>" class="btn btn-success"><i class="fa fa-refresh"></i> Đồng bộ về Database</a>
                             </div>  
                         </div>
                         <hr class="hr-panel-heading">
