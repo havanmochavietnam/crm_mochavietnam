@@ -1100,3 +1100,1032 @@ ERROR - 2025-09-15 16:30:11 --> Could not find the language line "Đơn hàng"
 ERROR - 2025-09-15 16:30:11 --> Could not find the language line "Sản phẩm"
 ERROR - 2025-09-15 16:30:11 --> Could not find the language line "Khách hàng"
 ERROR - 2025-09-15 16:30:17 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:08:04 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:08:04 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:08:04 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:08:04 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:08:04 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:08:04 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:08:04 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:08:05 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:08:09 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:08:09 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:08:09 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:08:09 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:08:09 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:08:09 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:08:09 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:08:25 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:08:26 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:08:26 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:08:26 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:08:26 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:08:26 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:08:26 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:08:26 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:08:27 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:08:28 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:08:28 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:08:28 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:08:28 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:08:28 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:08:28 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:08:28 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:08:30 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:08:30 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:08:30 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:08:30 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:08:30 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:08:30 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:08:30 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:22:43 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:22:43 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:22:43 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:22:43 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:22:43 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:22:43 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:22:43 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:22:45 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:22:45 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:22:45 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:22:45 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:22:45 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:22:45 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:22:45 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:22:48 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:23:18 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:23:18 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:23:18 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:23:18 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:23:18 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:23:18 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:23:18 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:24:53 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:24:57 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:24:57 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:24:57 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:24:57 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:24:57 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:24:57 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:24:57 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:25:07 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:25:07 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:25:07 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:25:07 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:25:07 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:25:07 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:25:07 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:26:56 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:28:30 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:28:30 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:28:30 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:28:30 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:28:30 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:28:30 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:28:30 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:28:33 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:28:33 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:28:33 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:28:33 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:28:33 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:28:33 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:28:33 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:28:34 --> Severity: Warning --> Undefined property: pancake_sync_products::$Pancake_products_sync C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\controllers\pancake_sync_products.php 103
+ERROR - 2025-09-15 22:28:34 --> Severity: error --> Exception: Call to a member function sync_products() on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\controllers\pancake_sync_products.php 103
+ERROR - 2025-09-15 22:30:02 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:30:02 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:30:02 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:30:02 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:30:02 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:30:02 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:30:02 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:30:03 --> Severity: Warning --> Undefined property: pancake_sync_products::$Pancake_products_sync C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\controllers\pancake_sync_products.php 103
+ERROR - 2025-09-15 22:30:03 --> Severity: error --> Exception: Call to a member function sync_products() on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\controllers\pancake_sync_products.php 103
+ERROR - 2025-09-15 22:32:55 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:32:55 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:32:55 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:32:55 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:32:55 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:32:55 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:32:55 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:32:55 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:33:20 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:33:20 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:33:20 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:33:20 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:33:20 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:33:20 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:33:20 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:33:27 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:33:27 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:33:27 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:33:27 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:33:27 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:33:27 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:33:27 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:33:27 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:33:29 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:33:29 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:33:29 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:33:29 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:33:29 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:33:29 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:33:29 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:46:34 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:46:34 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:46:34 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:46:34 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:46:34 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:46:34 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:46:34 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:46:34 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:46:42 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:46:42 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:46:42 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:46:42 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:46:42 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:46:42 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:46:42 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:48:53 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:50:16 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:50:16 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:50:16 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:50:16 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:50:16 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:50:16 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:50:16 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:50:29 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:50:33 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:50:35 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:51:36 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:52:31 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:52:34 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:52:34 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:52:34 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:52:34 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:52:34 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:52:34 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:52:34 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:52:41 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:52:41 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:52:41 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:52:41 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:52:41 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:52:41 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:52:41 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:52:42 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:53:03 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:53:04 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:53:04 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:53:04 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:53:04 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:53:04 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:53:04 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:53:04 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:53:05 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:53:28 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:53:28 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:53:28 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:53:28 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:53:28 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:53:28 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:53:28 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:53:30 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:53:30 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:53:30 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:53:30 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:53:30 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:53:30 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:53:30 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:53:32 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:53:32 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:53:32 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:53:32 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:53:32 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:53:32 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:53:32 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:53:32 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:53:34 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:53:37 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:53:37 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:53:37 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:53:37 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:53:37 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:53:37 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:53:37 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:55:04 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:55:04 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:55:04 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:55:04 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:55:04 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:55:04 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:55:04 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:55:06 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:55:06 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:55:06 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:55:06 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:55:06 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:55:06 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:55:06 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:55:09 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:55:09 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:55:09 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:55:09 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:55:09 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:55:09 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:55:09 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:55:11 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:55:11 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:55:11 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:55:11 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:55:11 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:55:11 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:55:11 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:55:11 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:57:27 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:57:28 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:57:28 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:57:28 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:57:28 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:57:28 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:57:28 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:57:28 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:57:29 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:57:30 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:57:30 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:57:30 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:57:30 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:57:30 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:57:30 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:57:30 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:57:31 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:57:31 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:57:31 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:57:31 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:57:31 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:57:31 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:57:31 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:57:33 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:57:33 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:57:33 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:57:33 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:57:33 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:57:33 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:57:33 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:57:33 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:57:41 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:57:41 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:57:41 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:57:41 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:57:41 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:57:41 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:57:41 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:57:42 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:57:55 --> 404 Page Not Found: admin/Pancake/pancake_sync_products
+ERROR - 2025-09-15 22:58:07 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:58:07 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:58:07 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:58:07 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:58:07 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:58:07 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:58:07 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:58:08 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 22:58:27 --> 404 Page Not Found: ../../modules/pancake_sync/controllers/Pancake_sync/pancake_sync_product
+ERROR - 2025-09-15 22:58:31 --> 404 Page Not Found: ../../modules/pancake_sync/controllers/Pancake_sync/pancake_sync_product
+ERROR - 2025-09-15 22:58:37 --> 404 Page Not Found: ../../modules/pancake_sync/controllers/Pancake_sync/pancake_sync_product
+ERROR - 2025-09-15 22:58:42 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:58:42 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:58:42 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:58:42 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:58:42 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:58:42 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:58:42 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:58:43 --> 404 Page Not Found: admin/Pancake_sync_products/sync
+ERROR - 2025-09-15 22:58:54 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 22:58:54 --> Could not find the language line "merged"
+ERROR - 2025-09-15 22:58:54 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 22:58:54 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 22:58:54 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 22:58:54 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 22:58:54 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 22:58:55 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 23:00:04 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:00:04 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:00:04 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:00:04 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:00:04 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:00:04 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:00:04 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:00:05 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:00:09 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:00:09 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:00:09 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:00:09 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:00:09 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:00:09 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:00:09 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:00:11 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:00:11 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:00:11 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:00:11 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:00:11 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:00:11 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:00:11 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:00:11 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 23:00:51 --> 404 Page Not Found: admin/Pancake_sync_products/index
+ERROR - 2025-09-15 23:00:57 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:00:57 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:00:57 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:00:57 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:00:57 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:00:57 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:00:57 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:01:18 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:01:18 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:01:18 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:01:18 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:01:18 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:01:18 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:01:18 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:01:19 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:01:19 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:01:19 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:01:19 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:01:19 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:01:19 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:01:19 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:01:36 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:09:59 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:09:59 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:09:59 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:09:59 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:09:59 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:09:59 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:09:59 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:10:00 --> Severity: error --> Exception: Unknown column 'product_name' in 'field list' C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\system\database\drivers\mysqli\mysqli_driver.php 307
+ERROR - 2025-09-15 23:10:35 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:10:35 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:10:35 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:10:35 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:10:35 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:10:35 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:10:35 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:10:38 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:10:38 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:10:38 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:10:38 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:10:38 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:10:38 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:10:38 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:10:39 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:10:39 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:10:39 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:10:39 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:10:39 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:10:39 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:10:39 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:10:47 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:10:47 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:10:47 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:10:47 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:10:47 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:10:47 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:10:47 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:10:48 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:10:48 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:10:48 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:10:48 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:10:48 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:10:48 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:10:48 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:13:21 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:13:21 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:13:21 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:13:21 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:13:21 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:13:21 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:13:21 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:13:22 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:13:22 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:13:22 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:13:22 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:13:22 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:13:22 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:13:22 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:13:31 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:13:31 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:13:31 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:13:31 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:13:31 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:13:31 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:13:31 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:13:44 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:13:44 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:13:44 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:13:44 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:13:44 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:13:44 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:13:44 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:13:48 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:13:48 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:13:48 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:13:48 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:13:48 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:13:48 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:13:48 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:13:56 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:13:56 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:13:56 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:13:56 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:13:56 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:13:56 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:13:56 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:14:02 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:14:02 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:14:02 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:14:02 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:14:02 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:14:02 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:14:02 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:14:22 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:14:22 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:14:22 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:14:22 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:14:22 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:14:22 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:14:22 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:14:44 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:14:44 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:14:44 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:14:44 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:14:44 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:14:44 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:14:44 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:15:10 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:15:10 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:15:10 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:15:10 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:15:10 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:15:10 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:15:10 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:15:11 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:15:11 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:15:11 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:15:11 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:15:11 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:15:11 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:15:11 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:15:12 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:15:15 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:15:15 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:15:15 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:15:15 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:15:15 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:15:15 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:15:15 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:15:18 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:15:18 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:15:18 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:15:18 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:15:18 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:15:18 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:15:18 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:18:33 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:18:33 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:18:33 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:18:33 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:18:33 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:18:33 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:18:33 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:20:23 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:20:23 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:20:23 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:20:23 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:20:23 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:20:23 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:20:23 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:22:22 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:22:22 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:22:22 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:22:22 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:22:22 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:22:22 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:22:22 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:22:28 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:22:28 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:22:28 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:22:28 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:22:28 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:22:28 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:22:28 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:22:31 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:22:31 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:22:31 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:22:31 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:22:31 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:22:31 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:22:31 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:28:29 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:28:29 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:28:29 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:28:29 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:28:29 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:28:29 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:28:29 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:28:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:18 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:29:18 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:29:18 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:29:18 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:29:18 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:29:18 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:29:18 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:19 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:29:30 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:29:30 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:29:30 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:29:30 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:29:30 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:29:30 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 227
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:29:30 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 229
+ERROR - 2025-09-15 23:30:18 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:30:18 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:30:18 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:30:18 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:30:18 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:30:18 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:30:18 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Undefined array key "variation" C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:30:18 --> Severity: Warning --> Trying to access array offset on null C:\Users\Admin\Desktop\CRM Mocha\crm_mochavietnam\modules\pancake_sync\views\products.php 228
+ERROR - 2025-09-15 23:32:08 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:32:08 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:32:08 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:32:08 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:32:08 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:32:08 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:32:08 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:40:21 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:40:21 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:40:21 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:40:21 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:40:21 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:40:21 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:40:21 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:43:05 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:43:05 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:43:05 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:43:05 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:43:05 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:43:05 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:43:05 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:43:07 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:43:07 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:43:07 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:43:07 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:43:07 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:43:07 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:43:07 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:43:08 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:43:08 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:43:08 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:43:08 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:43:08 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:43:08 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:43:08 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:44:15 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:47:22 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:47:22 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:47:22 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:47:22 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:47:22 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:47:22 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:47:22 --> Could not find the language line "Khách hàng"
+ERROR - 2025-09-15 23:47:23 --> Could not find the language line "date_subscribed"
+ERROR - 2025-09-15 23:47:23 --> Could not find the language line "merged"
+ERROR - 2025-09-15 23:47:23 --> Could not find the language line "POS Pancake"
+ERROR - 2025-09-15 23:47:23 --> Could not find the language line "Tổng quan đơn hàng"
+ERROR - 2025-09-15 23:47:23 --> Could not find the language line "Đơn hàng"
+ERROR - 2025-09-15 23:47:23 --> Could not find the language line "Sản phẩm"
+ERROR - 2025-09-15 23:47:23 --> Could not find the language line "Khách hàng"

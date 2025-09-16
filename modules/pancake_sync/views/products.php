@@ -21,7 +21,8 @@
         justify-content: space-between;
         align-items: center;
         gap: 15px;
-        flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+        flex-wrap: wrap;
+        /* Cho phép xuống dòng trên màn hình nhỏ */
     }
 
     .card-modern-header .no-margin {
@@ -48,15 +49,18 @@
         left: 12px;
         transform: translateY(-50%);
         color: #9e9e9e;
-        pointer-events: none; /* Kích vào icon vẫn focus vào input */
+        pointer-events: none;
+        /* Kích vào icon vẫn focus vào input */
     }
 
     .search-wrapper .form-control {
-        padding-left: 35px; /* Tạo khoảng trống cho icon */
+        padding-left: 35px;
+        /* Tạo khoảng trống cho icon */
         width: 280px;
         height: 36px;
         border-radius: 6px;
     }
+
     /* ------------------------------------------------ */
 
     .table-container {
@@ -77,8 +81,9 @@
         border-collapse: separate;
         border-spacing: 0;
     }
-    
-    .table-pancake th, .table-pancake td {
+
+    .table-pancake th,
+    .table-pancake td {
         vertical-align: middle !important;
         padding: 12px 15px !important;
     }
@@ -88,16 +93,54 @@
     }
 
     /* Các CSS khác giữ nguyên */
-    .product-image { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; border: 1px solid #eee; }
-    .image-placeholder { display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; color: #ccc; background-color: #f9f9f9; border-radius: 6px; }
-    .tag-label { margin: 0 5px 5px 0; display: inline-block; font-weight: 500; border-radius: 12px; padding: 4px 10px; font-size: 0.8rem; }
-    
+    .product-image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #eee;
+    }
+
+    .image-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        color: #ccc;
+        background-color: #f9f9f9;
+        border-radius: 6px;
+    }
+
+    .tag-label {
+        margin: 0 5px 5px 0;
+        display: inline-block;
+        font-weight: 500;
+        border-radius: 12px;
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
+
     /* CSS cho thanh cuộn nổi */
-    .os-theme-dark.os-scrollbar-horizontal { height: 14px; }
-    .os-theme-dark.os-scrollbar-horizontal .os-scrollbar-handle { min-height: 10px; }
-    .os-theme-dark.os-scrollbar-vertical { width: 15px; }
-    .os-theme-dark.os-scrollbar-vertical .os-scrollbar-handle { background-color: #888; }
-    .os-theme-dark.os-scrollbar-vertical .os-scrollbar-handle:hover { background-color: #555; }
+    .os-theme-dark.os-scrollbar-horizontal {
+        height: 14px;
+    }
+
+    .os-theme-dark.os-scrollbar-horizontal .os-scrollbar-handle {
+        min-height: 10px;
+    }
+
+    .os-theme-dark.os-scrollbar-vertical {
+        width: 15px;
+    }
+
+    .os-theme-dark.os-scrollbar-vertical .os-scrollbar-handle {
+        background-color: #888;
+    }
+
+    .os-theme-dark.os-scrollbar-vertical .os-scrollbar-handle:hover {
+        background-color: #555;
+    }
 </style>
 
 <div id="wrapper">
@@ -110,21 +153,22 @@
                             <h4 class="no-margin">
                                 <i class="fa fa-cubes" aria-hidden="true"></i> Danh sách sản phẩm Pancake
                             </h4>
-                            
+
                             <div class="header-actions">
                                 <div class="search-wrapper">
                                     <span class="search-icon"><i class="fa fa-search"></i></span>
                                     <input type="text" id="productSearchInput" class="form-control" placeholder="Tìm trên trang hiện tại...">
                                 </div>
-                                <a href="<?php echo admin_url('pancake_sync/pancake_sync_products/sync'); ?>" class="btn btn-success"><i class="fa fa-refresh"></i> Đồng bộ về Database</a>
+                                <a href="<?php echo admin_url('pancake_sync_products/sync'); ?>" class="btn btn-success"><i class="fa fa-refresh"></i> Đồng bộ về Database</a>
                             </div>  
                         </div>
                         <hr class="hr-panel-heading">
-                        
+
                         <div id="scrollableTable" class="table-container">
                             <table class="table table-pancake table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th class="text-center" style="width: 50px;">STT</th>
                                         <th class="text-center" style="width: 120px;">Mã sản phẩm (SKU)</th>
                                         <th class="text-left" style="min-width: 250px;">Tên sản phẩm</th>
                                         <th style="width: 80px;" class="text-center">Hình ảnh</th>
@@ -135,25 +179,24 @@
                                         <th class="text-right" style="width: 150px;">Giá sau giảm</th>
                                         <th class="text-right" style="width: 160px;">Tổng tiền còn lại</th>
                                         <th class="text-right" style="width: 120px;">Có thể bán</th>
+                                        <th class="text-center" style="width: 100px;">Ẩn/Hiện</th> <!-- Thêm mới -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php if (!empty($products)): ?>
-                                        <?php foreach ($products as $product): ?>
+                                        <?php $i = 1;
+                                        foreach ($products as $product): ?>
                                             <tr>
+                                                <td class="text-center"><?php echo $i++; ?></td>
                                                 <td class="text-center">
                                                     <span class="label label-default"><?php echo $product['barcode'] ?: 'N/A'; ?></span>
                                                 </td>
-                                                <td>
-                                                    <strong><?php echo htmlspecialchars($product['product']['name']); ?></strong>
-                                                </td>
+                                                <td><strong><?php echo htmlspecialchars($product['product']['name']); ?></strong></td>
                                                 <td class="text-center">
                                                     <?php if (!empty($product['images'])): ?>
-                                                        <img src="<?php echo $product['images'][0]; ?>" alt="<?php echo htmlspecialchars($product['product']['name']); ?>" class="product-image">
+                                                        <img src="<?php echo $product['images'][0]; ?>" class="product-image">
                                                     <?php else: ?>
-                                                        <span class="image-placeholder">
-                                                            <svg viewBox="64 64 896 896" focusable="false" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M928 160H96c-17.7 0-32 14.3-32 32v640c0 17.7 14.3 32 32 32h832c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32zm-40 632H136v-39.9l138.5-164.3 150.1 178L658.1 489 888 761.6V792zm0-129.8L664.2 396.8c-3.2-3.8-9-3.8-12.2 0L424.6 666.4l-144-170.7c-3.2-3.8-9-3.8-12.2 0L136 652.7V232h752v430.2zM304 456a88 88 0 100-176 88 88 0 000 176zm0-116c15.5 0 28 12.5 28 28s-12.5 28-28 28-28-12.5-28-28 12.5-28 28-28z"></path></svg>
-                                                        </span>
+                                                        <span class="image-placeholder">N/A</span>
                                                     <?php endif; ?>
                                                 </td>
                                                 <td>
@@ -175,10 +218,18 @@
                                                 <td class="text-right"><strong class="text-success"><?php echo number_format($product['retail_price_after_discount']); ?></strong></td>
                                                 <td class="text-right"><strong class="text-danger"><?php echo number_format($product['total_purchase_price']); ?></strong></td>
                                                 <td class="text-right"><strong class="text-primary"><?php echo number_format($product['remain_quantity']); ?></strong></td>
+
+                                                <!-- Cột bật/tắt is_hidden -->
+                                                <td class="text-center">
+                                                    <button
+                                                        class="btn btn-sm toggle-hidden <?php echo isset($product['is_locked']) && $product['is_locked'] ? 'btn-danger' : 'btn-success'; ?>"
+                                                        data-id="<?php echo $product['id']; ?>"
+                                                        data-status="<?php echo isset($product['is_locked']) && $product['is_locked'] ? 'false' : 'true'; ?>">
+                                                        <?php echo isset($product['is_locked']) && $product['is_locked'] ? '<i class="fa fa-eye-slash"></i>' : '<i class="fa fa-eye"></i>'; ?>
+                                                    </button>
+                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <tr><td colspan="10" class="text-center"><h4>Không tìm thấy sản phẩm nào.</h4></td></tr>
                                     <?php endif; ?>
                                 </tbody>
                             </table>
@@ -201,9 +252,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // ----- KHỞI TẠO THANH CUỘN NỔI -----
-        const { OverlayScrollbars } = OverlayScrollbarsGlobal;
+        const {
+            OverlayScrollbars
+        } = OverlayScrollbarsGlobal;
         const scrollableElement = document.getElementById('scrollableTable');
-        
+
         if (scrollableElement) {
             OverlayScrollbars(scrollableElement, {
                 scrollbars: {
@@ -251,4 +304,5 @@
 </script>
 
 </body>
+
 </html>
