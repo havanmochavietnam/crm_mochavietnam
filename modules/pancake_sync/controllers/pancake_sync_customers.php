@@ -14,7 +14,12 @@ class Pancake_sync_customers extends AdminController
     public function __construct()
     {
         parent::__construct();
+        // Load model
+        $this->load->model('pancake_sync/pancake_customers_model', 'pancake_customers');
+        //Load library
         $this->load->library('pagination');
+        //Load Helper
+        $this->load->helper('pancake');
 
         $this->apiUrl = get_option(self::PANCAKE_URL_OPTION) ?: "https://pos.pages.fm/api/v1";
         $this->shopId = get_option(self::PANCAKE_SHOP_ID_OPTION) ?: "1720001063";
@@ -97,6 +102,33 @@ class Pancake_sync_customers extends AdminController
         ];
     }
 
+    public function sync()
+    {
+        $all_customers = [];
+        $page = 1;
+        $pageSize = 100;
+
+        do {
+            $response = $this->getCustomersFromApi(['page_number' => $page, 'page_size' => $pageSize]);
+            $customers_on_page = $response['data'] ?? [];
+            if (!empty($customers_on_page)) {
+                $all_customers = array_merge($customers_on_page, $customers_on_page);
+            }
+            $page++;
+        } while (count($customers_on_page) === $pageSize);
+
+        if (!empty($all_customers)) {
+            // gọi model qua alias
+            $synced_count = $this->pancake_customers->sync_products($all_customers);
+            set_alert('success', 'Đồng bộ ' . $synced_count . ' sản phẩm về database thành công!');
+        } else {
+            set_alert('info', 'Không tìm thấy khách hàng nào từ Pancake để đồng bộ.');
+        }
+
+        redirect(admin_url('pancake_sync/pancake_sync_customers'));
+    }
+
+
     // Các hàm getUniqueCustomers và setupPagination giữ nguyên, không cần thay đổi
     private function getUniqueCustomers(array $customers): array
     {
@@ -111,17 +143,53 @@ class Pancake_sync_customers extends AdminController
         return $unique_customers;
     }
 
+    /**
+     * Configures and initializes the CodeIgniter Pagination library.
+     * Generates Bootstrap-compatible HTML markup.
+     * @param int $totalRows Total number of items
+     * @param int $pageSize  Number of items per page
+     * @return string The generated HTML links for pagination
+     */
     private function setupPagination(int $totalRows, int $pageSize): string
     {
         $config = [
             'base_url'             => admin_url('pancake_sync/pancake_sync_customers'),
             'total_rows'           => $totalRows,
             'per_page'             => $pageSize,
-            'page_query_string'    => true,
+            'page_query_string'    => true,      // Use ?page_number=...
             'query_string_segment' => 'page_number',
-            'use_page_numbers'     => true,
-            'reuse_query_string'   => true,
+            'use_page_numbers'     => true,      // Use actual page numbers (1, 2, 3...)
+            'reuse_query_string'   => true,      // IMPORTANT: Keeps other query params (like search) when changing pages
+
+            // --- HTML Customization for Bootstrap ---
+            'full_tag_open'        => '<nav aria-label="Page navigation"><ul class="pagination">',
+            'full_tag_close'       => '</ul></nav>',
+
+            'first_link'           => '&laquo;', // First
+            'first_tag_open'       => '<li class="page-item">',
+            'first_tag_close'      => '</li>',
+
+            'last_link'            => '&raquo;', // Last
+            'last_tag_open'        => '<li class="page-item">',
+            'last_tag_close'       => '</li>',
+
+            'next_link'            => '&gt;',   // Next
+            'next_tag_open'        => '<li class="page-item">',
+            'next_tag_close'       => '</li>',
+
+            'prev_link'            => '&lt;',   // Previous
+            'prev_tag_open'        => '<li class="page-item">',
+            'prev_tag_close'       => '</li>',
+
+            'cur_tag_open'         => '<li class="page-item active" aria-current="page"><span class="page-link">',
+            'cur_tag_close'        => '</span></li>',
+
+            'num_tag_open'         => '<li class="page-item">',
+            'num_tag_close'        => '</li>',
+
+            'attributes'           => ['class' => 'page-link'], // Add class to all <a> tags
         ];
+
         $this->pagination->initialize($config);
         return $this->pagination->create_links();
     }

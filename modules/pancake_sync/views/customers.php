@@ -86,62 +86,130 @@ if (!function_exists('get_pancake_mobile_network')) {
         margin: 2px;
         display: inline-block;
     }
+    
+    /* Header styling */
+    .card-modern-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+    
+    .header-title {
+        flex: 1;
+        min-width: 250px;
+    }
+    
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .search-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    .search-icon {
+        position: absolute;
+        left: 10px;
+        color: #6c757d;
+        z-index: 3;
+    }
+    
+    .search-input {
+        padding-left: 35px;
+        padding-right: 100px;
+        width: 300px;
+        border-radius: 4px;
+        height: 38px;
+    }
+    
+    .search-button {
+        position: absolute;
+        right: 5px;
+        background: #f4f4f4;
+        border: none;
+        height: 28px;
+        border-radius: 3px;
+        padding: 0 10px;
+        color: #333;
+        z-index: 2;
+    }
+    
+    .sync-button {
+        background: #26B99A;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        height: 38px;
+    }
+    
+    .sync-button:hover {
+        background: #1e9e87;
+        color: white;
+    }
+    
+    @media (max-width: 768px) {
+        .card-modern-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 15px;
+        }
+        
+        .header-actions {
+            flex-direction: column;
+        }
+        
+        .search-wrapper {
+            width: 100%;
+        }
+        
+        .search-input {
+            width: 100%;
+        }
+    }
 </style>
 
 <div id="wrapper">
-
     <div class="content">
-
         <div class="row">
-
             <div class="col-md-12">
-
                 <div class="card-modern">
                     <div class="card-modern-body">
                         <div class="card-modern-header">
-
-                            <h4 class="no-margin">
-
-                                <i class="fa fa-users" aria-hidden="true"></i> <?php echo $title; ?>
-
-                                <small>(Tổng: <?php echo $total; ?>)</small>
-
-                            </h4>
-
+                            <div class="header-title">
+                                <h4 class="no-margin">
+                                    <i class="fa fa-users" aria-hidden="true"></i> <?php echo $title; ?>
+                                    <small>(Tổng: <?php echo $total; ?>)</small>
+                                </h4>
+                            </div>
                             <div class="header-actions">
-
                                 <form action="<?= admin_url('pancake_sync/pancake_sync_customers'); ?>" method="get" class="search-wrapper">
-
                                     <span class="search-icon"><i class="fa fa-search"></i></span>
-
-
-
-                                    <input type="text" name="search_ids" class="form-control"
-
+                                    <input type="text" name="search_ids" class="form-control search-input"
                                         placeholder="Nhập Customer ID, cách nhau bởi dấu phẩy..."
                                         value="<?= html_escape($search_ids); ?>">
-
-
-
-                                    <button type="submit" class="hide"></button>
-
+                                    <button type="submit" class="search-button">Tìm kiếm</button>
                                 </form>
-
+                                <a href="<?= admin_url('pancake_sync/pancake_sync_customers/sync'); ?>" class="sync-button">
+                                    <i class="fa fa-refresh" aria-hidden="true"></i> Đồng bộ DB
+                                </a>
                             </div>
-
                         </div>
-
-
+                        
                         <hr class="hr-panel-heading">
-
-
-
+                        
                         <?php if (!empty($error_message)) : ?>
-
                             <div class="alert alert-danger">
-
                                 <?php echo html_escape($error_message); ?>
-
                             </div>
                         <?php endif; ?>
 
@@ -166,7 +234,7 @@ if (!function_exists('get_pancake_mobile_network')) {
                                         <th>Lần mua cuối</th>
                                         <th>Thẻ</th>
                                         <th>Emails</th>
-                                        <th>Ngày tạo</th>
+                                        <th>Thời gian phát sinh đơn hàng đầu tiên</th>
                                         <th>FB ID</th>
                                         <th>Ghi chú cuối</th>
                                     </tr>
@@ -269,5 +337,4 @@ if (!function_exists('get_pancake_mobile_network')) {
     });
 </script>
 </body>
-
 </html>
