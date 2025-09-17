@@ -7,72 +7,97 @@ class Pancake_sync_products extends AdminController
     private $shopId;
     private $apiKey;
 
+    private const PANCAKE_URL_OPTION = 'pancake_url';
+    private const PANCAKE_SHOP_ID_OPTION = 'pancake_shop_id';
+    private const PANCAKE_API_KEY_OPTION = 'api_key';
+
     public function __construct()
     {
         parent::__construct();
         // Load model
         $this->load->model('pancake_sync/pancake_products_model', 'pancake_products');
+        //Load library
+        $this->load->library('pagination');
 
-        // Config API
-        $this->apiUrl = get_option('pancake_url') ?: "https://pos.pages.fm/api/v1";
-        $this->shopId = get_option('pancake_shop_id') ?: "1720001063";
-        $this->apiKey = get_option('api_key') ?: "fde1951a7d0e4c3b976aedb1776e731e";
+        $this->apiUrl = get_option(self::PANCAKE_URL_OPTION) ?: "https://pos.pages.fm/api/v1";
+        $this->shopId = get_option(self::PANCAKE_SHOP_ID_OPTION) ?: "1720001063";
+        $this->apiKey = get_option(self::PANCAKE_API_KEY_OPTION) ?: "fde1951a7d0e4c3b976aedb1776e731e";
     }
 
     public function index()
     {
-        $page     = (int)($this->input->get('page_number') ?: 1);
-        $pageSize = (int)($this->input->get('page_size') ?: 30);
-
-        $params = [
-            'page_number' => $page,
-            'page_size'   => $pageSize,
+        // ĐƠN GIẢN HÓA: Chỉ lấy các tham số cần thiết
+        $filters = [
+            'page_number' => (int)($this->input->get('page_number') ?: 1),
+            'page_size'   => (int)($this->input->get('page_size') ?: 30),
+            'search_ids'  => trim($this->input->get('search_ids', true) ?? ''), // Đổi tên cho rõ nghĩa
         ];
 
-        $response = $this->getProductsFromApi($params);
-        $all_products_from_api = $response['data'] ?? [];
+        $response = $this->getProductsFromApi($filters);
 
-        // Lọc trùng theo product_id
-        $unique_products   = [];
-        $processed_ids     = [];
-        foreach ($all_products_from_api as $variation) {
-            if (isset($variation['product_id'])) {
-                $pid = $variation['product_id'];
-                if (!isset($processed_ids[$pid])) {
-                    $unique_products[] = $variation;
-                    $processed_ids[$pid] = true;
-                }
-            }
-        }
+        $data = [
+            'products'     => [],
+            'total'         => 0,
+            'pagination'    => '',
+            'error_message' => '',
+            'title'         => 'Tìm kiếm khách hàng Pancake theo ID',
+        ];
+        $data = array_merge($data, $filters);
 
-        $data['products'] = $unique_products;
-        $data['total']    = $response['total'] ?? 0;
-
-        // Phân trang
-        if ($data['total'] > 0 && $pageSize > 0 && ceil($data['total'] / $pageSize) > 1) {
-            $this->load->library('pagination');
-            $config['base_url']             = admin_url('pancake_sync_products');
-            $config['total_rows']           = $data['total'];
-            $config['per_page']             = $pageSize;
-            $config['page_query_string']    = TRUE;
-            $config['query_string_segment'] = 'page_number';
-            $config['reuse_query_string']   = TRUE;
-            $config['use_page_numbers']     = TRUE;
-
-            $queryParams = $this->input->get();
-            unset($queryParams['page_number']);
-            if (!empty($queryParams)) {
-                $config['suffix']    = '&' . http_build_query($queryParams);
-                $config['first_url'] = $config['base_url'] . '?' . http_build_query($queryParams);
-            }
-            $this->pagination->initialize($config);
-            $data['pagination'] = $this->pagination->create_links();
+        if (!$response['success']) {
+            $data['error_message'] = "Lỗi API: " . $response['message'];
         } else {
-            $data['pagination'] = '';
+            $data['products'] = $this->getUniqueProducts($response['data'] ?? []);
+            $data['total']     = $response['total'];
+
+            if ($data['total'] > 0 && $filters['page_size'] > 0) {
+                $data['pagination'] = $this->setupPagination($data['total'], $filters['page_size']);
+            }
         }
 
-        $data['title'] = 'Danh sách sản phẩm từ Pancake API';
         $this->load->view('pancake_sync/products', $data);
+    }
+
+    private function getProductsFromApi(array $filters = []): array
+    {
+        if (empty($this->apiKey) || empty($this->shopId)) {
+            return ['success' => false, 'message' => "Chưa cấu hình API Key hoặc Shop ID.", 'data' => [], 'total' => 0];
+        }
+
+        $queryParams = [
+            'api_key'     => $this->apiKey,
+            'page_number' => $filters['page_number'] ?? 1,
+            'page_size'   => $filters['page_size'] ?? 30,
+        ];
+
+        // ĐƠN GIẢN HÓA: Chỉ xử lý tìm kiếm theo 'customer_ids'
+        if (!empty($filters['search_ids'])) {
+            $queryParams['search'] = $filters['search_ids'];
+        }
+
+        $url = "{$this->apiUrl}/shops/{$this->shopId}/products/variations?" . http_build_query($queryParams);
+
+        // Phần cURL giữ nguyên...
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true, CURLOPT_HTTPHEADER => ["Accept: application/json"],
+            CURLOPT_TIMEOUT => 30, CURLOPT_CONNECTTIMEOUT => 10
+        ]);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        
+        if ($response === false || $httpCode !== 200) {
+            return ['success' => false, 'message' => "Lỗi API, mã HTTP: {$httpCode}", 'data' => [], 'total' => 0];
+        }
+
+        $jsonData = json_decode($response, true);
+        return [
+            'success' => $jsonData['success'] ?? false,
+            'message' => $jsonData['message'] ?? 'Thành công',
+            'data'    => $jsonData['data'] ?? [],
+            'total'   => (int)($jsonData['total_entries'] ?? 0)
+        ];
     }
 
     public function sync()
@@ -85,7 +110,7 @@ class Pancake_sync_products extends AdminController
             $response = $this->getProductsFromApi(['page_number' => $page, 'page_size' => $pageSize]);
             $products_on_page = $response['data'] ?? [];
             if (!empty($products_on_page)) {
-                $all_products = array_merge($all_products, $products_on_page);
+                $all_products = array_merge($products_on_page, $products_on_page);
             }
             $page++;
         } while (count($products_on_page) === $pageSize);
@@ -101,38 +126,69 @@ class Pancake_sync_products extends AdminController
         redirect(admin_url('pancake_sync/pancake_sync_products'));
     }
 
-    private function getProductsFromApi(array $params = []): array
+
+    // Các hàm getUniqueCustomers và setupPagination giữ nguyên, không cần thay đổi
+    private function getUniqueProducts(array $products): array
     {
-        $queryParams = [
-            'api_key'     => $this->apiKey,
-            'page_number' => $params['page_number'] ?? 1,
-            'page_size'   => $params['page_size'] ?? 30
+        $unique_products = [];
+        $processed_ids    = [];
+        foreach ($products as $product) {
+            if (isset($product['barcode']) && !isset($processed_ids[$product['barcode']])) {
+                $unique_products[] = $product;
+                $processed_ids[$product['barcode']] = true;
+            }
+        }
+        return $unique_products;
+    }
+
+    /**
+     * Configures and initializes the CodeIgniter Pagination library.
+     * Generates Bootstrap-compatible HTML markup.
+     * @param int $totalRows Total number of items
+     * @param int $pageSize  Number of items per page
+     * @return string The generated HTML links for pagination
+     */
+    private function setupPagination(int $totalRows, int $pageSize): string
+    {
+        $config = [
+            'base_url'             => admin_url('pancake_sync/pancake_sync_customers'),
+            'total_rows'           => $totalRows,
+            'per_page'             => $pageSize,
+            'page_query_string'    => true,      // Use ?page_number=...
+            'query_string_segment' => 'page_number',
+            'use_page_numbers'     => true,      // Use actual page numbers (1, 2, 3...)
+            'reuse_query_string'   => true,      // IMPORTANT: Keeps other query params (like search) when changing pages
+
+            // --- HTML Customization for Bootstrap ---
+            'full_tag_open'        => '<nav aria-label="Page navigation"><ul class="pagination">',
+            'full_tag_close'       => '</ul></nav>',
+
+            'first_link'           => '&laquo;', // First
+            'first_tag_open'       => '<li class="page-item">',
+            'first_tag_close'      => '</li>',
+
+            'last_link'            => '&raquo;', // Last
+            'last_tag_open'        => '<li class="page-item">',
+            'last_tag_close'       => '</li>',
+
+            'next_link'            => '&gt;',   // Next
+            'next_tag_open'        => '<li class="page-item">',
+            'next_tag_close'       => '</li>',
+
+            'prev_link'            => '&lt;',   // Previous
+            'prev_tag_open'        => '<li class="page-item">',
+            'prev_tag_close'       => '</li>',
+
+            'cur_tag_open'         => '<li class="page-item active" aria-current="page"><span class="page-link">',
+            'cur_tag_close'        => '</span></li>',
+
+            'num_tag_open'         => '<li class="page-item">',
+            'num_tag_close'        => '</li>',
+
+            'attributes'           => ['class' => 'page-link'], // Add class to all <a> tags
         ];
 
-        $url = $this->apiUrl . "/shops/{$this->shopId}/products/variations?" . http_build_query($queryParams);
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Accept: application/json"]);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        $response = curl_exec($ch);
-        $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($status !== 200) {
-            return ['success' => false, 'message' => "API Error: HTTP {$status}", 'data' => [], 'total' => 0];
-        }
-
-        $jsonData = json_decode($response, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return ['success' => false, 'message' => "JSON parse error", 'data' => [], 'total' => 0];
-        }
-
-        return [
-            'success' => $jsonData['success'] ?? false,
-            'message' => $jsonData['message'] ?? 'OK',
-            'data'    => $jsonData['data'] ?? [],
-            'total'   => (int)($jsonData['total_entries'] ?? 0)
-        ];
+        $this->pagination->initialize($config);
+        return $this->pagination->create_links();
     }
 }

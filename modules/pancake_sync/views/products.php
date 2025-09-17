@@ -8,68 +8,26 @@
         background-color: #fff;
         border-radius: 8px;
         border: 1px solid #dfe1e6;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
     }
 
     .card-modern-body {
         padding: 20px 25px;
     }
 
-    .card-modern-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 15px;
-        flex-wrap: wrap;
-        /* Cho phép xuống dòng trên màn hình nhỏ */
-    }
-
-    .card-modern-header .no-margin {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #333;
-    }
-
-    /* ----- CSS CHO KHU VỰC TÌM KIẾM VÀ NÚT BẤM ----- */
-    .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        flex-wrap: wrap;
-    }
-
-    .search-wrapper {
-        position: relative;
-    }
-
-    .search-wrapper .search-icon {
-        position: absolute;
-        top: 50%;
-        left: 12px;
-        transform: translateY(-50%);
-        color: #9e9e9e;
-        pointer-events: none;
-        /* Kích vào icon vẫn focus vào input */
-    }
-
-    .search-wrapper .form-control {
-        padding-left: 35px;
-        /* Tạo khoảng trống cho icon */
-        width: 280px;
-        height: 36px;
-        border-radius: 6px;
-    }
-
-    /* ------------------------------------------------ */
-
     .table-container {
         max-height: 75vh;
         overflow: auto;
     }
 
+    .table-pancake th,
+    .table-pancake td {
+        vertical-align: middle !important;
+        padding: 12px 15px !important;
+        white-space: nowrap;
+    }
+
     .table-container thead th {
-        position: -webkit-sticky;
         position: sticky;
         top: 0;
         background-color: #f8f9fa;
@@ -77,19 +35,99 @@
         box-shadow: inset 0 -2px 0 #dee2e6;
     }
 
-    .table-pancake {
-        border-collapse: separate;
-        border-spacing: 0;
+    .label-tag {
+        margin: 2px;
+        display: inline-block;
     }
 
-    .table-pancake th,
-    .table-pancake td {
-        vertical-align: middle !important;
-        padding: 12px 15px !important;
+    /* Header styling */
+    .card-modern-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
     }
 
-    .table-pancake tbody tr:hover {
-        background-color: #f5f5f5;
+    .header-title {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .search-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 10px;
+        color: #6c757d;
+        z-index: 3;
+    }
+
+    .search-input {
+        padding-left: 35px;
+        padding-right: 100px;
+        width: 300px;
+        border-radius: 4px;
+        height: 38px;
+    }
+
+    .search-button {
+        position: absolute;
+        right: 5px;
+        background: #f4f4f4;
+        border: none;
+        height: 28px;
+        border-radius: 3px;
+        padding: 0 10px;
+        color: #333;
+        z-index: 2;
+    }
+
+    .sync-button {
+        background: #26B99A;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        height: 38px;
+    }
+
+    .sync-button:hover {
+        background: #1e9e87;
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .card-modern-header {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 15px;
+        }
+
+        .header-actions {
+            flex-direction: column;
+        }
+
+        .search-wrapper {
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+        }
     }
 
     /* Các CSS khác giữ nguyên */
@@ -111,115 +149,6 @@
         background-color: #f9f9f9;
         border-radius: 6px;
     }
-
-    .tag-label {
-        margin: 0 5px 5px 0;
-        display: inline-block;
-        font-weight: 500;
-        border-radius: 12px;
-        padding: 4px 10px;
-        font-size: 0.8rem;
-    }
-
-    /* CSS cho thanh cuộn nổi */
-    .os-theme-dark.os-scrollbar-horizontal {
-        height: 14px;
-    }
-
-    .os-theme-dark.os-scrollbar-horizontal .os-scrollbar-handle {
-        min-height: 10px;
-    }
-
-    .os-theme-dark.os-scrollbar-vertical {
-        width: 15px;
-    }
-
-    .os-theme-dark.os-scrollbar-vertical .os-scrollbar-handle {
-        background-color: #888;
-    }
-
-    .os-theme-dark.os-scrollbar-vertical .os-scrollbar-handle:hover {
-        background-color: #555;
-    }
-
-    /* --- START: REFINED PAGINATION CSS --- */
-    .pagination-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem 0;
-    }
-
-    /* The .pagination class is often on the direct container generated by the library */
-    .pagination-container .pagination {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        /* 8px */
-        padding: 0;
-        margin: 0;
-    }
-
-    /* Common styles for ALL pagination elements (links and current page) */
-    .pagination-container .pagination a,
-    .pagination-container .pagination strong {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        min-width: 40px;
-        height: 40px;
-        padding: 0 0.5rem;
-        border: 1px solid #d1d5db;
-        /* gray-300 */
-        border-radius: 0.5rem;
-        /* 8px */
-        background-color: #ffffff;
-        color: #374151;
-        /* gray-700 */
-        font-weight: 500;
-        font-size: 0.9rem;
-        transition: all 0.2s ease-in-out;
-        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    }
-
-    /* Hover effect ONLY for clickable links (<a> tags) */
-    .pagination-container .pagination a:hover {
-        border-color: #3b82f6;
-        /* blue-500 */
-        background-color: #eff6ff;
-        /* blue-50 */
-        color: #1d4ed8;
-        /* blue-700 */
-        transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgb(59 130 246 / 0.2);
-    }
-
-    /* Style for the active/current page number (the <strong> tag) */
-    .pagination-container .pagination strong {
-        cursor: default;
-        border-color: #2563eb;
-        /* blue-600 */
-        background-color: #2563eb;
-        color: #ffffff;
-        box-shadow: 0 4px 12px rgb(37 99 235 / 0.3);
-        transform: translateY(-1px);
-    }
-
-    /* Style for icons inside the links */
-    .pagination-container .pagination svg {
-        width: 1rem;
-        /* 16px */
-        height: 1rem;
-        /* 16px */
-    }
-
-    /* Reset Perfex/Bootstrap default float and margin on li if they exist */
-    .pagination>li {
-        display: inline-block !important;
-    }
-
-    /* --- END: REFINED PAGINATION CSS --- */
 </style>
 
 <div id="wrapper">
@@ -234,11 +163,16 @@
                             </h4>
 
                             <div class="header-actions">
-                                <div class="search-wrapper">
+                                <form action="<?= admin_url('pancake_sync/pancake_sync_products'); ?>" method="get" class="search-wrapper">
                                     <span class="search-icon"><i class="fa fa-search"></i></span>
-                                    <input type="text" id="productSearchInput" class="form-control" placeholder="Tìm trên trang hiện tại...">
-                                </div>
-                                <a href="<?php echo admin_url('pancake_sync/pancake_sync_products/sync'); ?>" class="btn btn-success"><i class="fa fa-refresh"></i> Đồng bộ về Database</a>
+                                    <input type="text" name="search_ids" class="form-control search-input"
+                                        placeholder="Mã / Tên sản phẩm / Barcode / Keyword"
+                                        value="<?= html_escape($search_ids); ?>">
+                                    <button type="submit" class="search-button">Tìm kiếm</button>
+                                </form>
+                                <a href="<?= admin_url('pancake_sync/pancake_sync_products/sync'); ?>" class="sync-button">
+                                    <i class="fa fa-refresh" aria-hidden="true"></i> Đồng bộ Sản Phẩm
+                                </a>
                             </div>
                         </div>
                         <hr class="hr-panel-heading">
@@ -263,12 +197,28 @@
                                 </thead>
                                 <tbody>
                                     <?php if (!empty($products)): ?>
-                                        <?php $i = 1;
-                                        foreach ($products as $product): ?>
+                                        <?php
+                                        $i = 1;
+                                        // 1. Khởi tạo mảng để theo dõi các display_id đã xử lý
+                                        $processed_display_ids = [];
+                                        ?>
+                                        <?php foreach ($products as $product): ?>
+                                            <?php
+                                            // 2. Lấy display_id của sản phẩm hiện tại
+                                            $display_id = $product['product']['display_id'] ?? null;
+
+                                            // 3. KIỂM TRA TRÙNG LẶP: Nếu ID này đã tồn tại trong mảng, bỏ qua lần lặp này
+                                            if (isset($processed_display_ids[$display_id])) {
+                                                continue;
+                                            }
+
+                                            // 4. ĐÁNH DẤU: Nếu ID chưa có, đánh dấu là đã xử lý để lần sau bỏ qua
+                                            $processed_display_ids[$display_id] = true;
+                                            ?>
                                             <tr>
                                                 <td class="text-center"><?php echo $i++; ?></td>
                                                 <td class="text-center">
-                                                    <span class="label label-default"><?php echo $product['barcode'] ?: 'N/A'; ?></span>
+                                                    <span class="label label-default"><?php echo $display_id ?: ''; ?></span>
                                                 </td>
                                                 <td><strong><?php echo htmlspecialchars($product['product']['name']); ?></strong></td>
                                                 <td class="text-center">
@@ -298,7 +248,6 @@
                                                 <td class="text-right"><strong class="text-danger"><?php echo number_format($product['total_purchase_price']); ?></strong></td>
                                                 <td class="text-right"><strong class="text-primary"><?php echo number_format($product['remain_quantity']); ?></strong></td>
 
-                                                <!-- Cột bật/tắt is_hidden -->
                                                 <td class="text-center">
                                                     <button
                                                         class="btn btn-sm toggle-hidden <?php echo isset($product['is_locked']) && $product['is_locked'] ? 'btn-danger' : 'btn-success'; ?>"

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class pancake_products_model extends CI_Model
+class Pancake_products_model extends CI_Model
 {
     private $table = 'pancake_products';
 
@@ -127,7 +127,7 @@ class pancake_products_model extends CI_Model
                 'retail_price_after_discount' => $p['retail_price_after_discount'] ?? null,
                 'total_purchase_price' => $p['total_purchase_price'] ?? null,
                 'remain_quantity' => $p['remain_quantity'] ?? null,
-                'is_locked' => isset($p['product']['is_locked']) ? (int)$p['product']['is_locked'] : 0,
+                'is_locked' => isset($p['is_locked']) ? (int)$p['is_locked'] : 0,
                 'updated_at' => date('Y-m-d H:i:s'),
             ];
 
