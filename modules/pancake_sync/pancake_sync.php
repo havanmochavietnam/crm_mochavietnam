@@ -59,7 +59,7 @@ hooks()->add_action('admin_init', function () {
         $CI->app_menu->add_sidebar_children_item('pancake-sync-parent', [
             'slug'     => 'pancake-sync-dashboard',
             'name'     => _l('Tổng quan đơn hàng'),
-            'href'     => admin_url('pancake_dashboard'), // <-- THAY ĐỔI
+            'href'     => admin_url('pancake_sync/pancake_dashboard'), // <-- THAY ĐỔI
             'position' => 5,
         ]);
 
