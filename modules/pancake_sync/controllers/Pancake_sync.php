@@ -10,50 +10,36 @@ class Pancake_sync extends AdminController
     public function __construct()
     {
         parent::__construct();
+        // Tải model mới để làm việc với database
+        $this->load->model('pancake_orders_model');
 
         $this->apiUrl = get_option('pancake_url') ?: "https://pos.pages.fm/api/v1";
         $this->shopId = get_option('pancake_shop_id') ?: "1720001063";
         $this->apiKey = get_option('api_key') ?: "fde1951a7d0e4c3b976aedb1776e731e";
     }
 
+    /**
+     * Hiển thị danh sách đơn hàng LẤY TỪ DATABASE LOCAL.
+     * Các bộ lọc (ngày, tìm kiếm,...) sẽ được áp dụng trên database này.
+     */
     public function index()
     {
-        $page     = (int)($this->input->get('page_number') ?: 1);
-        $pageSize = (int)($this->input->get('page_size') ?: 30);
+        // Lấy tất cả các tham số filter từ URL
+        $filters = $this->input->get();
 
-        $params = [
-            'page_number'     => $page,
-            'page_size'       => $pageSize,
-            'search'          => $this->input->get('search'),
-            'filter_status'   => $this->input->get('filter_status'),
-            'include_removed' => $this->input->get('include_removed'),
-            'updateStatus'    => $this->input->get('updateStatus'),
-        ];
-        // --- Sửa lại logic xử lý ngày tháng ở đây ---
-        $vietnamTimezone = new DateTimeZone('Asia/Ho_Chi_Minh');
-
-        if ($this->input->get('startDateTime')) {
-            // Tạo đối tượng DateTime cho ngày bắt đầu lúc 00:00:00 giờ Việt Nam
-            $startDateTime = new DateTime($this->input->get('startDateTime') . ' 00:00:00', $vietnamTimezone);
-            // Lấy timestamp UTC để gửi cho API
-            $params['startDateTime'] = $startDateTime->getTimestamp();
-        }
-
-        if ($this->input->get('endDateTime')) {
-            // Tạo đối tượng DateTime cho ngày kết thúc lúc 23:59:59 giờ Việt Nam
-            $endDateTime = new DateTime($this->input->get('endDateTime') . ' 23:59:59', $vietnamTimezone);
-            // Lấy timestamp UTC để gửi cho API
-            $params['endDateTime'] = $endDateTime->getTimestamp();
-        }
-
-        $response = $this->getOrdersFromApi($params);
+        // Lấy dữ liệu từ database thông qua model mới
+        $response = $this->pancake_orders_model->get_orders_from_db($filters);
 
         $data['orders'] = $response['data'] ?? [];
-        // Đảm bảo total luôn là số nguyên
-        $data['total']  = isset($response['total']) ? (int)$response['total'] : 0;
+        $data['total']  = $response['total'] ?? 0;
 
-        // Chỉ khởi tạo phân trang nếu có dữ liệu và điều kiện hợp lệ
-        if ($data['total'] > 0 && $pageSize > 0 && ceil($data['total'] / $pageSize) > 1) {
+        // Lấy danh sách người bán để hiển thị trên bộ lọc
+        $data['sellers'] = $this->pancake_orders_model->get_sellers_from_orders();
+
+        $pageSize = (int)($filters['page_size'] ?? 30);
+
+        // --- Cấu hình phân trang ---
+        if ($data['total'] > 0 && $pageSize > 0) {
             $this->load->library('pagination');
 
             $config['base_url']             = admin_url('pancake_sync');
@@ -64,9 +50,8 @@ class Pancake_sync extends AdminController
             $config['reuse_query_string']   = TRUE;
             $config['use_page_numbers']     = TRUE;
 
-            // Thêm các tham số tìm kiếm vào URL phân trang
             $queryParams = $this->input->get();
-            unset($queryParams['page_number']); // Loại bỏ page_number để tránh trùng lặp
+            unset($queryParams['page_number']);
 
             if (!empty($queryParams)) {
                 $config['suffix'] = '&' . http_build_query($queryParams);
@@ -79,12 +64,63 @@ class Pancake_sync extends AdminController
             $data['pagination'] = '';
         }
 
-        $data['current_page'] = $page;
+        $data['current_page'] = (int)($filters['page_number'] ?? 1);
         $data['total_pages']  = ($pageSize > 0 && $data['total'] > 0) ? ceil($data['total'] / $pageSize) : 0;
 
+        // Tải view để hiển thị
         $this->load->view('pancake_sync/orders', $data);
     }
 
+    /**
+     * Hàm này được gọi (thường qua AJAX) để kích hoạt quá trình đồng bộ.
+     * Nó sẽ gọi API Pancake, lấy dữ liệu và đẩy vào database.
+     */
+    public function sync_from_api()
+    {
+        $total_orders_to_sync = 5000;
+        $page_size = 1000; // Lấy 1000 đơn mỗi lần (số lượng tối đa API cho phép)
+        $number_of_pages = ceil($total_orders_to_sync / $page_size); // Sẽ chạy 5 lần (5000 / 1000)
+
+        $total_rows_affected = 0;
+
+        // Chạy vòng lặp để lấy từng trang một
+        for ($page = 1; $page <= $number_of_pages; $page++) {
+
+            // Chuẩn bị tham số cho trang hiện tại
+            $params = [
+                'page_size'   => $page_size,
+                'page_number' => $page, // Yêu cầu trang số 1, rồi 2, rồi 3...
+            ];
+
+            $apiResponse = $this->getOrdersFromApi($params);
+
+            // Nếu API trả về thành công và có dữ liệu
+            if ($apiResponse['success'] && !empty($apiResponse['data'])) {
+                // Gọi hàm sync và cộng dồn số đơn đã xử lý
+                $rows_affected_this_page = $this->pancake_orders_model->sync_orders($apiResponse['data']);
+                $total_rows_affected += $rows_affected_this_page;
+            } else {
+                // Nếu API không trả về dữ liệu nữa (đã hết đơn) thì dừng vòng lặp
+                break;
+            }
+        }
+
+        // Trả về kết quả tổng cộng sau khi chạy hết các trang
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success'       => true,
+            'message'       => "Đồng bộ hoàn tất! Có {$total_rows_affected} đơn hàng được thêm mới hoặc cập nhật.",
+            'rows_affected' => $total_rows_affected
+        ]);
+    }
+
+
+    /**
+     * Hàm private để gọi API Pancake.
+     * Hàm này không thay đổi và được sử dụng bởi sync_from_api().
+     * @param array $params
+     * @return array
+     */
     private function getOrdersFromApi(array $params = []): array
     {
         $queryParams = [
@@ -115,7 +151,6 @@ class Pancake_sync extends AdminController
         }
 
         $jsonData = json_decode($response, true);
-
         if (json_last_error() !== JSON_ERROR_NONE) {
             return ['success' => false, 'message' => "JSON parse error", 'data' => [], 'total' => 0];
         }

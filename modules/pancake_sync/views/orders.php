@@ -1122,6 +1122,11 @@
                         <a href="<?= admin_url('pancake_sync') ?>" class="btn btn-outline">Đặt lại</a>
                     </div>
                 </form>
+                <div class="col-md-4 text-right">
+                    <button id="sync-button" class="btn btn-primary">
+                        <i class="fa fa-refresh"></i> Đồng bộ từ Pancake
+                    </button>
+                </div>
 
                 <?php if (isset($total)) : ?>
                     <div class="results-count">
@@ -1567,7 +1572,7 @@
                                         <!-- Số lượng đơn hàng hoàn của khách hàng -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['customer']['returned_order_count'] ?? 0) ?></td>
                                         <!-- Phường/Xã -->
-                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['commune_name'] ?? '') ?></td>
+                                        <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['commune_name'] ?? '') ?></td>
                                         <!-- Quận/Huyện -->
                                         <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>"><?= html_escape($order['shipping_address']['district_name'] ?? '') ?></td>
                                         <!-- Tỉnh thành phố -->
@@ -3282,6 +3287,37 @@
         }
         // Call the styling function once the DOM is ready
         stylePagination();
+
+        $('#sync-button').on('click', function(e) {
+            e.preventDefault();
+            var button = $(this);
+            var originalText = button.html();
+
+            // Vô hiệu hóa nút và hiển thị trạng thái đang chạy
+            button.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang đồng bộ...');
+
+            $.ajax({
+                url: '<?= admin_url('pancake_sync/sync_from_api') ?>',
+                method: 'POST', // Hoặc GET, tùy vào bạn định nghĩa route
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        alert_float('success', response.message);
+                        // Tải lại trang sau 1.5 giây để xem kết quả mới
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 1500);
+                    } else {
+                        alert_float('danger', response.message);
+                        button.prop('disabled', false).html(originalText);
+                    }
+                },
+                error: function() {
+                    alert_float('danger', 'Lỗi không xác định. Không thể kết nối đến máy chủ.');
+                    button.prop('disabled', false).html(originalText);
+                }
+            });
+        });
     });
 </script>
 <?php init_tail(); ?>
