@@ -251,7 +251,7 @@ class Pancake_orders_model extends App_Model
         return $this->db->count_all_results(db_prefix() . 'pancake_orders');
     }
 
-   /**
+    /**
      * [HÔM NAY] Đếm số đơn được TẠO MỚI trong ngày, có thể lọc theo trạng thái.
      * Nếu không truyền $status, hàm sẽ đếm tất cả đơn mới.
      * @param string|null $status Tên trạng thái cần đếm (vd: 'canceled', 'removed').
@@ -367,11 +367,12 @@ class Pancake_orders_model extends App_Model
     public function count_unique_customers_today()
     {
         $sql = "
-            SELECT COUNT(DISTINCT JSON_UNQUOTE(JSON_EXTRACT(data, '$.customer.id'))) as total_customers
-            FROM " . db_prefix() . "pancake_orders
-            WHERE 
-                DATE(DATE_ADD(created_at, INTERVAL 7 HOUR)) = CURDATE()
-        ";
+        SELECT COUNT(DISTINCT JSON_UNQUOTE(JSON_EXTRACT(data, '$.customer.id'))) as total_customers
+        FROM " . db_prefix() . "pancake_orders
+        WHERE 
+            DATE(DATE_ADD(created_at, INTERVAL 7 HOUR)) = CURDATE()
+            AND JSON_UNQUOTE(JSON_EXTRACT(data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+    ";
         $result = $this->db->query($sql)->row();
         return $result ? (int)$result->total_customers : 0;
     }
@@ -397,7 +398,7 @@ class Pancake_orders_model extends App_Model
         return $result ? (int)$result->total_products : 0;
     }
     /**
-     * Doanh Thu từ các nguồn đơn
+     * Doanh thu từ các nguồn đơn
      */
     /**
      * [KHOẢNG NGÀY] Tính tổng doanh thu từ nguồn AFFILIATE của các đơn được xác nhận.
@@ -409,19 +410,32 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price_after_sub_discount') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Affiliate'
-            ) as t
-        ";
+        SELECT SUM(t.net_revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id,
+                -- Tính doanh thu thực: total_price trừ đi tổng các loại discount
+                (
+                    IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) - 
+                    (
+                        -- Giảm giá toàn đơn hàng
+                        IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) +
+                        -- Cộng tổng giảm giá của từng sản phẩm trong đơn
+                        (
+                            SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                            FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                        )
+                    )
+                ) as net_revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Affiliate'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -434,19 +448,32 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price_after_sub_discount') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Facebook'
-            ) as t
-        ";
+        SELECT SUM(t.net_revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id,
+                -- Tính doanh thu thực: total_price trừ đi tổng các loại discount
+                (
+                    IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) - 
+                    (
+                        -- Giảm giá toàn đơn hàng
+                        IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) +
+                        -- Cộng tổng giảm giá của từng sản phẩm trong đơn
+                        (
+                            SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                            FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                        )
+                    )
+                ) as net_revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Facebook'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -459,19 +486,32 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price_after_sub_discount') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Shopee'
-            ) as t
-        ";
+        SELECT SUM(t.net_revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id,
+                -- Tính doanh thu thực: total_price trừ đi tổng các loại discount
+                (
+                    IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) - 
+                    (
+                        -- Giảm giá toàn đơn hàng
+                        IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) +
+                        -- Cộng tổng giảm giá của từng sản phẩm trong đơn
+                        (
+                            SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                            FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                        )
+                    )
+                ) as net_revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Shopee'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -483,19 +523,32 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price_after_sub_discount') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Zalo'
-            ) as t
-        ";
+        SELECT SUM(t.net_revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id,
+                -- Tính doanh thu thực: total_price trừ đi tổng các loại discount
+                (
+                    IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) - 
+                    (
+                        -- Giảm giá toàn đơn hàng
+                        IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) +
+                        -- Cộng tổng giảm giá của từng sản phẩm trong đơn
+                        (
+                            SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                            FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                        )
+                    )
+                ) as net_revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Zalo'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -507,19 +560,32 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price_after_sub_discount') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Tiktok'
-            ) as t
-        ";
+        SELECT SUM(t.net_revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id,
+                -- Tính doanh thu thực: total_price trừ đi tổng các loại discount
+                (
+                    IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) - 
+                    (
+                        -- Giảm giá toàn đơn hàng
+                        IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) +
+                        -- Cộng tổng giảm giá của từng sản phẩm trong đơn
+                        (
+                            SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                            FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                        )
+                    )
+                ) as net_revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Tiktok'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -531,19 +597,32 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price_after_sub_discount') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Woocommerce'
-            ) as t
-        ";
+        SELECT SUM(t.net_revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id,
+                -- Tính doanh thu thực: total_price trừ đi tổng các loại discount
+                (
+                    IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) - 
+                    (
+                        -- Giảm giá toàn đơn hàng
+                        IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) +
+                        -- Cộng tổng giảm giá của từng sản phẩm trong đơn
+                        (
+                            SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                            FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                        )
+                    )
+                ) as net_revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Woocommerce'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -555,19 +634,32 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price_after_sub_discount') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Khác'
-            ) as t
-        ";
+        SELECT SUM(t.net_revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id,
+                -- Tính doanh thu thực: total_price trừ đi tổng các loại discount
+                (
+                    IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) - 
+                    (
+                        -- Giảm giá toàn đơn hàng
+                        IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) +
+                        -- Cộng tổng giảm giá của từng sản phẩm trong đơn
+                        (
+                            SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                            FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                        )
+                    )
+                ) as net_revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Khác'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -583,24 +675,27 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Affiliate'
-            ) as t
-        ";
+        SELECT SUM(t.revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id, 
+                -- Lấy tổng tiền hàng CỘNG với phí vận chuyển (nếu có)
+                (JSON_EXTRACT(po.data, '$.total_price') + IFNULL(JSON_EXTRACT(po.data, '$.shipping_fee'), 0)) as revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Affiliate'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
     }
-    
+
     public function get_sale_of_facebook_orders_confirmed_in_range($start_date, $end_date)
     {
         if (empty($start_date) || empty($end_date)) {
@@ -608,19 +703,22 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Facebook'
-            ) as t
-        ";
+        SELECT SUM(t.revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id, 
+                -- Lấy tổng tiền hàng CỘNG với phí vận chuyển (nếu có)
+                (JSON_EXTRACT(po.data, '$.total_price') + IFNULL(JSON_EXTRACT(po.data, '$.shipping_fee'), 0)) as revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Facebook'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -633,19 +731,22 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Shopee'
-            ) as t
-        ";
+        SELECT SUM(t.revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id, 
+                -- Lấy tổng tiền hàng CỘNG với phí vận chuyển (nếu có)
+                (JSON_EXTRACT(po.data, '$.total_price') + IFNULL(JSON_EXTRACT(po.data, '$.shipping_fee'), 0)) as revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Shopee'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -658,19 +759,22 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Zalo'
-            ) as t
-        ";
+        SELECT SUM(t.revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id, 
+                -- Lấy tổng tiền hàng CỘNG với phí vận chuyển (nếu có)
+                (JSON_EXTRACT(po.data, '$.total_price') + IFNULL(JSON_EXTRACT(po.data, '$.shipping_fee'), 0)) as revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Zalo'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -682,19 +786,22 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Tiktok'
-            ) as t
-        ";
+        SELECT SUM(t.revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id, 
+                -- Lấy tổng tiền hàng CỘNG với phí vận chuyển (nếu có)
+                (JSON_EXTRACT(po.data, '$.total_price') + IFNULL(JSON_EXTRACT(po.data, '$.shipping_fee'), 0)) as revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Tiktok'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -707,19 +814,22 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Woocommerce'
-            ) as t
-        ";
+        SELECT SUM(t.revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id, 
+                -- Lấy tổng tiền hàng CỘNG với phí vận chuyển (nếu có)
+                (JSON_EXTRACT(po.data, '$.total_price') + IFNULL(JSON_EXTRACT(po.data, '$.shipping_fee'), 0)) as revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Woocommerce'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
@@ -732,21 +842,570 @@ class Pancake_orders_model extends App_Model
         }
 
         $sql = "
-            SELECT SUM(t.revenue) as total_revenue
-            FROM (
-                SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_price') as revenue
-                FROM " . db_prefix() . "pancake_orders po
-                JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
-                WHERE 
-                    history.status = 1 
-                    AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
-                    -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
-                    AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Khác'
-            ) as t
-        ";
+        SELECT SUM(t.revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id, 
+                -- Lấy tổng tiền hàng CỘNG với phí vận chuyển (nếu có)
+                (JSON_EXTRACT(po.data, '$.total_price') + IFNULL(JSON_EXTRACT(po.data, '$.shipping_fee'), 0)) as revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Khác'
+        ) as t
+    ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
+    }
+
+    /**
+     * Chiết khấu
+     */
+    public function get_discount_of_ctv_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.total_discount) as total_revenue
+        FROM (
+            SELECT
+                DISTINCT po.id,
+                -- Lấy tổng giảm giá từ đơn hàng
+                JSON_EXTRACT(po.data, '$.total_discount') +
+                -- Cộng thêm tổng giảm giá từ từng sản phẩm
+                (
+                    SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                ) AS total_discount
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Affiliate'
+        ) AS t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+    public function get_discount_of_facebook_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.total_discount) as total_revenue
+        FROM (
+            SELECT
+                DISTINCT po.id,
+                -- Lấy tổng giảm giá từ đơn hàng
+                JSON_EXTRACT(po.data, '$.total_discount') +
+                -- Cộng thêm tổng giảm giá từ từng sản phẩm
+                (
+                    SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                ) AS total_discount
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Facebook'
+        ) AS t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+    public function get_discount_of_shopee_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.total_discount) as total_revenue
+        FROM (
+            SELECT
+                DISTINCT po.id,
+                -- Lấy tổng giảm giá từ đơn hàng
+                JSON_EXTRACT(po.data, '$.total_discount') +
+                -- Cộng thêm tổng giảm giá từ từng sản phẩm
+                (
+                    SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                ) AS total_discount
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Shopee'
+        ) AS t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+    public function get_discount_of_zalo_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.total_discount) as total_revenue
+        FROM (
+            SELECT
+                DISTINCT po.id,
+                -- Lấy tổng giảm giá từ đơn hàng
+                JSON_EXTRACT(po.data, '$.total_discount') +
+                -- Cộng thêm tổng giảm giá từ từng sản phẩm
+                (
+                    SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                ) AS total_discount
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Zalo'
+        ) AS t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+    public function get_discount_of_tiktok_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.total_discount) as total_revenue
+        FROM (
+            SELECT
+                DISTINCT po.id,
+                -- Lấy tổng giảm giá từ đơn hàng
+                JSON_EXTRACT(po.data, '$.total_discount') +
+                -- Cộng thêm tổng giảm giá từ từng sản phẩm
+                (
+                    SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                ) AS total_discount
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Tiktok'
+        ) AS t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+    public function get_discount_of_woocommerce_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.total_discount) as total_revenue
+        FROM (
+            SELECT
+                DISTINCT po.id,
+                -- Lấy tổng giảm giá từ đơn hàng
+                JSON_EXTRACT(po.data, '$.total_discount') +
+                -- Cộng thêm tổng giảm giá từ từng sản phẩm
+                (
+                    SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                ) AS total_discount
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Woocommerce'
+        ) AS t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+    public function get_discount_of_others_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.total_discount) as total_revenue
+        FROM (
+            SELECT
+                DISTINCT po.id,
+                -- Lấy tổng giảm giá từ đơn hàng
+                JSON_EXTRACT(po.data, '$.total_discount') +
+                -- Cộng thêm tổng giảm giá từ từng sản phẩm
+                (
+                    SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                ) AS total_discount
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Khác'
+        ) AS t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+
+    /**
+     * Đơn chốt cho các nguồn
+     */
+    public function count_ctv_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT COUNT(DISTINCT po.id) as total
+        FROM " . db_prefix() . "pancake_orders po
+        JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+        WHERE 
+            history.status = 1 
+            AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+            -- Dòng được thêm vào để lọc nguồn Facebook
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Affiliate'
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total : 0;
+    }
+    public function count_facebook_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT COUNT(DISTINCT po.id) as total
+        FROM " . db_prefix() . "pancake_orders po
+        JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+        WHERE 
+            history.status = 1 
+            AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+            -- Dòng được thêm vào để lọc nguồn Facebook
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Facebook'
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total : 0;
+    }
+
+    public function count_shopee_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT COUNT(DISTINCT po.id) as total
+        FROM " . db_prefix() . "pancake_orders po
+        JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+        WHERE 
+            history.status = 1 
+            AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+            -- Dòng được thêm vào để lọc nguồn Facebook
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Shopee'
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total : 0;
+    }
+
+
+    public function count_zalo_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT COUNT(DISTINCT po.id) as total
+        FROM " . db_prefix() . "pancake_orders po
+        JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+        WHERE 
+            history.status = 1 
+            AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+            -- Dòng được thêm vào để lọc nguồn Facebook
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Zalo'
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total : 0;
+    }
+
+    public function count_tiktok_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT COUNT(DISTINCT po.id) as total
+        FROM " . db_prefix() . "pancake_orders po
+        JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+        WHERE 
+            history.status = 1 
+            AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+            -- Dòng được thêm vào để lọc nguồn Facebook
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Tiktok'
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total : 0;
+    }
+
+    public function count_woocommerce_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT COUNT(DISTINCT po.id) as total
+        FROM " . db_prefix() . "pancake_orders po
+        JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+        WHERE 
+            history.status = 1 
+            AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+            -- Dòng được thêm vào để lọc nguồn Facebook
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Woocommerce'
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total : 0;
+    }
+
+    public function count_others_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT COUNT(DISTINCT po.id) as total
+        FROM " . db_prefix() . "pancake_orders po
+        JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+        WHERE 
+            history.status = 1 
+            AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+            -- Dòng được thêm vào để lọc nguồn Facebook
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Khác'
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total : 0;
+    }
+
+    //SL hàng chốt
+    /////////////////////////////////////***************************************//////////////////////////
+    public function get_product_ctv_quantity_of_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.product_quantity) as total_products
+        FROM (
+            SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_quantity') as product_quantity
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Affiliate'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total_products : 0;
+    }
+
+    public function get_product_facebook_quantity_of_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.product_quantity) as total_products
+        FROM (
+            SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_quantity') as product_quantity
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Facebook'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total_products : 0;
+    }
+
+    public function get_product_Shopee_quantity_of_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.product_quantity) as total_products
+        FROM (
+            SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_quantity') as product_quantity
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Shopee'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total_products : 0;
+    }
+
+    public function get_product_zalo_quantity_of_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.product_quantity) as total_products
+        FROM (
+            SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_quantity') as product_quantity
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Zalo'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total_products : 0;
+    }
+    public function get_product_tiktok_quantity_of_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.product_quantity) as total_products
+        FROM (
+            SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_quantity') as product_quantity
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Tiktok'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total_products : 0;
+    }
+
+    public function get_product_woocommerce_quantity_of_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.product_quantity) as total_products
+        FROM (
+            SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_quantity') as product_quantity
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Woocommerce'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total_products : 0;
+    }
+    public function get_product_others_quantity_of_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.product_quantity) as total_products
+        FROM (
+            SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_quantity') as product_quantity
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Khác'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total_products : 0;
     }
 }

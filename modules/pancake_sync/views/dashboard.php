@@ -773,14 +773,13 @@
                             <th>Nguồn đơn</th>
                             <th>Doanh thu</th>
                             <th>Doanh số</th>
+                            <th>Chiết khấu</th>
                             <th>Đơn chốt</th>
                             <th>SL hàng chốt</th>
                             <th>GTTB</th>
-                            <th>SL TB / đơn</th>
-                            <th>Đơn hoàn</th>
-                            <th>Tỷ lệ hoàn</th>
-                            <th>Chi phí QC</th>
-                            <th>ROAS</th>
+                            <th>SL KH cũ</th>
+                            <th>SL KH mới</th>
+                            <th>Doan thu bán hàng</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -789,22 +788,25 @@
                             <td>
                                 <i class="fa-solid fa-users source-icon" style="color:#28a745;"></i> CTV
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_revenue_of_affiliate_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_sale_of_ctv_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
-                                12
+                            <td style="text-align: center;">
+                                <?= number_format($get_discount_of_ctv_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>53</td>
-                            <td>736.166 đ</td>
+                            <td style="text-align: center;">
+                                <?= number_format($count_ctv_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_product_ctv_quantity_of_orders_confirmed_in_range ?? 0); ?>
+                            </td>
                             <td>4.4</td>
                             <td>1</td>
                             <td>8.3%</td>
                             <td>0 đ</td>
-                            <td class="text-success"><strong>N/A</strong></td>
                         </tr>
                         <td>
                             <img src="https://www.freeiconspng.com/uploads/facebook-png-icon-follow-us-facebook-1.png"
@@ -812,22 +814,25 @@
                                 class="source-icon"
                                 style="height: 35px; width: auto; vertical-align: middle;"> Facebook
                         </td>
-                        <td>
+                        <td style="text-align: center;">
                             <?= number_format($get_revenue_of_facebook_orders_confirmed_in_range ?? 0); ?>
                         </td>
-                        <td>
+                        <td style="text-align: center;">
                             <?= number_format($get_sale_of_facebook_orders_confirmed_in_range ?? 0); ?>
                         </td>
-                        <td>
-                            27
+                        <td style="text-align: center;">
+                            <?= number_format($get_discount_of_facebook_confirmed_in_range ?? 0); ?>
                         </td>
-                        <td>43</td>
-                        <td>931.815 đ</td>
+                        <td style="text-align: center;">
+                            <?= number_format($count_facebook_orders_confirmed_in_range ?? 0); ?>
+                        </td>
+                        <td style="text-align: center;">
+                            <?= number_format($get_product_facebook_quantity_of_orders_confirmed_in_range ?? 0); ?>
+                        </td>
                         <td>1.6</td>
                         <td>4</td>
                         <td>14.8%</td>
                         <td>5.000.000 đ</td>
-                        <td class="text-success"><strong>5.03</strong></td>
                         </tr>
                         <tr>
                             <td>
@@ -836,23 +841,25 @@
                                     class="source-icon"
                                     style="height: 35px; width: auto; vertical-align: middle;"> Shopee
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_revenue_of_shopee_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_sale_of_shopee_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
-                                18
-                                <span class="trend-indicator trend-up"><i class="fa-solid fa-arrow-up"></i> 5.88%</span>
+                            <td style="text-align: center;">
+                                <?= number_format($get_discount_of_shopee_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>40</td>
-                            <td>495.229 đ</td>
+                            <td style="text-align: center;">
+                                <?= number_format($count_shopee_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_product_Shopee_quantity_of_orders_confirmed_in_range ?? 0); ?>
+                            </td>
                             <td>2.2</td>
                             <td>1</td>
                             <td>5.6%</td>
                             <td>1.200.000 đ</td>
-                            <td class="text-success"><strong>7.42</strong></td>
                         </tr>
                         <tr>
                             <td>
@@ -861,22 +868,25 @@
                                     class="source-icon"
                                     style="height: 35px; width: auto; vertical-align: middle;"> Zalo
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_revenue_of_zalo_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_sale_of_zalo_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
-                                15
+                            <td style="text-align: center;">
+                                <?= number_format($get_discount_of_zalo_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>35</td>
-                            <td>835.000 đ</td>
+                            <td style="text-align: center;">
+                                <?= number_format($count_zalo_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_product_zalo_quantity_of_orders_confirmed_in_range ?? 0); ?>
+                            </td>
                             <td>2.3</td>
                             <td>1</td>
                             <td>6.7%</td>
                             <td>3.500.000 đ</td>
-                            <td class="text-success"><strong>3.57</strong></td>
                         </tr>
                         <tr>
                             <td>
@@ -885,23 +895,25 @@
                                     class="source-icon"
                                     style="height: 35px; width: auto; vertical-align: middle;"> Tiktok
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_revenue_of_tiktok_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_sale_of_tiktok_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
-                                18
-                                <span class="trend-indicator trend-up"><i class="fa-solid fa-arrow-up"></i> 5.88%</span>
+                            <td style="text-align: center;">
+                                <?= number_format($get_discount_of_tiktok_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>40</td>
-                            <td>495.229 đ</td>
+                            <td style="text-align: center;">
+                                <?= number_format($count_tiktok_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_product_tiktok_quantity_of_orders_confirmed_in_range ?? 0); ?>
+                            </td>
                             <td>2.2</td>
                             <td>1</td>
                             <td>5.6%</td>
                             <td>1.200.000 đ</td>
-                            <td class="text-success"><strong>7.42</strong></td>
                         </tr>
                         <tr>
                             <td>
@@ -910,43 +922,49 @@
                                     class="source-icon"
                                     style="height: 35px; width: auto; vertical-align: middle;"> Woocommerce
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_revenue_of_woocommerce_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_sale_of_woocommerce_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
-                                1
+                            <td style="text-align: center;">
+                                <?= number_format($get_discount_of_woocommerce_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>1</td>
-                            <td>1.050.000 đ</td>
+                            <td style="text-align: center;">
+                                <?= number_format($count_woocommerce_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_product_woocommerce_quantity_of_orders_confirmed_in_range ?? 0); ?>
+                            </td>
                             <td>1.0</td>
                             <td>0</td>
                             <td>0.0%</td>
                             <td>150.000 đ</td>
-                            <td class="text-success"><strong>7.00</strong></td>
                         </tr>
                         <tr>
                             <td>
                                 <i class="fa-solid fa-circle-question source-icon" style="color:#6c757d;"></i> Khác
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_revenue_of_others_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
+                            <td style="text-align: center;">
                                 <?= number_format($get_sale_of_others_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>
-                                5
+                            <td style="text-align: center;">
+                                <?= number_format($get_discount_of_others_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>8</td>
-                            <td>409.000 đ</td>
+                            <td style="text-align: center;">
+                                <?= number_format($count_others_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_product_others_quantity_of_orders_confirmed_in_range ?? 0); ?>
+                            </td>
                             <td>1.6</td>
                             <td>0</td>
                             <td>0.0%</td>
                             <td>0 đ</td>
-                            <td class="text-success"><strong>N/A</strong></td>
                         </tr>
                     </tbody>
                 </table>

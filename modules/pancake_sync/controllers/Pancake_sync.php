@@ -77,14 +77,14 @@ class Pancake_sync extends AdminController
      */
     public function sync_from_api()
     {
-        $total_orders_to_sync = 5000;
-        $page_size = 1000; // Lấy 1000 đơn mỗi lần (số lượng tối đa API cho phép)
-        $number_of_pages = ceil($total_orders_to_sync / $page_size); // Sẽ chạy 5 lần (5000 / 1000)
+        $total_orders_to_sync = 200;
+        $page_size = 200;
+        $number_of_pages = ceil($total_orders_to_sync / $page_size);
 
         $total_rows_affected = 0;
 
         // Chạy vòng lặp để lấy từng trang một
-        for ($page = 1; $page <= $number_of_pages; $page++) {
+        for ($page = 1; $page <= 5; $page++) {
 
             // Chuẩn bị tham số cho trang hiện tại
             $params = [
