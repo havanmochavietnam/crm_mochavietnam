@@ -1137,6 +1137,12 @@
                     </div>
                 <?php endif; ?>
             </div>
+            <div class="col-md-12" id="sync-progress-container" style="display: none; margin-top: 15px;">
+                <p id="sync-status-text" class="mbot5">Đang chuẩn bị...</p>
+                <div class="progress">
+                    <div id="sync-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+                </div>
+            </div>
 
             <div class="tw-mb-6">
                 <h4 class="tw-text-2xl tw-font-bold tw-text-gray-800">
@@ -3294,36 +3300,101 @@
         // Call the styling function once the DOM is ready
         stylePagination();
 
-        $('#sync-button').on('click', function(e) {
+        // --- LOGIC ĐỒNG BỘ MỚI KHI CLICK NÚT ---
+
+        const syncButton = $('#sync-button');
+        const originalButtonText = syncButton.html();
+        const progressContainer = $('#sync-progress-container');
+        const progressBar = $('#sync-progress-bar');
+        const statusText = $('#sync-status-text');
+        let totalSyncedCount = 0;
+
+        syncButton.on('click', function(e) {
             e.preventDefault();
-            var button = $(this);
-            var originalText = button.html();
 
-            // Vô hiệu hóa nút và hiển thị trạng thái đang chạy
-            button.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang đồng bộ...');
+            // Vô hiệu hóa nút, reset và hiển thị thanh tiến trình
+            syncButton.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Bắt đầu...');
+            progressContainer.show();
+            progressBar.css('width', '0%').text('0%');
+            statusText.text('Đang kết nối đến Pancake API...');
+            totalSyncedCount = 0;
 
+            // Gọi API để lấy tổng số đơn hàng cần đồng bộ
             $.ajax({
-                url: '<?= admin_url('pancake_sync/sync_from_api') ?>',
-                method: 'POST', // Hoặc GET, tùy vào bạn định nghĩa route
+                url: '<?= admin_url('pancake_sync/start_sync') ?>',
+                method: 'POST',
                 dataType: 'json',
                 success: function(response) {
                     if (response.success) {
-                        alert_float('success', response.message);
-                        // Tải lại trang sau 1.5 giây để xem kết quả mới
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 1500);
+                        const totalOrdersApi = response.total_orders;
+                        if (totalOrdersApi > 0) {
+                            statusText.text(`Sẵn sàng đồng bộ ${totalOrdersApi} đơn hàng...`);
+                            // Bắt đầu quá trình đồng bộ tuần tự từ trang 1
+                            syncPage(1, totalOrdersApi);
+                        } else {
+                            statusText.text('Không có đơn hàng nào để đồng bộ.');
+                            resetSyncUI();
+                        }
                     } else {
                         alert_float('danger', response.message);
-                        button.prop('disabled', false).html(originalText);
+                        resetSyncUI();
                     }
                 },
                 error: function() {
-                    alert_float('danger', 'Lỗi không xác định. Không thể kết nối đến máy chủ.');
-                    button.prop('disabled', false).html(originalText);
+                    alert_float('danger', 'Lỗi khi bắt đầu quá trình đồng bộ. Không thể kết nối đến máy chủ.');
+                    resetSyncUI();
                 }
             });
         });
+
+        function syncPage(page, totalOrdersApi) {
+            $.ajax({
+                url: '<?= admin_url('pancake_sync/sync_page') ?>',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    page: page
+                },
+                success: function(response) {
+                    if (response.status === 'processing') {
+                        // Cập nhật tổng số lượng đã đồng bộ
+                        totalSyncedCount += response.processed_count;
+
+                        // Cập nhật thanh tiến trình
+                        let percentage = Math.min(100, Math.round((totalSyncedCount / totalOrdersApi) * 100));
+                        progressBar.css('width', percentage + '%').text(percentage + '%');
+                        statusText.text(`Đã đồng bộ ${totalSyncedCount} / ${totalOrdersApi} đơn hàng...`);
+
+                        // Tự động gọi trang tiếp theo
+                        syncPage(response.next_page, totalOrdersApi);
+
+                    } else if (response.status === 'complete') {
+                        // Hoàn tất
+                        progressBar.css('width', '100%').addClass('progress-bar-success');
+                        statusText.text(`Hoàn tất! Đã xử lý ${totalSyncedCount} đơn hàng.`);
+                        alert_float('success', response.message);
+
+                        // Tải lại trang sau 2 giây để xem dữ liệu mới
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
+
+                    } else {
+                        alert_float('danger', response.message || 'Có lỗi không xác định từ máy chủ.');
+                        resetSyncUI();
+                    }
+                },
+                error: function() {
+                    alert_float('danger', 'Mất kết nối tới máy chủ, quá trình đồng bộ đã bị hủy.');
+                    resetSyncUI();
+                }
+            });
+        }
+
+        function resetSyncUI() {
+            syncButton.prop('disabled', false).html(originalButtonText);
+            progressContainer.hide();
+        }
     });
 </script>
 <?php init_tail(); ?>
