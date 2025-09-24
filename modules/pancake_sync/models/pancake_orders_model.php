@@ -125,6 +125,7 @@ class Pancake_orders_model extends App_Model
         foreach ($orders_from_db as $order_row) {
             $orders_formatted[] = json_decode($order_row['data'], true);
         }
+        
 
         return [
             'data' => $orders_formatted,
@@ -627,6 +628,82 @@ class Pancake_orders_model extends App_Model
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
     }
+    public function get_revenue_of_hotline_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.net_revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id,
+                -- Tính doanh thu thực: total_price trừ đi tổng các loại discount
+                (
+                    IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) - 
+                    (
+                        -- Giảm giá toàn đơn hàng
+                        IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) +
+                        -- Cộng tổng giảm giá của từng sản phẩm trong đơn
+                        (
+                            SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                            FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                        )
+                    )
+                ) as net_revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Hotline'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+
+    public function get_revenue_of_ladipage_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.net_revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id,
+                -- Tính doanh thu thực: total_price trừ đi tổng các loại discount
+                (
+                    IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) - 
+                    (
+                        -- Giảm giá toàn đơn hàng
+                        IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) +
+                        -- Cộng tổng giảm giá của từng sản phẩm trong đơn
+                        (
+                            SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                            FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                        )
+                    )
+                ) as net_revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Ladipage'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+
     public function get_revenue_of_others_orders_confirmed_in_range($start_date, $end_date)
     {
         if (empty($start_date) || empty($end_date)) {
@@ -828,6 +905,62 @@ class Pancake_orders_model extends App_Model
                 AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
                 -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
                 AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Woocommerce'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+
+    public function get_sale_of_hotline_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id, 
+                -- Lấy tổng tiền hàng CỘNG với phí vận chuyển (nếu có)
+                (JSON_EXTRACT(po.data, '$.total_price') + IFNULL(JSON_EXTRACT(po.data, '$.shipping_fee'), 0)) as revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Hotline'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+
+    public function get_sale_of_ladipage_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.revenue) as total_revenue
+        FROM (
+            SELECT 
+                DISTINCT po.id, 
+                -- Lấy tổng tiền hàng CỘNG với phí vận chuyển (nếu có)
+                (JSON_EXTRACT(po.data, '$.total_price') + IFNULL(JSON_EXTRACT(po.data, '$.shipping_fee'), 0)) as revenue
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                -- THÊM ĐIỀU KIỆN LỌC THEO NGUỒN Ở ĐÂY
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'LadiPage'
         ) as t
     ";
 
@@ -1052,6 +1185,70 @@ class Pancake_orders_model extends App_Model
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (float)$result->total_revenue : 0;
     }
+     public function get_discount_of_hotline_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.total_discount) as total_revenue
+        FROM (
+            SELECT
+                DISTINCT po.id,
+                -- Lấy tổng giảm giá từ đơn hàng
+                JSON_EXTRACT(po.data, '$.total_discount') +
+                -- Cộng thêm tổng giảm giá từ từng sản phẩm
+                (
+                    SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                ) AS total_discount
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Hotline'
+        ) AS t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+
+    public function get_discount_of_ladipage_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.total_discount) as total_revenue
+        FROM (
+            SELECT
+                DISTINCT po.id,
+                -- Lấy tổng giảm giá từ đơn hàng
+                JSON_EXTRACT(po.data, '$.total_discount') +
+                -- Cộng thêm tổng giảm giá từ từng sản phẩm
+                (
+                    SELECT IFNULL(SUM(JSON_EXTRACT(items.value, '$.total_discount')), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) AS items
+                ) AS total_discount
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'LadiPage'
+        ) AS t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (float)$result->total_revenue : 0;
+    }
+
     public function get_discount_of_others_confirmed_in_range($start_date, $end_date)
     {
         if (empty($start_date) || empty($end_date)) {
@@ -1213,6 +1410,50 @@ class Pancake_orders_model extends App_Model
             AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
             -- Dòng được thêm vào để lọc nguồn Facebook
             AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Woocommerce'
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total : 0;
+    }
+
+    public function count_hotline_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT COUNT(DISTINCT po.id) as total
+        FROM " . db_prefix() . "pancake_orders po
+        JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+        WHERE 
+            history.status = 1 
+            AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+            -- Dòng được thêm vào để lọc nguồn Facebook
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Hotline'
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total : 0;
+    }
+
+    public function count_ladipage_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT COUNT(DISTINCT po.id) as total
+        FROM " . db_prefix() . "pancake_orders po
+        JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+        WHERE 
+            history.status = 1 
+            AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+            -- Dòng được thêm vào để lọc nguồn Facebook
+            AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'LadiPage'
     ";
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
@@ -1385,6 +1626,55 @@ class Pancake_orders_model extends App_Model
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (int)$result->total_products : 0;
     }
+
+    public function get_product_hotline_quantity_of_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.product_quantity) as total_products
+        FROM (
+            SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_quantity') as product_quantity
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'Hotline'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total_products : 0;
+    }
+
+    public function get_product_ladipage_quantity_of_orders_confirmed_in_range($start_date, $end_date)
+    {
+        if (empty($start_date) || empty($end_date)) {
+            return 0;
+        }
+
+        $sql = "
+        SELECT SUM(t.product_quantity) as total_products
+        FROM (
+            SELECT DISTINCT po.id, JSON_EXTRACT(po.data, '$.total_quantity') as product_quantity
+            FROM " . db_prefix() . "pancake_orders po
+            JOIN JSON_TABLE(po.data, '$.status_history[*]' COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')) AS history ON TRUE
+            WHERE 
+                history.status = 1 
+                AND DATE(DATE_ADD(history.updated_at, INTERVAL 7 HOUR)) BETWEEN ? AND ?
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled', 'returned', 'returning')
+                AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) = 'LadiPage'
+        ) as t
+    ";
+
+        $result = $this->db->query($sql, [$start_date, $end_date])->row();
+        return $result ? (int)$result->total_products : 0;
+    }
+
     public function get_product_others_quantity_of_orders_confirmed_in_range($start_date, $end_date)
     {
         if (empty($start_date) || empty($end_date)) {
@@ -1407,5 +1697,160 @@ class Pancake_orders_model extends App_Model
 
         $result = $this->db->query($sql, [$start_date, $end_date])->row();
         return $result ? (int)$result->total_products : 0;
+    }
+
+    //GTTB
+    ///////////////////////////////////***********************************/////////////////////////////////////
+    public function get_aov_of_ctv_orders_confirmed_in_range($start_date, $end_date)
+    {
+        // Lấy tổng doanh thu từ các đơn hàng Facebook đã xác nhận
+        $total_revenue = $this->get_revenue_of_affiliate_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đếm tổng số đơn hàng Facebook đã xác nhận
+        $total_orders = $this->count_ctv_orders_confirmed_in_range($start_date, $end_date);
+
+        // Tránh lỗi chia cho 0 nếu không có đơn hàng nào
+        if ($total_orders == 0) {
+            return 0;
+        }
+
+        // Tính và trả về giá trị trung bình
+        return (float) $total_revenue / $total_orders;
+    }
+
+    public function get_aov_of_facebook_orders_confirmed_in_range($start_date, $end_date)
+    {
+        // Lấy tổng doanh thu từ các đơn hàng Facebook đã xác nhận
+        $total_revenue = $this->get_revenue_of_facebook_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đếm tổng số đơn hàng Facebook đã xác nhận
+        $total_orders = $this->count_facebook_orders_confirmed_in_range($start_date, $end_date);
+
+        // Tránh lỗi chia cho 0 nếu không có đơn hàng nào
+        if ($total_orders == 0) {
+            return 0;
+        }
+
+        // Tính và trả về giá trị trung bình
+        return (float) $total_revenue / $total_orders;
+    }
+
+    public function get_aov_of_shopee_orders_confirmed_in_range($start_date, $end_date)
+    {
+        // Lấy tổng doanh thu từ các đơn hàng Facebook đã xác nhận
+        $total_revenue = $this->get_revenue_of_shopee_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đếm tổng số đơn hàng Facebook đã xác nhận
+        $total_orders = $this->count_shopee_orders_confirmed_in_range($start_date, $end_date);
+
+        // Tránh lỗi chia cho 0 nếu không có đơn hàng nào
+        if ($total_orders == 0) {
+            return 0;
+        }
+
+        // Tính và trả về giá trị trung bình
+        return (float) $total_revenue / $total_orders;
+    }
+
+    public function get_aov_of_zalo_orders_confirmed_in_range($start_date, $end_date)
+    {
+        // Lấy tổng doanh thu từ các đơn hàng Facebook đã xác nhận
+        $total_revenue = $this->get_revenue_of_zalo_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đếm tổng số đơn hàng Facebook đã xác nhận
+        $total_orders = $this->count_zalo_orders_confirmed_in_range($start_date, $end_date);
+
+        // Tránh lỗi chia cho 0 nếu không có đơn hàng nào
+        if ($total_orders == 0) {
+            return 0;
+        }
+
+        // Tính và trả về giá trị trung bình
+        return (float) $total_revenue / $total_orders;
+    }
+
+    public function get_aov_of_tiktok_orders_confirmed_in_range($start_date, $end_date)
+    {
+        // Lấy tổng doanh thu từ các đơn hàng Facebook đã xác nhận
+        $total_revenue = $this->get_revenue_of_tiktok_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đếm tổng số đơn hàng Facebook đã xác nhận
+        $total_orders = $this->count_tiktok_orders_confirmed_in_range($start_date, $end_date);
+
+        // Tránh lỗi chia cho 0 nếu không có đơn hàng nào
+        if ($total_orders == 0) {
+            return 0;
+        }
+
+        // Tính và trả về giá trị trung bình
+        return (float) $total_revenue / $total_orders;
+    }
+
+    public function get_aov_of_woocommerce_orders_confirmed_in_range($start_date, $end_date)
+    {
+        // Lấy tổng doanh thu từ các đơn hàng Facebook đã xác nhận
+        $total_revenue = $this->get_revenue_of_woocommerce_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đếm tổng số đơn hàng Facebook đã xác nhận
+        $total_orders = $this->count_woocommerce_orders_confirmed_in_range($start_date, $end_date);
+
+        // Tránh lỗi chia cho 0 nếu không có đơn hàng nào
+        if ($total_orders == 0) {
+            return 0;
+        }
+
+        // Tính và trả về giá trị trung bình
+        return (float) $total_revenue / $total_orders;
+    }
+
+    public function get_aov_of_hotline_orders_confirmed_in_range($start_date, $end_date)
+    {
+        // Lấy tổng doanh thu từ các đơn hàng Facebook đã xác nhận
+        $total_revenue = $this->get_revenue_of_hotline_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đếm tổng số đơn hàng Facebook đã xác nhận
+        $total_orders = $this->count_hotline_orders_confirmed_in_range($start_date, $end_date);
+
+        // Tránh lỗi chia cho 0 nếu không có đơn hàng nào
+        if ($total_orders == 0) {
+            return 0;
+        }
+
+        // Tính và trả về giá trị trung bình
+        return (float) $total_revenue / $total_orders;
+    }
+
+    public function get_aov_of_ladipage_orders_confirmed_in_range($start_date, $end_date)
+    {
+        // Lấy tổng doanh thu từ các đơn hàng Facebook đã xác nhận
+        $total_revenue = $this->get_revenue_of_ladipage_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đếm tổng số đơn hàng Facebook đã xác nhận
+        $total_orders = $this->count_ladipage_orders_confirmed_in_range($start_date, $end_date);
+
+        // Tránh lỗi chia cho 0 nếu không có đơn hàng nào
+        if ($total_orders == 0) {
+            return 0;
+        }
+
+        // Tính và trả về giá trị trung bình
+        return (float) $total_revenue / $total_orders;
+    }
+
+    public function get_aov_of_others_orders_confirmed_in_range($start_date, $end_date)
+    {
+        // Lấy tổng doanh thu từ các đơn hàng Facebook đã xác nhận
+        $total_revenue = $this->get_revenue_of_others_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đếm tổng số đơn hàng Facebook đã xác nhận
+        $total_orders = $this->count_others_orders_confirmed_in_range($start_date, $end_date);
+
+        // Tránh lỗi chia cho 0 nếu không có đơn hàng nào
+        if ($total_orders == 0) {
+            return 0;
+        }
+
+        // Tính và trả về giá trị trung bình
+        return (float) $total_revenue / $total_orders;
     }
 }

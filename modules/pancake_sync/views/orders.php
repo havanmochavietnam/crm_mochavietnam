@@ -1659,11 +1659,17 @@
                                         <td class="tw-px-6 tw-py-4 tw-font-semibold tw-border tw-border-gray-300 align-middle text-center" rowspan="<?= $itemsCount ?>">
                                             <?php
                                             $total = 0;
+                                            // Vòng lặp để tính tổng tiền hàng sau khi đã trừ discount của từng item
                                             foreach ($order['items'] as $item) {
-                                                $price = ($item['variation_info']['retail_price'] ?? 0) * ($item['quantity'] ?? 0);
+                                                $price = (($item['variation_info']['retail_price'] ?? 0) * ($item['quantity'] ?? 0)) - ($item['total_discount'] ?? 0);
                                                 $total += $price;
                                             }
+
+                                            // Trừ đi discount tổng của cả đơn hàng (nếu có)
                                             $total = $total - $total_discount;
+
+                                            // Hiển thị kết quả. 
+                                            // Lưu ý: Biến $total này là tổng tiền hàng sau giảm giá, chưa trừ phí sàn.
                                             echo number_format($total, 0, ',', '.');
                                             ?>
                                         </td>

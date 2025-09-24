@@ -779,7 +779,6 @@
                             <th>GTTB</th>
                             <th>SL KH cũ</th>
                             <th>SL KH mới</th>
-                            <th>Doan thu bán hàng</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -803,10 +802,11 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_product_ctv_quantity_of_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>4.4</td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_aov_of_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
+                            </td>
                             <td>1</td>
                             <td>8.3%</td>
-                            <td>0 đ</td>
                         </tr>
                         <td>
                             <img src="https://www.freeiconspng.com/uploads/facebook-png-icon-follow-us-facebook-1.png"
@@ -829,10 +829,11 @@
                         <td style="text-align: center;">
                             <?= number_format($get_product_facebook_quantity_of_orders_confirmed_in_range ?? 0); ?>
                         </td>
-                        <td>1.6</td>
+                        <td style="text-align: center;">
+                            <?= number_format($get_aov_of_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
+                        </td>
                         <td>4</td>
                         <td>14.8%</td>
-                        <td>5.000.000 đ</td>
                         </tr>
                         <tr>
                             <td>
@@ -856,10 +857,11 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_product_Shopee_quantity_of_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>2.2</td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_aov_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
+                            </td>
                             <td>1</td>
                             <td>5.6%</td>
-                            <td>1.200.000 đ</td>
                         </tr>
                         <tr>
                             <td>
@@ -883,10 +885,11 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_product_zalo_quantity_of_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>2.3</td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_aov_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
+                            </td>
                             <td>1</td>
                             <td>6.7%</td>
-                            <td>3.500.000 đ</td>
                         </tr>
                         <tr>
                             <td>
@@ -910,10 +913,11 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_product_tiktok_quantity_of_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>2.2</td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_aov_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
+                            </td>
                             <td>1</td>
                             <td>5.6%</td>
-                            <td>1.200.000 đ</td>
                         </tr>
                         <tr>
                             <td>
@@ -937,10 +941,67 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_product_woocommerce_quantity_of_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>1.0</td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_aov_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
+                            </td>
                             <td>0</td>
                             <td>0.0%</td>
-                            <td>150.000 đ</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="https://static.vecteezy.com/system/resources/previews/036/269/966/non_2x/phone-call-icon-answer-accept-call-icon-with-green-button-contact-us-telephone-sign-yes-button-incoming-call-icon-vector.jpg"
+                                    alt="Holine"
+                                    class="source-icon"
+                                    style="height: 35px; width: auto; vertical-align: middle;"> Holine
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_revenue_of_hotline_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_sale_of_hotline_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_discount_of_hotline_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($count_hotline_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_product_hotline_quantity_of_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_aov_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td>0</td>
+                            <td>0.0%</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <img src="https://helpv3.ladipage.vn/~gitbook/image?url=https%3A%2F%2F4163873660-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FVlMUbaIjYt7SY2R8v2az%252Ficon%252Fhdr8lmBqrumyQd8I249v%252Flogo-white.svg%3Falt%3Dmedia%26token%3Df2464a07-be53-4fb1-bf06-a0c2c6b6a9a7&width=32&dpr=4&quality=100&sign=407bcf19&sv=2"
+                                    alt="LadiPage"
+                                    class="source-icon"
+                                    style="height: 35px; width: auto; vertical-align: middle;"> LadiPage
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_revenue_of_ladipage_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_sale_of_ladipage_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_discount_of_ladipage_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($count_hotline_ladipage_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_product_ladipage_quantity_of_orders_confirmed_in_range ?? 0); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_aov_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td>0</td>
+                            <td>0.0%</td>
                         </tr>
                         <tr>
                             <td>
@@ -961,10 +1022,11 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_product_others_quantity_of_orders_confirmed_in_range ?? 0); ?>
                             </td>
-                            <td>1.6</td>
+                            <td style="text-align: center;">
+                                <?= number_format($get_aov_of_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
+                            </td>
                             <td>0</td>
                             <td>0.0%</td>
-                            <td>0 đ</td>
                         </tr>
                     </tbody>
                 </table>

@@ -86,6 +86,12 @@ class Pancake_dashboard extends AdminController
         
         // Doanh thu woocommerce theo thời gian
         $get_revenue_of_woocommerce_orders_confirmed_in_range = $this->pancake_orders_model->get_revenue_of_woocommerce_orders_confirmed_in_range($start_date, $end_date);
+
+        // Doanh thu Hotline theo thời gian
+        $get_revenue_of_hotline_orders_confirmed_in_range = $this->pancake_orders_model->get_revenue_of_hotline_orders_confirmed_in_range($start_date, $end_date);
+
+        // Doanh thu LadiPage theo thời gian
+        $get_revenue_of_ladipage_orders_confirmed_in_range = $this->pancake_orders_model->get_revenue_of_ladipage_orders_confirmed_in_range($start_date, $end_date);
         
         // Doanh thu khác theo thời gian
         $get_revenue_of_others_orders_confirmed_in_range = $this->pancake_orders_model->get_revenue_of_others_orders_confirmed_in_range($start_date, $end_date);
@@ -104,6 +110,12 @@ class Pancake_dashboard extends AdminController
 
         // Doanh số tiktok theo thời gian
         $get_sale_of_tiktok_orders_confirmed_in_range = $this->pancake_orders_model->get_sale_of_tiktok_orders_confirmed_in_range($start_date, $end_date);
+
+        // Doanh số hotline theo thời gian
+        $get_sale_of_hotline_orders_confirmed_in_range = $this->pancake_orders_model->get_sale_of_hotline_orders_confirmed_in_range($start_date, $end_date);
+
+        // Doanh số LadiPage theo thời gian
+        $get_sale_of_ladipage_orders_confirmed_in_range = $this->pancake_orders_model->get_sale_of_ladipage_orders_confirmed_in_range($start_date, $end_date);
 
         // Doanh số woocommerce theo thời gian
         $get_sale_of_woocommerce_orders_confirmed_in_range = $this->pancake_orders_model->get_sale_of_woocommerce_orders_confirmed_in_range($start_date, $end_date);
@@ -129,6 +141,12 @@ class Pancake_dashboard extends AdminController
         //Chiết khấu Woocommerce theo thời gian
         $get_discount_of_woocommerce_confirmed_in_range = $this->pancake_orders_model->get_discount_of_woocommerce_confirmed_in_range($start_date, $end_date);
 
+        //Chiết khấu Hotline theo thời gian
+        $get_discount_of_hotline_confirmed_in_range = $this->pancake_orders_model->get_discount_of_hotline_confirmed_in_range($start_date, $end_date);
+
+        //Chiết khấu LadiPage theo thời gian
+        $get_discount_of_ladipage_confirmed_in_range = $this->pancake_orders_model->get_discount_of_ladipage_confirmed_in_range($start_date, $end_date);
+
         //Chiết khấu Khác theo thời gian
         $get_discount_of_others_confirmed_in_range = $this->pancake_orders_model->get_discount_of_others_confirmed_in_range($start_date, $end_date);
 
@@ -149,6 +167,12 @@ class Pancake_dashboard extends AdminController
 
         // Đơn chốt Woocommerce theo thời gian
         $count_woocommerce_orders_confirmed_in_range = $this->pancake_orders_model->count_woocommerce_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đơn chốt Hotline theo thời gian
+        $count_hotline_orders_confirmed_in_range = $this->pancake_orders_model->count_hotline_orders_confirmed_in_range($start_date, $end_date);
+
+        // Đơn chốt Hotline theo thời gian
+        $count_ladipage_orders_confirmed_in_range = $this->pancake_orders_model->count_ladipage_orders_confirmed_in_range($start_date, $end_date);
 
         // Đơn chốt Khác theo thời gian
         $count_others_orders_confirmed_in_range = $this->pancake_orders_model->count_others_orders_confirmed_in_range($start_date, $end_date);
@@ -171,8 +195,41 @@ class Pancake_dashboard extends AdminController
         // SL hàng chốt Woocommerce
         $get_product_woocommerce_quantity_of_orders_confirmed_in_range = $this->pancake_orders_model->get_product_woocommerce_quantity_of_orders_confirmed_in_range($start_date, $end_date);
 
+        // SL hàng chốt Hotline
+        $get_product_hotline_quantity_of_orders_confirmed_in_range = $this->pancake_orders_model->get_product_hotline_quantity_of_orders_confirmed_in_range($start_date, $end_date);
+
+        // SL hàng chốt Hotline
+        $get_product_ladipage_quantity_of_orders_confirmed_in_range = $this->pancake_orders_model->get_product_ladipage_quantity_of_orders_confirmed_in_range($start_date, $end_date);
+
         // SL hàng chốt
         $get_product_others_quantity_of_orders_confirmed_in_range = $this->pancake_orders_model->get_product_others_quantity_of_orders_confirmed_in_range($start_date, $end_date);
+
+        // GTTB ctv
+        $get_aov_of_ctv_orders_confirmed_in_range = $this->pancake_orders_model->get_aov_of_ctv_orders_confirmed_in_range($start_date, $end_date);
+
+        //GTTB facebook
+        $get_aov_of_facebook_orders_confirmed_in_range = $this->pancake_orders_model->get_aov_of_facebook_orders_confirmed_in_range($start_date, $end_date);
+
+        // GTTB shopee
+        $get_aov_of_shopee_orders_confirmed_in_range = $this->pancake_orders_model->get_aov_of_shopee_orders_confirmed_in_range($start_date, $end_date);
+
+        // GTTB zalo
+        $get_aov_of_zalo_orders_confirmed_in_range = $this->pancake_orders_model->get_aov_of_zalo_orders_confirmed_in_range($start_date, $end_date);
+
+        // GTTB tiktok
+        $get_aov_of_tiktok_orders_confirmed_in_range = $this->pancake_orders_model->get_aov_of_tiktok_orders_confirmed_in_range($start_date, $end_date);
+
+        // GTTB woocommerce
+        $get_aov_of_woocommerce_orders_confirmed_in_range = $this->pancake_orders_model->get_aov_of_woocommerce_orders_confirmed_in_range($start_date, $end_date);
+
+        // GTTB Holine
+        $get_aov_of_hotline_orders_confirmed_in_range = $this->pancake_orders_model->get_aov_of_hotline_orders_confirmed_in_range($start_date, $end_date);
+
+        // GTTB LadiPage
+        $get_aov_of_ladipage_orders_confirmed_in_range = $this->pancake_orders_model->get_aov_of_ladipage_orders_confirmed_in_range($start_date, $end_date);
+
+        // GTTB Khác
+        $get_aov_of_others_orders_confirmed_in_range = $this->pancake_orders_model->get_aov_of_others_orders_confirmed_in_range($start_date, $end_date);
 
         $data['count_confirmed'] = $count_confirmed_in_range;
         $data['revenue_confirmed'] = $revenue_confirmed_in_range;
@@ -195,6 +252,8 @@ class Pancake_dashboard extends AdminController
         $data['get_revenue_of_zalo_orders_confirmed_in_range'] = $get_revenue_of_zalo_orders_confirmed_in_range;
         $data['get_revenue_of_tiktok_orders_confirmed_in_range'] = $get_revenue_of_tiktok_orders_confirmed_in_range;
         $data['get_revenue_of_woocommerce_orders_confirmed_in_range'] = $get_revenue_of_woocommerce_orders_confirmed_in_range;
+        $data['get_revenue_of_hotline_orders_confirmed_in_range'] = $get_revenue_of_hotline_orders_confirmed_in_range;
+        $data['get_revenue_of_ladipage_orders_confirmed_in_range'] = $get_revenue_of_ladipage_orders_confirmed_in_range;
         $data['get_revenue_of_others_orders_confirmed_in_range'] = $get_revenue_of_others_orders_confirmed_in_range;
         $data['get_sale_of_ctv_orders_confirmed_in_range'] = $get_sale_of_ctv_orders_confirmed_in_range;
         $data['get_sale_of_facebook_orders_confirmed_in_range'] = $get_sale_of_facebook_orders_confirmed_in_range;
@@ -202,6 +261,8 @@ class Pancake_dashboard extends AdminController
         $data['get_sale_of_zalo_orders_confirmed_in_range'] = $get_sale_of_zalo_orders_confirmed_in_range;
         $data['get_sale_of_tiktok_orders_confirmed_in_range'] = $get_sale_of_tiktok_orders_confirmed_in_range;
         $data['get_sale_of_woocommerce_orders_confirmed_in_range'] = $get_sale_of_woocommerce_orders_confirmed_in_range;
+        $data['get_sale_of_hotline_orders_confirmed_in_range'] = $get_sale_of_hotline_orders_confirmed_in_range;
+        $data['get_sale_of_ladipage_orders_confirmed_in_range'] = $get_sale_of_ladipage_orders_confirmed_in_range;
         $data['get_sale_of_others_orders_confirmed_in_range'] = $get_sale_of_others_orders_confirmed_in_range;
         $data['get_discount_of_ctv_orders_confirmed_in_range'] = $get_discount_of_ctv_orders_confirmed_in_range;
         $data['get_discount_of_facebook_confirmed_in_range'] = $get_discount_of_facebook_confirmed_in_range;
@@ -209,6 +270,7 @@ class Pancake_dashboard extends AdminController
         $data['get_discount_of_zalo_orders_confirmed_in_range'] = $get_discount_of_zalo_orders_confirmed_in_range;
         $data['get_discount_of_tiktok_orders_confirmed_in_range'] = $get_discount_of_tiktok_orders_confirmed_in_range;
         $data['get_discount_of_woocommerce_confirmed_in_range'] = $get_discount_of_woocommerce_confirmed_in_range;
+        $data['get_discount_of_hotline_confirmed_in_range'] = $get_discount_of_hotline_confirmed_in_range;
         $data['get_discount_of_others_confirmed_in_range'] = $get_discount_of_others_confirmed_in_range;
         $data['count_ctv_orders_confirmed_in_range'] = $count_ctv_orders_confirmed_in_range;
         $data['count_facebook_orders_confirmed_in_range'] = $count_facebook_orders_confirmed_in_range;
@@ -216,6 +278,8 @@ class Pancake_dashboard extends AdminController
         $data['count_zalo_orders_confirmed_in_range'] = $count_zalo_orders_confirmed_in_range;
         $data['count_tiktok_orders_confirmed_in_range'] = $count_tiktok_orders_confirmed_in_range;
         $data['count_woocommerce_orders_confirmed_in_range'] = $count_woocommerce_orders_confirmed_in_range;
+        $data['count_hotline_orders_confirmed_in_range'] = $count_hotline_orders_confirmed_in_range;
+        $data['count_ladipage_orders_confirmed_in_range'] = $count_ladipage_orders_confirmed_in_range;
         $data['count_others_orders_confirmed_in_range'] = $count_others_orders_confirmed_in_range;
         $data['get_product_ctv_quantity_of_orders_confirmed_in_range'] = $get_product_ctv_quantity_of_orders_confirmed_in_range;
         $data['get_product_facebook_quantity_of_orders_confirmed_in_range'] = $get_product_facebook_quantity_of_orders_confirmed_in_range;
@@ -223,7 +287,18 @@ class Pancake_dashboard extends AdminController
         $data['get_product_zalo_quantity_of_orders_confirmed_in_range'] = $get_product_zalo_quantity_of_orders_confirmed_in_range;
         $data['get_product_tiktok_quantity_of_orders_confirmed_in_range'] = $get_product_tiktok_quantity_of_orders_confirmed_in_range;
         $data['get_product_woocommerce_quantity_of_orders_confirmed_in_range'] = $get_product_woocommerce_quantity_of_orders_confirmed_in_range;
+        $data['get_product_hotline_quantity_of_orders_confirmed_in_range'] = $get_product_hotline_quantity_of_orders_confirmed_in_range;
+        $data['get_product_ladipage_quantity_of_orders_confirmed_in_range'] = $get_product_ladipage_quantity_of_orders_confirmed_in_range;
         $data['get_product_others_quantity_of_orders_confirmed_in_range'] = $get_product_others_quantity_of_orders_confirmed_in_range;
+        $data['get_aov_of_ctv_orders_confirmed_in_range'] = $get_aov_of_ctv_orders_confirmed_in_range;
+        $data['get_aov_of_facebook_orders_confirmed_in_range'] = $get_aov_of_facebook_orders_confirmed_in_range;
+        $data['get_aov_of_shopee_orders_confirmed_in_range'] = $get_aov_of_shopee_orders_confirmed_in_range;
+        $data['get_aov_of_zalo_orders_confirmed_in_range'] = $get_aov_of_zalo_orders_confirmed_in_range;
+        $data['get_aov_of_tiktok_orders_confirmed_in_range'] = $get_aov_of_tiktok_orders_confirmed_in_range;
+        $data['get_aov_of_woocommerce_orders_confirmed_in_range'] = $get_aov_of_woocommerce_orders_confirmed_in_range;
+        $data['get_aov_of_hotline_orders_confirmed_in_range'] = $get_aov_of_hotline_orders_confirmed_in_range;
+        $data['get_aov_of_ladipage_orders_confirmed_in_range'] = $get_aov_of_ladipage_orders_confirmed_in_range;
+        $data['get_aov_of_others_orders_confirmed_in_range'] = $get_aov_of_others_orders_confirmed_in_range;
 
         // Truyền các biến điều khiển
         $data['start_date'] = $start_date;
