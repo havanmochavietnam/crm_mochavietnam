@@ -186,9 +186,9 @@
     }
 
     #hourly-revenue-chart {
-        height: 250px;
+        /* height: 250px;
         width: 100%;
-        margin-bottom: 25px;
+        margin-bottom: 25px; */
     }
 
     .full-width-chart-panel .chart-bottom-summaries {
@@ -422,6 +422,61 @@
         text-align: center;
         display: inline-block;
     }
+
+    /* BẢNG SẢN PHẨM */
+    .product-table thead th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: left;
+    }
+
+    .product-table tbody td {
+        vertical-align: middle;
+        padding: 12px 8px;
+    }
+
+    .product-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .product-thumb {
+        width: 44px;
+        height: 44px;
+        border-radius: 6px;
+        object-fit: cover;
+        background: #f3f4f6;
+        flex: 0 0 44px;
+    }
+
+    .product-info .code {
+        font-weight: 700;
+        font-size: 13px;
+        line-height: 1.1;
+    }
+
+    .product-info .name {
+        color: #555;
+        font-size: 13px;
+        line-height: 1.2;
+    }
+
+    .product-value {
+        text-align: right;
+    }
+
+    .product-trend.up {
+        color: #28a745;
+        font-size: 12px;
+    }
+
+    .product-trend.down {
+        color: #dc3545;
+        font-size: 12px;
+    }
 </style>
 
 <div id="wrapper">
@@ -474,12 +529,11 @@
     $extendCode = $order['histories'][2]['extend_code']['new'] ?? null;
     $firststaffconfirm = $order['status_history'][0]['editor']['name'] ?? null;
     $staffconfirm = $order['status_history'][1]['editor']['name'] ?? null;
-    $reconciliationTime = null; // Biến để lưu kết quả
+    $reconciliationTime = null;
     $extendUpdateHistory = $order['partner']['extend_update'] ?? [];
     $tagPancake = $order['customer']['conversation_tags'] ?? [];
     foreach ($extendUpdateHistory as $update) {
         if (isset($update['status']) && $update['status'] === 'Đã đối soát') {
-            // Lấy thời gian và dừng vòng lặp
             $reconciliationTime = $update['update_at'] ?? null;
             break;
         }
@@ -495,22 +549,13 @@
     $p_utm_id = $order['p_utm_id'] ?? null;
     $tracking_id = $order['partner']['extend_code'] ?? null;
     $products_to_display = [];
-    if (
-        !empty($order['items']) &&
-        isset($order['items'][0]['is_composite']) &&
-        $order['items'][0]['is_composite'] === true &&
-        !empty($order['items'][0]['components'])
-    ) {
-        // Nếu là combo, ta sẽ lặp qua các 'components'
+    if (!empty($order['items']) && isset($order['items'][0]['is_composite']) && $order['items'][0]['is_composite'] === true && !empty($order['items'][0]['components'])) {
         $products_to_display = $order['items'][0]['components'];
     } else {
-        // Nếu là sản phẩm thường, ta lặp qua 'items' như bình thường
-        $products_to_display = $order['items'] ?? []; // Dùng ?? [] để đảm bảo đây luôn là một mảng
+        $products_to_display = $order['items'] ?? [];
     }
     $productsCount = count($products_to_display);
     ?>
-
-
 
     <div class="info-section">
         <h3><i class="fa-solid fa-chart-pie"></i> Tổng quan</h3>
@@ -777,8 +822,8 @@
                             <th>Đơn chốt</th>
                             <th>SL hàng chốt</th>
                             <th>GTTB</th>
-                            <th>SL KH cũ</th>
                             <th>SL KH mới</th>
+                            <th>SL KH cũ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -805,8 +850,12 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_aov_of_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
                             </td>
-                            <td>1</td>
-                            <td>8.3%</td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_new_affiliate ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_returning_affiliate ?? 0, 0, ',', '.'); ?>
+                            </td>
                         </tr>
                         <td>
                             <img src="https://www.freeiconspng.com/uploads/facebook-png-icon-follow-us-facebook-1.png"
@@ -832,8 +881,12 @@
                         <td style="text-align: center;">
                             <?= number_format($get_aov_of_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
                         </td>
-                        <td>4</td>
-                        <td>14.8%</td>
+                        <td style="text-align: center;">
+                            <?= number_format($cust_new_facebook ?? 0, 0, ',', '.'); ?>
+                        </td>
+                        <td style="text-align: center;">
+                            <?= number_format($cust_returning_facebook ?? 0, 0, ',', '.'); ?>
+                        </td>
                         </tr>
                         <tr>
                             <td>
@@ -860,8 +913,12 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_aov_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
                             </td>
-                            <td>1</td>
-                            <td>5.6%</td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_new_shopee ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_returning_shopee ?? 0, 0, ',', '.'); ?>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -888,8 +945,12 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_aov_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
                             </td>
-                            <td>1</td>
-                            <td>6.7%</td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_new_zalo ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_returning_zalo ?? 0, 0, ',', '.'); ?>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -916,8 +977,12 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_aov_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
                             </td>
-                            <td>1</td>
-                            <td>5.6%</td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_new_tiktok ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_returning_tiktok ?? 0, 0, ',', '.'); ?>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -944,8 +1009,12 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_aov_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
                             </td>
-                            <td>0</td>
-                            <td>0.0%</td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_new_woocommerce ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_returning_woocommerce ?? 0, 0, ',', '.'); ?>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -972,8 +1041,12 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_aov_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
                             </td>
-                            <td>0</td>
-                            <td>0.0%</td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_new_hotline ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_returning_hotline ?? 0, 0, ',', '.'); ?>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -1000,8 +1073,12 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_aov_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
                             </td>
-                            <td>0</td>
-                            <td>0.0%</td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_new_ladipage ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_returning_ladipage ?? 0, 0, ',', '.'); ?>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -1025,16 +1102,72 @@
                             <td style="text-align: center;">
                                 <?= number_format($get_aov_of_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?>
                             </td>
-                            <td>0</td>
-                            <td>0.0%</td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_new_others ?? 0, 0, ',', '.'); ?>
+                            </td>
+                            <td style="text-align: center;">
+                                <?= number_format($cust_returning_others ?? 0, 0, ',', '.'); ?>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <div class="info-section">
+        <h3><i class="fa-solid fa-boxes-stacked"></i> Sản phẩm</h3>
+        <div class="dashboard-panel" style="padding:0;">
+            <div class="table-responsive">
+                <table class="table table-hover product-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 70%;">Thông tin sản phẩm</th>
+                            <th style="width: 30%; text-align:right;">Doanh thu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($products_metrics)) : ?>
+                            <?php foreach ($products_metrics as $p) :
+                                $img = $p['image_url'] ?: 'https://via.placeholder.com/44x44?text=%20';
+                                $code = $p['product_code'] ?: '-';
+                                $name = $p['product_name'] ?: '-';
+                                $rev  = (float)$p['revenue'];
+                                $pct  = $p['pct'];
+                                $isUp = !is_null($pct) && ($pct >= 0);
+                            ?>
+                                <tr>
+                                    <td>
+                                        <div class="product-cell">
+                                            <img class="product-thumb" src="<?= htmlspecialchars($img); ?>" alt="">
+                                            <div class="product-info">
+                                                <div class="code"><?= htmlspecialchars($code); ?></div>
+                                                <div class="name"><?= htmlspecialchars($name); ?></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="product-value">
+                                        <div class="value"><strong><?= number_format($rev, 0, ',', '.'); ?> đ</strong></div>
+                                        <?php if (!is_null($pct)) : ?>
+                                            <div class="product-trend <?= $isUp ? 'up' : 'down'; ?>">
+                                                <?= $isUp ? '▲' : '▼'; ?> <?= number_format(abs($pct), 2, ',', '.'); ?>%
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <tr>
+                                <td colspan="2" class="text-center">Không có dữ liệu sản phẩm trong khoảng ngày đã chọn.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 <?php init_tail(); ?>
 </body>
 

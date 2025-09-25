@@ -51,7 +51,7 @@ class Pancake_sync extends AdminController
 
         $data['current_page'] = (int)($filters['page_number'] ?? 1);
         $data['total_pages']  = ($pageSize > 0 && $data['total'] > 0) ? ceil($data['total'] / $pageSize) : 0;
-        
+
         $this->load->view('pancake_sync/orders', $data);
     }
 
@@ -61,62 +61,83 @@ class Pancake_sync extends AdminController
      */
     public function start_sync()
     {
-        // Gọi API chỉ với 1 đơn hàng để lấy được tổng số 'total_entries'
-        $apiResponse = $this->getOrdersFromApi(['page_size' => 1]);
-
-        if (!$apiResponse['success']) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'message' => 'Không thể kết nối đến API Pancake. Vui lòng kiểm tra lại cấu hình.']);
-            return;
-        }
-
         header('Content-Type: application/json');
-        echo json_encode([
-            'success' => true,
-            'total_orders' => $apiResponse['total'], // Trả về tổng số đơn có trên Pancake
-        ]);
-    }
 
-    /**
-     * BƯỚC 2 CỦA QUÁ TRÌNH SYNC: Đồng bộ một trang duy nhất.
-     * Được gọi lặp đi lặp lại bởi AJAX cho đến khi hoàn tất.
-     */
-    public function sync_page()
-    {
-        $page = (int)$this->input->post('page');
-        if ($page <= 0) {
-            $page = 1;
-        }
-        
-        $page_size = 100; // Mỗi lần đồng bộ 100 đơn -> nhanh và an toàn, không timeout.
+        // Chốt mỗi lần đồng bộ chỉ lấy 1 page 1000 đơn
+        $page_size   = 1000;
+        $page_number = 1;
 
-        $apiResponse = $this->getOrdersFromApi([
-            'page_size'   => $page_size,
-            'page_number' => $page,
-        ]);
-
-        // Nếu API trả về lỗi hoặc không có đơn hàng nào nữa (đã hết)
-        if (!$apiResponse['success'] || empty($apiResponse['data'])) {
-            header('Content-Type: application/json');
+        // Chạm API nhẹ để xác thực cấu hình / key hợp lệ
+        $head = $this->getOrdersFromApi(['page_size' => 1, 'page_number' => 1]);
+        if (!$head['success']) {
             echo json_encode([
-                'status'  => 'complete', // Báo cho JS biết là đã đồng bộ xong
-                'message' => "Đồng bộ hoàn tất!",
+                'success' => false,
+                'message' => 'Không thể kết nối đến API Pancake. Vui lòng kiểm tra lại cấu hình.'
             ]);
             return;
         }
-        
-        // Gọi model để lưu dữ liệu của trang này vào DB
-        $rows_affected = $this->pancake_orders_model->sync_orders($apiResponse['data']);
 
-        // Trả về kết quả của lần chạy này, và báo cho JS tiếp tục xử lý trang kế tiếp
-        header('Content-Type: application/json');
         echo json_encode([
-            'status'          => 'processing', // Báo cho JS biết vẫn đang xử lý, chưa xong
-            'next_page'       => $page + 1,
-            'processed_count' => count($apiResponse['data']), // Số đơn xử lý trong lần này
-            'rows_affected'   => $rows_affected,
+            'success'     => true,
+            'page_size'   => $page_size,
+            'total_pages' => 1,
+            'next_page'   => $page_number,
         ]);
     }
+
+    public function sync_page()
+    {
+        header('Content-Type: application/json');
+
+        $page_number = (int)$this->input->post('page');
+        if ($page_number <= 0) $page_number = 1;
+
+        $page_size = 1000;
+
+        // Nếu muốn cho phép filter kèm theo (tùy bạn), gom ở đây
+        $allowedFilters = ['search', 'filter_status', 'include_removed', 'updateStatus', 'startDateTime', 'endDateTime'];
+        $params = ['page_number' => $page_number, 'page_size' => $page_size];
+        foreach ($allowedFilters as $f) {
+            $v = $this->input->post($f);
+            if ($v !== null && $v !== '') $params[$f] = $v;
+        }
+
+        // Retry nhẹ 1 lần
+        $attempts = 0;
+        $apiResponse = ['success' => false, 'data' => []];
+        while ($attempts < 2) {
+            $attempts++;
+            $apiResponse = $this->getOrdersFromApi($params);
+            if ($apiResponse['success']) break;
+            usleep(300000);
+        }
+
+        if (!$apiResponse['success']) {
+            echo json_encode([
+                'status'  => 'error',
+                'message' => 'Lỗi gọi API. Vui lòng thử lại.'
+            ]);
+            return;
+        }
+
+        $batch = is_array($apiResponse['data']) ? $apiResponse['data'] : [];
+        $rows_affected = 0;
+        if (!empty($batch)) {
+            $rows_affected = $this->pancake_orders_model->sync_orders($batch);
+        }
+
+        // KẾT THÚC sau 1 trang
+        echo json_encode([
+            'status'          => 'complete',
+            'processed_count' => count($batch),
+            'rows_affected'   => $rows_affected,
+            'page'            => $page_number,
+            'page_size'       => $page_size,
+            'message'         => 'Đồng bộ 1 trang (1000 đơn) hoàn tất.'
+        ]);
+    }
+
+
 
     // Giữ nguyên hàm getOrdersFromApi của bạn
     private function getOrdersFromApi(array $params = []): array
@@ -124,7 +145,7 @@ class Pancake_sync extends AdminController
         $queryParams = [
             'api_key'     => $this->apiKey,
             'page_number' => $params['page_number'] ?? 1,
-            'page_size'   => $params['page_size'] ?? 30
+            'page_size'   => $params['page_size'] ?? 30,
         ];
 
         $filters = ['search', 'filter_status', 'include_removed', 'updateStatus', 'startDateTime', 'endDateTime'];
@@ -133,26 +154,37 @@ class Pancake_sync extends AdminController
                 $queryParams[$key] = $params[$key];
             }
         }
+
         $url = $this->apiUrl . "/shops/{$this->shopId}/orders?" . http_build_query($queryParams);
         $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Accept: application/json"]);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER     => ["Accept: application/json"],
+            CURLOPT_TIMEOUT        => 120,
+            CURLOPT_CONNECTTIMEOUT => 15,
+            CURLOPT_FAILONERROR    => false,
+            CURLOPT_TCP_KEEPALIVE  => 1,
+            CURLOPT_TCP_KEEPIDLE   => 30,
+            CURLOPT_TCP_KEEPINTVL  => 10,
+        ]);
         $response = curl_exec($ch);
         $status   = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        if ($status !== 200) {
+
+        if ($status !== 200 || $response === false) {
             return ['success' => false, 'message' => "API Error: HTTP {$status}", 'data' => [], 'total' => 0];
         }
+
         $jsonData = json_decode($response, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             return ['success' => false, 'message' => "JSON parse error", 'data' => [], 'total' => 0];
         }
+
         return [
             'success' => $jsonData['success'] ?? false,
             'message' => $jsonData['message'] ?? 'OK',
             'data'    => $jsonData['data'] ?? [],
-            'total'   => isset($jsonData['total_entries']) ? (int)$jsonData['total_entries'] : 0
+            'total'   => isset($jsonData['total_entries']) ? (int)$jsonData['total_entries'] : 0,
         ];
     }
 }
