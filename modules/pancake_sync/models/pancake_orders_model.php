@@ -44,9 +44,6 @@ class Pancake_orders_model extends App_Model
         return true;
     }
 
-    /* ==================== CUSTOMER HELPERS ==================== */
-
-    // UID khách để đếm distinct: ưu tiên customer.id, fallback phone/bill/referral_code, cuối cùng là po.id
     private function _customer_uid_expr()
     {
         return "COALESCE(
@@ -498,102 +495,5 @@ class Pancake_orders_model extends App_Model
 
         $this->_cache_set($cache_key, $row, 60);
         return $row;
-    }
-
-    /* ==================== TOP PRODUCTS (REVENUE BY ITEM, CACHE 60s) ==================== */
-    /**
-     * Tính doanh thu theo sản phẩm trong khoảng ngày.
-     * - Lấy từ $.items[*] (KHÔNG nổ components => combo được tính là 1 sản phẩm).
-     * - Doanh thu theo item = quantity * unit_price - total_discount (chỉ trừ discount ở từng item).
-     * - unit_price fallback: exact_price -> retail_price -> price -> 0.
-     * - Lọc đơn theo confirmed_at (status=1) +7h, và loại trừ canceled / returned / returning.
-     *
-     * @param string $start_date Y-m-d
-     * @param string $end_date   Y-m-d
-     * @param int    $limit      số SP trả về (mặc định 100)
-     * @return array [ ['product_code','product_name','image_url','revenue','quantity','orders'], ... ]
-     */
-    public function get_top_products($start_date, $end_date, $limit = 100)
-    {
-        $limit = max(1, (int)$limit);
-        $cache_key = 'prod_top_' . $start_date . '_' . $end_date . '_' . $limit;
-        if (($cached = $this->_cache_get($cache_key, 60)) !== false) return $cached;
-
-        $table   = db_prefix() . 'pancake_orders';
-        $startDT = $start_date . ' 00:00:00';
-        $endDT   = $end_date   . ' 23:59:59';
-
-        $sql = "
-        SELECT
-            t.product_code,
-            t.product_name,
-            t.image_url,
-            SUM(t.item_revenue) AS revenue,
-            SUM(t.quantity)     AS quantity,
-            COUNT(DISTINCT t.order_id) AS orders
-        FROM
-        (
-            SELECT
-                o.id AS order_id,
-                /* Mã & tên sản phẩm từ item; với combo cũng lấy từ item chính */
-                COALESCE(j.disp_id, j.alt_id, j.variation_id)               AS product_code,
-                j.name                                                      AS product_name,
-                JSON_UNQUOTE(JSON_EXTRACT(j.images,'$[0]'))                 AS image_url,
-                CAST(j.quantity AS DECIMAL(18,2))                            AS quantity,
-                /* Giá fallback: exact_price -> retail_price -> price -> 0 */
-                CAST(COALESCE(j.exact_price, j.retail_price, j.price, 0) AS DECIMAL(18,2))  AS unit_price,
-                CAST(IFNULL(j.item_discount, 0) AS DECIMAL(18,2))           AS item_discount,
-                /* Doanh thu theo item */
-                (CAST(j.quantity AS DECIMAL(18,2)) * CAST(COALESCE(j.exact_price, j.retail_price, j.price, 0) AS DECIMAL(18,2))
-                    - CAST(IFNULL(j.item_discount, 0) AS DECIMAL(18,2)))    AS item_revenue
-            FROM
-            (
-                SELECT
-                    po.id,
-                    JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) AS status_name,
-                    (
-                      SELECT MAX(DATE_ADD(h.updated_at, INTERVAL 7 HOUR))
-                      FROM JSON_TABLE(
-                          po.data,
-                          '$.status_history[*]'
-                          COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                      ) h
-                      WHERE h.status = 1
-                    ) AS confirmed_at,
-                    po.data
-                FROM {$table} po
-            ) o
-            JOIN JSON_TABLE(
-                o.data,
-                '$.items[*]'
-                COLUMNS (
-                    quantity      DECIMAL(18,2) PATH '$.quantity',
-                    item_discount DECIMAL(18,2) PATH '$.total_discount',
-                    exact_price   DECIMAL(18,2) PATH '$.variation_info.exact_price',
-                    retail_price  DECIMAL(18,2) PATH '$.variation_info.retail_price',
-                    price         DECIMAL(18,2) PATH '$.price',
-                    disp_id       VARCHAR(191)  PATH '$.variation_info.product_display_id',
-                    alt_id        VARCHAR(191)  PATH '$.variation_info.id',
-                    variation_id  VARCHAR(191)  PATH '$.variation_id',
-                    name          VARCHAR(255)  PATH '$.variation_info.name',
-                    images        JSON          PATH '$.variation_info.images',
-                    is_composite  INT           PATH '$.is_composite'
-                )
-            ) j
-            WHERE o.confirmed_at BETWEEN ? AND ?
-              AND o.status_name NOT IN ('canceled','returned','returning')
-              /* Lưu ý: KHÔNG nổ components => combo được tính là 1 sản phẩm */
-        ) t
-        WHERE t.product_code IS NOT NULL AND t.product_code <> ''
-        GROUP BY t.product_code, t.product_name, t.image_url
-        ORDER BY revenue DESC
-        LIMIT {$limit}
-        ";
-
-        $bind = [$startDT, $endDT];
-        $rows = $this->db->query($sql, $bind)->result_array() ?: [];
-
-        $this->_cache_set($cache_key, $rows, 60);
-        return $rows;
     }
 }

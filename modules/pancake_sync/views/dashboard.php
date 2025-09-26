@@ -629,7 +629,7 @@
                                     <div class="big-number"><?= number_format($tong_hang_hoan_tien ?? 0, 0, ',', '.'); ?> </div>                                </div>
                                 <div class="metric-item">
                                     <div class="text-muted">Số lượng</div>
-                                    <div class="big-number"><?= number_format($tong_hang_hoan_soluong ?? 0); ?></div>d
+                                    <div class="big-number"><?= number_format($tong_hang_hoan_soluong ?? 0); ?></div>
                                 </div>
                             </div>
                         </div>
@@ -1104,57 +1104,6 @@
         </div>
     </div>
 
-    <div class="info-section">
-        <h3><i class="fa-solid fa-boxes-stacked"></i> Sản phẩm</h3>
-        <div class="dashboard-panel" style="padding:0;">
-            <div class="table-responsive">
-                <table class="table table-hover product-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 70%;">Thông tin sản phẩm</th>
-                            <th style="width: 30%; text-align:right;">Doanh thu</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($products_metrics)) : ?>
-                            <?php foreach ($products_metrics as $p) :
-                                $img = $p['image_url'] ?: 'https://via.placeholder.com/44x44?text=%20';
-                                $code = $p['product_code'] ?: '-';
-                                $name = $p['product_name'] ?: '-';
-                                $rev  = (float)$p['revenue'];
-                                $pct  = $p['pct'];
-                                $isUp = !is_null($pct) && ($pct >= 0);
-                            ?>
-                                <tr>
-                                    <td>
-                                        <div class="product-cell">
-                                            <img class="product-thumb" src="<?= htmlspecialchars($img); ?>" alt="">
-                                            <div class="product-info">
-                                                <div class="code"><?= htmlspecialchars($code); ?></div>
-                                                <div class="name"><?= htmlspecialchars($name); ?></div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="product-value">
-                                        <div class="value"><strong><?= number_format($rev, 0, ',', '.'); ?> đ</strong></div>
-                                        <?php if (!is_null($pct)) : ?>
-                                            <div class="product-trend <?= $isUp ? 'up' : 'down'; ?>">
-                                                <?= $isUp ? '▲' : '▼'; ?> <?= number_format(abs($pct), 2, ',', '.'); ?>%
-                                            </div>
-                                        <?php endif; ?>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <tr>
-                                <td colspan="2" class="text-center">Không có dữ liệu sản phẩm trong khoảng ngày đã chọn.</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 </div>
 
 <?php init_tail(); ?>

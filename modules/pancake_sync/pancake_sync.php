@@ -62,13 +62,20 @@ hooks()->add_action('admin_init', function () {
             'href'     => admin_url('pancake_sync/pancake_dashboard'), // <-- THAY ĐỔI
             'position' => 5,
         ]);
+        
+        $CI->app_menu->add_sidebar_children_item('pancake-sync-parent', [
+            'slug'     => 'pancake-sync-customers',
+            'name'     => _l('Tổng quan sản phẩm'),
+            'href'     => admin_url('pancake_sync/pancake_overview_products'), // <-- THAY ĐỔI
+            'position' => 10,
+        ]);
 
         // Menu con: Đơn hàng -> Trỏ đến controller Pancake_sync (của bạn)
         $CI->app_menu->add_sidebar_children_item('pancake-sync-parent', [
             'slug'     => 'pancake-sync-orders',
             'name'     => _l('Đơn hàng'),
             'href'     => admin_url('pancake_sync'), // <-- GIỮ NGUYÊN
-            'position' => 10,
+            'position' => 15,
         ]);
 
         // Menu con: Sản phẩm -> Trỏ đến controller Pancake_dashboard
@@ -76,14 +83,14 @@ hooks()->add_action('admin_init', function () {
             'slug'     => 'pancake-sync-products',
             'name'     => _l('Sản phẩm'),
             'href'     => admin_url('pancake_sync/pancake_sync_products'), // <-- ĐÃ THAY ĐỔI
-            'position' => 15,
+            'position' => 20,
         ]);
         // Menu con: Khách hàng -> Trỏ đến controller Pancake_dashboard
         $CI->app_menu->add_sidebar_children_item('pancake-sync-parent', [
             'slug'     => 'pancake-sync-customers',
             'name'     => _l('Khách hàng'),
             'href'     => admin_url('pancake_sync/pancake_sync_customers'), // <-- THAY ĐỔI
-            'position' => 20,
+            'position' => 25,
         ]);
     }
 });

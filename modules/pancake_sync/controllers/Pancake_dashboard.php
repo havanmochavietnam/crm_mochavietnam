@@ -173,42 +173,6 @@ class Pancake_dashboard extends AdminController
         $data['tai_quay_doanh_thu'] = 0;
         $data['tai_quay_don_chot']  = 0;
 
-        // ==== SẢN PHẨM (mới): doanh thu theo sản phẩm ====
-        $topProducts = $this->pancake_orders_model->get_top_products($start_date, $end_date, 100);
-
-        // Kỳ trước (cùng số ngày) để tính % tăng/giảm
-        $days = max(1, (int) floor((strtotime($end_date) - strtotime($start_date)) / 86400) + 1);
-        $prev_end   = date('Y-m-d', strtotime($start_date . ' -1 day'));
-        $prev_start = date('Y-m-d', strtotime($prev_end . ' -' . ($days - 1) . ' day'));
-        $topProductsPrev = $this->pancake_orders_model->get_top_products($prev_start, $prev_end, 1000);
-
-        $prevMap = [];
-        foreach ($topProductsPrev as $p) {
-            $code = $p['product_code'] ?? '';
-            if ($code === '') continue;
-            $prevMap[$code] = (float)$p['revenue'];
-        }
-
-        $products_metrics = [];
-        foreach ($topProducts as $p) {
-            $code    = $p['product_code'] ?? '-';
-            $rev     = (float)($p['revenue'] ?? 0);
-            $prevRev = (float)($prevMap[$code] ?? 0);
-            $pct     = ($prevRev > 0) ? (($rev - $prevRev) / $prevRev * 100.0) : null;
-
-            $products_metrics[] = [
-                'product_code' => $code,
-                'product_name' => $p['product_name'] ?? '',
-                'image_url'    => $p['image_url'] ?? null,
-                'revenue'      => $rev,
-                'quantity'     => (float)($p['quantity'] ?? 0),
-                'orders'       => (int)($p['orders'] ?? 0),
-                'pct'          => $pct,
-            ];
-        }
-        $data['products_metrics'] = $products_metrics;
-        // ==== /SẢN PHẨM ====
-
         // Điều khiển view
         $data['start_date'] = $start_date;
         $data['end_date']   = $end_date;
