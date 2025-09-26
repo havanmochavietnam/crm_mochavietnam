@@ -594,10 +594,9 @@
                             <div class="stat-metrics">
                                 <div class="metric-item">
                                     <div class="text-muted">Tổng tiền</div>
-                                    <div class="big-number text-success-light">
+                                    <div class="big-number">
                                         <?= $sales_volume_confirmed; ?>
                                     </div>
-                                    <div class="small-percent text-success-percent"><i class="fa-solid fa-arrow-up"></i> <?= $tong_hang_chot_percent ?? '0.00%'; ?></div>
                                 </div>
                                 <div class="metric-item">
                                     <div class="text-muted">Số lượng</div>
@@ -611,10 +610,9 @@
                                                 }
                                             }
                                         }
-                                        echo number_format($gross_product_count, 0, ',', '.');
+                                        echo number_format($gross_product_count, 0, ',', ',');
                                         ?>
                                     </div>
-                                    <div class="small-percent text-success-percent"><i class="fa-solid fa-arrow-up"></i> <?= $tong_hang_chot_soluong_percent ?? '0.00%'; ?></div>
                                 </div>
                             </div>
                         </div>
@@ -628,13 +626,10 @@
                             <div class="stat-metrics">
                                 <div class="metric-item">
                                     <div class="text-muted">Tổng tiền</div>
-                                    <div class="big-number text-danger-light"><?= number_format($tong_hang_hoan_tien ?? 0, 0, ',', '.'); ?> đ</div>
-                                    <div class="small-percent text-danger-percent"><i class="fa-solid fa-arrow-down"></i> <?= $tong_hang_hoan_percent ?? '0.00%'; ?></div>
-                                </div>
+                                    <div class="big-number"><?= number_format($tong_hang_hoan_tien ?? 0, 0, ',', '.'); ?> </div>                                </div>
                                 <div class="metric-item">
                                     <div class="text-muted">Số lượng</div>
-                                    <div class="big-number"><?= number_format($tong_hang_hoan_soluong ?? 0); ?></div>
-                                    <div class="small-percent text-danger-percent"><i class="fa-solid fa-arrow-down"></i> <?= $tong_hang_hoan_soluong_percent ?? '0.00%'; ?></div>
+                                    <div class="big-number"><?= number_format($tong_hang_hoan_soluong ?? 0); ?></div>d
                                 </div>
                             </div>
                         </div>
@@ -646,17 +641,16 @@
                     <div class="dashboard-panel bottom-stat-panel">
                         <div class="panel-title-group">
                             <h4 class="no-margin"><i class="fa-solid fa-dollar-sign mright5"></i> Tổng cộng</h4>
-                            <span class="percent text-success-percent"><i class="fa-solid fa-arrow-up mright5"></i><?= $tong_cong_percent ?? '0.00%'; ?></span>
                         </div>
                         <div class="stat-row">
                             <span class="stat-label">Doanh thu:</span>
-                            <span class="stat-value currency text-success-light">
+                            <span class="value">
                                 <?= number_format($revenue_confirmed) ?>
                             </span>
                         </div>
                         <div class="stat-row">
                             <span class="stat-label">Đơn chốt:</span>
-                            <span class="stat-value text-info"><?= number_format($count_confirmed ?? 0); ?></span>
+                            <span class="value"><?= number_format($count_confirmed ?? 0); ?></span>
                         </div>
                     </div>
                 </div>
@@ -664,15 +658,14 @@
                     <div class="dashboard-panel bottom-stat-panel">
                         <div class="panel-title-group">
                             <h4 class="no-margin"><i class="fa-solid fa-desktop mright5"></i> Online</h4>
-                            <span class="percent text-success-percent"><i class="fa-solid fa-arrow-up mright5"></i><?= $online_percent ?? '0.00%'; ?></span>
                         </div>
                         <div class="stat-row">
                             <span class="stat-label">Doanh thu:</span>
-                            <span class="stat-value currency text-success-light"><?= number_format($revenue_confirmed ?? 0); ?></span>
+                            <span class="value"><?= number_format($revenue_confirmed ?? 0); ?></span>
                         </div>
                         <div class="stat-row">
                             <span class="stat-label">Đơn chốt:</span>
-                            <span class="stat-value text-info"><?= number_format($count_confirmed ?? 0); ?></span>
+                            <span class="value"><?= number_format($count_confirmed ?? 0); ?></span>
                         </div>
                     </div>
                 </div>
@@ -697,28 +690,24 @@
             <div class="overview-stats-grid">
                 <div class="overview-stat-box">
                     <h4>Doanh số</h4>
-                    <div class="value text-success-light">
+                    <div class="value">
                         <?= number_format($sales_volume_confirmed ?? 0); ?>
                     </div>
-                    <div class="trend up">+12.5% <i class="fa-solid fa-arrow-up"></i></div>
                 </div>
 
                 <div class="overview-stat-box">
                     <h4>Doanh thu</h4>
-                    <div class="value text-success-light"><?= number_format($revenue_confirmed ?? 0); ?></div>
-                    <div class="trend up">+8.3% <i class="fa-solid fa-arrow-up"></i></div>
+                    <div class="value"><?= number_format($revenue_confirmed ?? 0,0, ',', ','); ?></div>
                 </div>
 
                 <div class="overview-stat-box">
                     <h4>Số đơn chốt</h4>
                     <div class="value"><?= number_format($count_confirmed ?? 0); ?></div>
-                    <div class="trend up">+5.7% <i class="fa-solid fa-arrow-up"></i></div>
                 </div>
 
                 <div class="overview-stat-box">
                     <h4>GTTB</h4>
-                    <div class="value"><?= number_format($aov_confirmed ?? 0, 0, ',', '.'); ?> đ</div>
-                    <div class="trend up">+3.2% <i class="fa-solid fa-arrow-up"></i></div>
+                    <div class="value"><?= number_format($aov_confirmed ?? 0, 0, ',', ','); ?> </div>
                 </div>
             </div>
 
@@ -730,12 +719,12 @@
 
                 <div class="eight-stat-item">
                     <div class="label">SL SPTB</div>
-                    <div class="value text-success"><?= number_format($avg_products_per_order ?? 0, 2, ',', '.'); ?></div>
+                    <div class="value"><?= number_format($avg_products_per_order ?? 0, 2, ',', '.'); ?></div>
                 </div>
 
                 <div class="eight-stat-item">
                     <div class="label">Chi phí quảng cáo</div>
-                    <div class="value text-danger"><?= number_format($don_hang_huy ?? 0); ?></div>
+                    <div class="value"><?= number_format($don_hang_huy ?? 0); ?></div>
                 </div>
 
                 <div class="eight-stat-item">

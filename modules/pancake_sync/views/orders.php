@@ -1634,7 +1634,7 @@
                                                     }
                                                 }
                                             }
-                                            echo html_escape($editorName); // In ra: Lê Thị Trúc Phương
+                                            echo html_escape($editorName);
                                             ?>
                                         </td>
                                         <!-- Nhân viên cập nhật -->
