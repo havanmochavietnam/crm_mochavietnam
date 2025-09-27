@@ -96,15 +96,28 @@ class Pancake_orders_model extends App_Model
             return json_encode($v, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
         };
 
+        // tên bảng (để db_prefix() tự thêm 'tbl')
+        $tableOrders  = db_prefix() . 'pancake_orders';
+        $tableDetails = db_prefix() . 'pancake_order_details';
+
         foreach ($orders as $o) {
             try {
+                // ===== Chuẩn hoá thời gian tạo đơn (fallback theo nhiều key) =====
+                $createdRaw = $o['inserted_at']
+                    ?? $o['created_at']
+                    ?? $o['created_time']
+                    ?? $o['createdAt']
+                    ?? null;
+
+                // ===== DỮ LIỆU BẢNG ORDERS =====
                 $data = [
                     'pancake_order_id' => $str($o['id'] ?? null, 64),
-                    'customer_name'    => $str($o['shipping_address']['full_name'] ?? null, 191),
-                    'customer_phone'   => $str($o['shipping_address']['phone_number'] ?? null, 32),
-                    'status_name'      => $str($o['status_name'] ?? null, 64),
-                    'cod'              => $num($o['cod'] ?? 0),
-                    'created_at'       => $dt($o['inserted_at'] ?? null),
+                    'customer_name'    => $str($o['shipping_address']['full_name']     ?? null, 191),
+                    'customer_phone'   => $str($o['shipping_address']['phone_number']  ?? null, 32),
+                    'status_name'      => $str($o['status_name'] ?? $o['status'] ?? null, 64),
+                    'order_sources_name'   => $str($o['order_sources_name']  ?? null, max: 191),
+                    'cod'              => $num($o['cod'] ?? $o['cash_on_delivery'] ?? 0),
+                    'created_at'       => $dt($createdRaw),
                     'data'             => $js($o),
                 ];
 
@@ -112,18 +125,116 @@ class Pancake_orders_model extends App_Model
                     throw new Exception('missing pancake_order_id');
                 }
 
-                $table = db_prefix() . 'pancake_orders';
+                // ===== LẤY ITEMS (fallback nhiều tên key) =====
+                $items = $o['items']
+                    ?? $o['order_items']
+                    ?? $o['products']
+                    ?? $o['line_items']
+                    ?? [];
+                if (empty($items) && isset($o['order']['items']) && is_array($o['order']['items'])) {
+                    $items = $o['order']['items'];
+                }
 
+                // ===== Build rows details =====
+                $rows = [];
+                foreach ($items as $it) {
+                    // Một số API lồng thông tin biến thể vào variation_info / product
+                    $vi = $it['variation_info'] ?? $it['variationInfo'] ?? $it['product'] ?? $it;
+
+                    $product_id = $it['variation_info']['display_id'] ?? null;
+                    // Tên sp
+                    $product_name = $str(
+                        $vi['name']
+                            ?? $it['product_name']
+                            ?? $it['title']
+                            ?? null,
+                        191
+                    );
+                    // Số lượng
+                    $quantity = (int)($it['quantity'] ?? $vi['quantity'] ?? 0);
+
+                    // Ảnh: có thể là mảng string / mảng object / single field
+                    $img = null;
+                    if (!empty($vi['images'])) {
+                        if (is_array($vi['images'])) {
+                            // images[0] hoặc images[0]['url']
+                            $img = is_array($vi['images'][0] ?? null)
+                                ? ($vi['images'][0]['url'] ?? null)
+                                : ($vi['images'][0] ?? null);
+                        }
+                    }
+                    if (!$img) {
+                        $img = $vi['image_url'] ?? $vi['image'] ?? $it['image_url'] ?? $it['image'] ?? null;
+                    }
+                    $image_url = $str($img, 255);
+
+                    // Giá + giảm giá
+                    $unit_price = $num(
+                        $vi['retail_price']
+                            ?? $vi['price']
+                            ?? $it['unit_price']
+                            ?? $it['price']
+                            ?? 0
+                    );
+                    $total_discount = $num(
+                        $it['total_discount']
+                            ?? $it['discount']
+                            ?? $vi['discount']
+                            ?? 0
+                    );
+
+                    // Cờ combo/gift
+                    $is_combo = (!empty($it['is_composite']) || !empty($it['is_combo'])) ? 1 : 0;
+                    $is_gift  = (!empty($it['is_bonus_product']) || !empty($it['is_gift']) || $unit_price <= 0 || $total_discount >= $unit_price) ? 1 : 0;
+
+                    $rows[] = [
+                        'pancake_order_id' => $data['pancake_order_id'],
+                        'product_id'       => $product_id,
+                        'product_name'     => $product_name,
+                        'quantity'         => $quantity,
+                        'image_url'        => $image_url,
+                        'unit_price'       => $unit_price,
+                        'total_discount'   => $total_discount,
+                        'is_combo'         => $is_combo,
+                        'is_gift'          => $is_gift,
+                    ];
+                }
+
+                // ===== Ghi DB có transaction cho từng order =====
+                $this->db->trans_start();
+
+                // Upsert orders
                 $this->db->set($data);
-                $sql = $this->db->get_compiled_insert($table);
+                $sql = $this->db->get_compiled_insert($tableOrders);
                 $sql .= " ON DUPLICATE KEY UPDATE "
                     . "customer_name=VALUES(customer_name),"
                     . "customer_phone=VALUES(customer_phone),"
                     . "status_name=VALUES(status_name),"
+                    . "order_sources_name=VALUES(order_sources_name)," 
                     . "cod=VALUES(cod),"
                     . "created_at=VALUES(created_at),"
                     . "`data`=VALUES(`data`)";
                 $this->db->query($sql);
+
+                // Chỉ xoá + chèn lại chi tiết khi thực sự có rows
+                if (!empty($rows)) {
+                    $this->db->where('pancake_order_id', $data['pancake_order_id'])->delete($tableDetails);
+                    $this->db->insert_batch($tableDetails, $rows);
+                }
+
+                $this->db->trans_complete();
+
+                if ($this->db->trans_status() === FALSE) {
+                    // lấy lỗi DB (nếu có)
+                    $e = $this->db->error();
+                    $code = $e['code'] ?? 0;
+                    $msg  = $e['message'] ?? 'DB transaction failed';
+                    throw new Exception("DB err {$code}: {$msg}");
+                }
+
+                // (tuỳ chọn) log để soi nhanh khi cần
+                // log_message('debug', 'Synced order '.$data['pancake_order_id'].' items='.count($rows));
+
                 $ok++;
             } catch (Throwable $e) {
                 $err++;
@@ -137,6 +248,7 @@ class Pancake_orders_model extends App_Model
 
         return ['ok' => $ok, 'err' => $err, 'errors' => array_slice($errors, 0, 10)];
     }
+
 
     /* ==================== SELLERS (GIỮ NGUYÊN) ==================== */
     public function get_sellers_from_orders()
