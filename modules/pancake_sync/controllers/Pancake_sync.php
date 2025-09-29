@@ -58,7 +58,7 @@ class Pancake_sync extends AdminController
     public function start_sync()
     {
         header('Content-Type: application/json');
-        $page_size = 1000; 
+        $page_size = 1000;
         if (function_exists('set_time_limit')) @set_time_limit(0);
         if (function_exists('ignore_user_abort')) @ignore_user_abort(true);
         $params = [
@@ -188,5 +188,98 @@ class Pancake_sync extends AdminController
             'data'    => $jsonData['data'] ?? [],
             'total'   => isset($jsonData['total_entries']) ? (int)$jsonData['total_entries'] : 0,
         ];
+    }
+
+    public function sync_recent_1000()
+    {
+        header('Content-Type: application/json');
+
+        // Mục tiêu và cấu hình phân trang
+        $target     = 1000;                // số đơn cần sync
+        $page_size  = min(1000, $target);  // cố gắng lấy gọn 1 lần
+        $page       = 1;
+        $fetched    = 0;
+
+        $total_processed = 0;
+        $total_ok  = 0;
+        $total_err = 0;
+        $errors    = [];
+
+        // Nếu muốn lọc thêm (tuỳ chọn): lấy từ POST/GET (ví dụ startDateTime/endDateTime)
+        $allowedFilters = ['search', 'filter_status', 'include_removed', 'updateStatus', 'startDateTime', 'endDateTime'];
+        $baseParams = ['page_size' => $page_size];
+        foreach ($allowedFilters as $f) {
+            $v = $this->input->get_post($f);
+            if ($v !== null && $v !== '') $baseParams[$f] = $v;
+        }
+
+        // Lặp đến khi đủ 1000 hoặc hết dữ liệu
+        while ($fetched < $target) {
+            $params = $baseParams;
+            $params['page_number'] = $page;
+
+            // Gọi API (dựa trên hàm có sẵn của bạn)
+            $api = $this->getOrdersFromApi($params);
+            if (!$api['success']) {
+                echo json_encode([
+                    'status'  => 'error',
+                    'message' => "API error at page {$page}: " . ($api['message'] ?? 'unknown'),
+                ]);
+                return;
+            }
+
+            // Chuẩn hoá batch theo cấu trúc trả về
+            $batch = [];
+            if (isset($api['data']['orders']) && is_array($api['data']['orders'])) {
+                $batch = $api['data']['orders'];
+            } elseif (is_array($api['data']) && !isset($api['data']['total_pages'])) {
+                $batch = $api['data'];
+            }
+
+            $count = is_array($batch) ? count($batch) : 0;
+            if ($count === 0) {
+                // Hết dữ liệu
+                break;
+            }
+
+            // Cắt bớt nếu vượt quá target
+            $need  = $target - $fetched;
+            if ($count > $need) {
+                $batch = array_slice($batch, 0, $need);
+                $count = $need;
+            }
+
+            // Ghi DB bằng model sync_orders()
+            $sync = $this->pancake_orders_model->sync_orders($batch);
+
+            $total_processed += $count;
+            $total_ok  += (int)($sync['ok']  ?? 0);
+            $total_err += (int)($sync['err'] ?? 0);
+            if (!empty($sync['errors'])) {
+                // gom tối đa 50 lỗi để trả về (đủ soi nguyên nhân)
+                foreach ($sync['errors'] as $e) {
+                    if (count($errors) >= 50) break;
+                    $errors[] = $e;
+                }
+            }
+
+            $fetched += $count;
+
+            // Nếu API trả ít hơn page_size → khả năng hết trang
+            if ($count < $page_size) break;
+
+            $page++;
+        }
+
+        echo json_encode([
+            'status'           => 'complete',
+            'requested'        => $target,
+            'processed_count'  => $total_processed,
+            'rows_ok'          => $total_ok,
+            'rows_err'         => $total_err,
+            'errors'           => $errors,
+            'pages_called'     => $page,
+            'message'          => "Đồng bộ 1000 đơn gần nhất hoàn tất (đã xử lý {$total_processed} đơn)."
+        ]);
     }
 }

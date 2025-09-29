@@ -177,9 +177,21 @@
       <div class="kpi-wrap">
         <div class="kpi-card">
           <div class="kpi-title">Doanh thu tổng</div>
-          <div class="kpi-value"><?= number_format((float)($total_revenue ?? 0), 0, ',', '.'); ?></div>
-          <div class="kpi-sub">Trong khoảng:<?= htmlspecialchars($date_from ?? '-', ENT_QUOTES, 'UTF-8'); ?>→<?= htmlspecialchars($date_to ?? '-', ENT_QUOTES, 'UTF-8'); ?></div>
+          <div class="kpi-value">
+            <?= number_format((float)($total_revenue ?? 0), 0, ',', ','); ?>
+          </div>
+          <div class="kpi-sub">
+            <?php if ($date_from == $date_to): ?>
+              Hôm nay: <?= htmlspecialchars($date_from, ENT_QUOTES, 'UTF-8'); ?>
+            <?php else: ?>
+              Trong khoảng:
+              <?= htmlspecialchars($date_from ?? '-', ENT_QUOTES, 'UTF-8'); ?>
+              →
+              <?= htmlspecialchars($date_to ?? '-', ENT_QUOTES, 'UTF-8'); ?>
+            <?php endif; ?>
+          </div>
         </div>
+
 
         <div class="kpi-card">
           <div class="kpi-title">Combo được mua nhiều nhất</div>
@@ -190,8 +202,8 @@
             ?>
             <img src="<?= htmlspecialchars($tcimg); ?>" alt="">
             <div>
-              <div class="kpi-value" style="font-size:16px;"><?= htmlspecialchars($top_combo['name'] ?? '—'); ?></div>
-              <div class="kpi-sub">Doanh thu: <strong><?= number_format((float)($top_combo['revenue'] ?? 0), 0, ',', '.'); ?> đ</strong></div>
+              <div class="kpi-value" style="font-size:16px;"><?= htmlspecialchars($top_combo['product_name'] ?? '—'); ?></div>
+              <div class="kpi-sub">Doanh thu: <strong><?= number_format((float)($top_combo['revenue'] ?? 0), 0, ',', ','); ?> </strong></div>
             </div>
           </div>
         </div>
@@ -208,6 +220,7 @@
 
       <!-- Hàng 1: Doanh thu theo SP & theo Combo -->
       <div class="grid-2">
+        <!-- Doanh thu theo từng sản phẩm -->
         <div class="dash-panel">
           <div class="panel-head"><i class="fa fa-cubes"></i> Doanh thu theo từng sản phẩm</div>
           <div class="panel-body">
@@ -220,35 +233,37 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php if (!empty($products_metrics)) : foreach ($products_metrics as $p) :
-                      $img = $p['image_url'] ?: 'https://via.placeholder.com/44x44?text=%20';
-                      $code = $p['product_code'] ?: '-';
-                      $name = $p['product_name'] ?: '-';
+                  <?php if (!empty($products_metrics)) : ?>
+                    <?php
+                    $total_products_revenue = 0;
+                    foreach ($products_metrics as $p) :
+                      $img  = !empty($p['image_url']) ? $p['image_url'] : 'https://via.placeholder.com/44x44?text=%20';
+                      $code = isset($p['product_id']) ? (string)$p['product_id'] : '-';
+                      $name = !empty($p['product_name']) ? $p['product_name'] : '-';
                       $rev  = (float)($p['revenue'] ?? 0);
-                      $pct  = $p['pct'] ?? null;
-                      $isUp = !is_null($pct) && ($pct >= 0);
-                  ?>
+                      $total_products_revenue += $rev;
+                    ?>
                       <tr>
                         <td>
                           <div class="product-cell">
-                            <img class="product-thumb" src="<?= htmlspecialchars($img); ?>" alt="">
+                            <img class="product-thumb" src="<?= htmlspecialchars($img, ENT_QUOTES, 'UTF-8'); ?>" alt="">
                             <div class="product-info">
-                              <div class="code"><?= htmlspecialchars($code); ?></div>
-                              <div class="name"><?= htmlspecialchars($name); ?></div>
+                              <div class="code"><?= htmlspecialchars($code, ENT_QUOTES, 'UTF-8'); ?></div>
+                              <div class="name"><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?></div>
                             </div>
                           </div>
                         </td>
                         <td class="product-value">
-                          <div class="value"><strong><?= number_format($rev, 0, ',', '.'); ?> đ</strong></div>
-                          <?php if (!is_null($pct)) : ?>
-                            <div class="product-trend <?= $isUp ? 'up' : 'down'; ?>">
-                              <?= $isUp ? '▲' : '▼'; ?> <?= number_format(abs($pct), 2, ',', '.'); ?>%
-                            </div>
-                          <?php endif; ?>
+                          <div class="value"><strong><?= number_format($rev, 0, ',', ','); ?> </strong></div>
                         </td>
                       </tr>
-                    <?php endforeach;
-                  else: ?>
+                    <?php endforeach; ?>
+                    <!-- Hàng tổng -->
+                    <tr style="font-weight:bold; background:#f8f9fa;">
+                      <td class="text-end">TỔNG</td>
+                      <td class="product-value"><strong><?= number_format($total_products_revenue, 0, ',', ','); ?> </strong></td>
+                    </tr>
+                  <?php else: ?>
                     <tr>
                       <td colspan="2" class="text-center">Không có dữ liệu sản phẩm.</td>
                     </tr>
@@ -259,6 +274,7 @@
           </div>
         </div>
 
+        <!-- Doanh thu theo từng combo -->
         <div class="dash-panel">
           <div class="panel-head"><i class="fa fa-layer-group"></i> Doanh thu theo từng combo</div>
           <div class="panel-body">
@@ -266,35 +282,55 @@
               <table class="table table-hover product-table">
                 <thead>
                   <tr>
-                    <th style="width:70%;">Thông tin combo</th>
-                    <th style="width:30%; text-align:right;">Doanh thu</th>
+                    <th style="width:50%;">Thông tin combo</th>
+                    <th style="width:25%; text-align:right;">Doanh thu</th>
+                    <th style="width:25%; text-align:right;">Đóng góp</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php if (!empty($combos_revenue)) : foreach ($combos_revenue as $c) :
-                      $img = $c['image_url'] ?: 'https://via.placeholder.com/44x44?text=%20';
-                      $code = $c['combo_code'] ?: '-';
-                      $name = $c['combo_name'] ?: '-';
+                  <?php if (!empty($combos_revenue)) : ?>
+                    <?php
+                    $total_combos_revenue = 0;
+                    foreach ($combos_revenue as $c) {
+                      $total_combos_revenue += (float)($c['revenue'] ?? 0);
+                    }
+                    // biến $total_revenue đã được controller truyền sang
+                    foreach ($combos_revenue as $c) :
+                      $img  = !empty($c['image_url'])    ? $c['image_url']    : 'https://mochavietnam.com.vn/thumbs/600x600x2/upload/photo/tai-xuong-3278.png';
+                      $code = isset($c['product_id'])    ? (string)$c['product_id'] : '-';
+                      $name = !empty($c['product_name']) ? $c['product_name'] : '-';
                       $rev  = (float)($c['revenue'] ?? 0);
-                  ?>
+                      $pct  = ($total_revenue > 0) ? ($rev * 100 / $total_revenue) : 0;
+                    ?>
                       <tr>
                         <td>
                           <div class="product-cell">
-                            <img class="product-thumb" src="<?= htmlspecialchars($img); ?>" alt="">
+                            <img class="product-thumb" src="<?= htmlspecialchars($img, ENT_QUOTES, 'UTF-8'); ?>" alt="">
                             <div class="product-info">
-                              <div class="code"><?= htmlspecialchars($code); ?></div>
-                              <div class="name"><?= htmlspecialchars($name); ?></div>
+                              <div class="code"><?= htmlspecialchars($code, ENT_QUOTES, 'UTF-8'); ?></div>
+                              <div class="name"><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?></div>
                             </div>
                           </div>
                         </td>
-                        <td class="product-value">
+                        <td class="product-value" style="text-align:right;">
                           <div class="value"><strong><?= number_format($rev, 0, ',', '.'); ?> đ</strong></div>
                         </td>
+                        <td class="product-value" style="text-align:right;">
+                          <div class="value"><strong><?= number_format($pct, 2, ',', '.'); ?>%</strong></div>
+                        </td>
                       </tr>
-                    <?php endforeach;
-                  else: ?>
+                    <?php endforeach; ?>
+                    <!-- Hàng tổng -->
+                    <tr style="font-weight:bold; background:#f8f9fa;">
+                      <td class="text-end">TỔNG</td>
+                      <td class="product-value" style="text-align:right;"><strong><?= number_format($total_combos_revenue, 0, ',', '.'); ?> đ</strong></td>
+                      <td class="product-value" style="text-align:right;">
+                        <strong><?= ($total_revenue > 0) ? number_format(($total_combos_revenue * 100 / $total_revenue), 2, ',', '.') : '0'; ?>%</strong>
+                      </td>
+                    </tr>
+                  <?php else: ?>
                     <tr>
-                      <td colspan="2" class="text-center">Không có dữ liệu combo.</td>
+                      <td colspan="3" class="text-center">Không có dữ liệu combo.</td>
                     </tr>
                   <?php endif; ?>
                 </tbody>
@@ -318,28 +354,53 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php if (!empty($aov_by_combo)) : foreach ($aov_by_combo as $c) :
-                      $img = $c['image_url'] ?: 'https://via.placeholder.com/44x44?text=%20';
+                  <?php
+                  // Chuẩn hoá nguồn dữ liệu thành $rows gồm image_url, combo_code, combo_name, aov
+                  $rows = [];
+
+                  if (!empty($aov_by_combo) && isset($aov_by_combo[0]['combo_name'])) {
+                    // Trường hợp controller đã build sẵn $aov_by_combo đúng cấu trúc
+                    $rows = $aov_by_combo;
+                  } elseif (!empty($combos_revenue)) {
+                    // Suy ra từ $combos_revenue (fallback)
+                    foreach ($combos_revenue as $c) {
+                      $rev    = (float)($c['revenue'] ?? 0);
+                      $orders = (int)($c['orders']  ?? 0);
+                      $aov    = isset($c['aov']) ? (float)$c['aov'] : ($orders > 0 ? ($rev / $orders) : 0.0);
+
+                      $rows[] = [
+                        'image_url'  => !empty($c['image_url']) ? $c['image_url'] : 'https://mochavietnam.com.vn/thumbs/600x600x2/upload/photo/tai-xuong-3278.png',
+                        'combo_code' => isset($c['product_id']) ? (string)$c['product_id'] : '-',
+                        'combo_name' => !empty($c['product_name']) ? $c['product_name'] : '-',
+                        'aov'        => $aov,
+                      ];
+                    }
+                  }
+                  ?>
+
+                  <?php if (!empty($rows)) : ?>
+                    <?php foreach ($rows as $c) :
+                      $img  = $c['image_url']  ?: 'https://mochavietnam.com.vn/thumbs/600x600x2/upload/photo/tai-xuong-3278.png';
                       $code = $c['combo_code'] ?: '-';
                       $name = $c['combo_name'] ?: '-';
                       $aov  = (float)($c['aov'] ?? 0);
-                  ?>
+                    ?>
                       <tr>
                         <td>
                           <div class="product-cell">
-                            <img class="product-thumb" src="<?= htmlspecialchars($img); ?>" alt="">
+                            <img class="product-thumb" src="<?= htmlspecialchars($img, ENT_QUOTES, 'UTF-8'); ?>" alt="">
                             <div class="product-info">
-                              <div class="code"><?= htmlspecialchars($code); ?></div>
-                              <div class="name"><?= htmlspecialchars($name); ?></div>
+                              <div class="code"><?= htmlspecialchars($code, ENT_QUOTES, 'UTF-8'); ?></div>
+                              <div class="name"><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?></div>
                             </div>
                           </div>
                         </td>
-                        <td class="product-value">
-                          <div class="value"><strong><?= number_format($aov, 0, ',', '.'); ?> đ</strong></div>
+                        <td class="product-value" style="text-align:right;">
+                          <div class="value"><strong><?= number_format($aov, 0, ',', ','); ?> </strong></div>
                         </td>
                       </tr>
-                    <?php endforeach;
-                  else: ?>
+                    <?php endforeach; ?>
+                  <?php else: ?>
                     <tr>
                       <td colspan="2" class="text-center">Không có dữ liệu AOV theo combo.</td>
                     </tr>
@@ -349,6 +410,7 @@
             </div>
           </div>
         </div>
+
 
         <div class="dash-panel">
           <div class="panel-head"><i class="fa fa-sync"></i> Tỷ lệ mua lại theo combo</div>

@@ -1184,6 +1184,10 @@
                     <button id="sync-button" class="btn btn-primary">
                         <i class="fa fa-refresh"></i> Đồng bộ từ Pancake
                     </button>
+
+                    <button id="recent-sync-button" class="btn btn-info" type="button">
+                        Sync 1.000 đơn gần nhất
+                    </button>
                 </div>
 
                 <?php if (isset($total)) : ?>
@@ -2668,7 +2672,7 @@
                                                                 <div class="tw-text-xs tw-text-gray-500">SĐT</div>
                                                                 <div class="tw-font-semibold"><?= html_escape($order['shipping_address']['phone_number'] ?? '') ?></div>
                                                             </div>
-                                                            
+
                                                         </div>
 
                                                         <?php
@@ -2787,139 +2791,215 @@
     </div>
 </div>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // --- Giữ nguyên các tiện ích ban đầu ---
-  const searchInput = document.querySelector('input[name="search"]');
-  if (searchInput) searchInput.focus();
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- Giữ nguyên các tiện ích ban đầu ---
+        const searchInput = document.querySelector('input[name="search"]');
+        if (searchInput) searchInput.focus();
 
-  const startDateInput = document.querySelector('input[name="startDateTime"]');
-  const endDateInput   = document.querySelector('input[name="endDateTime"]');
-  if (startDateInput && !startDateInput.value) {
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    startDateInput.value = sevenDaysAgo.toISOString().slice(0, 16);
-  }
-  if (endDateInput && !endDateInput.value) {
-    endDateInput.value = new Date().toISOString().slice(0, 16);
-  }
-
-  function stylePagination() {
-    const paginationContainer = document.querySelector('.pagination');
-    if (!paginationContainer) return;
-    const paginationLinks = paginationContainer.querySelectorAll('.page-link');
-    if (paginationLinks.length === 0) return;
-    const prevIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>`;
-    const nextIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>`;
-    paginationLinks.forEach(link => {
-      const content = link.innerHTML.trim();
-      if (content.includes('&lt;') || content.includes('«')) {
-        link.innerHTML = prevIcon; link.setAttribute('aria-label', 'Previous');
-      } else if (content.includes('&gt;') || content.includes('»')) {
-        link.innerHTML = nextIcon; link.setAttribute('aria-label', 'Next');
-      }
-    });
-  }
-  stylePagination();
-
-  // --- Helper: gom filter từ form (nếu có) ---
-  function collectFilters() {
-    const out = {};
-    ['search','filter_status','include_removed','updateStatus','startDateTime','endDateTime'].forEach(name => {
-      const el = document.querySelector(`[name="${name}"]`);
-      if (el && el.value !== '') out[name] = el.value;
-      // với checkbox: nếu cần, có thể thêm điều kiện el.checked
-    });
-    return out;
-  }
-
-  // --- Biến UI ---
-  const syncButton        = $('#sync-button');
-  const originalButtonText= syncButton.html();
-  const progressContainer = $('#sync-progress-container');
-  const progressBar       = $('#sync-progress-bar');
-  const statusText        = $('#sync-status-text');
-
-  // --- Click đồng bộ: chạy ALL pages, mỗi lần 1.000 đơn ---
-  syncButton.on('click', function(e) {
-    e.preventDefault();
-
-    syncButton.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Bắt đầu...');
-    progressContainer.show();
-    progressBar.removeClass('progress-bar-success').css('width', '0%').text('0%');
-    statusText.text('Đang kết nối đến Pancake API...');
-
-    const filters = collectFilters();
-
-    // 1) Hỏi tổng số trang
-    $.ajax({
-      url: '<?= admin_url('pancake_sync/start_sync') ?>',
-      method: 'POST',
-      dataType: 'json',
-      data: filters,            // gửi cùng filter để server tính đúng total_pages
-      timeout: 120000,
-      success: function(response) {
-        if (response.success) {
-          const totalPages = parseInt(response.total_pages || 1, 10);
-          const pageSize   = parseInt(response.page_size   || 1000, 10);
-          statusText.text(`Bắt đầu đồng bộ ${totalPages} trang (mỗi lần tối đa ${pageSize} đơn)...`);
-          // 2) Chạy tuần tự 1 -> totalPages
-          runSyncPages(1, totalPages, pageSize, 0, filters);
-        } else {
-          alert_float('danger', response.message || 'Không khởi tạo được đồng bộ.');
-          resetSyncUI();
+        const startDateInput = document.querySelector('input[name="startDateTime"]');
+        const endDateInput = document.querySelector('input[name="endDateTime"]');
+        if (startDateInput && !startDateInput.value) {
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            startDateInput.value = sevenDaysAgo.toISOString().slice(0, 16);
         }
-      },
-      error: function() {
-        alert_float('danger', 'Lỗi khi bắt đầu quá trình đồng bộ. Không thể kết nối đến máy chủ.');
-        resetSyncUI();
-      }
-    });
-  });
-
-  function runSyncPages(page, totalPages, pageSize, totalProcessed, filters) {
-    $.ajax({
-      url: '<?= admin_url('pancake_sync/sync_page') ?>',
-      method: 'POST',
-      dataType: 'json',
-      data: Object.assign({ page: page }, filters),
-      timeout: 180000, // 3 phút / trang
-      success: function(res) {
-        if (res.status === 'complete') {
-          const processed = totalProcessed + (parseInt(res.processed_count || 0, 10));
-          const percent = Math.min(100, Math.round((page / totalPages) * 100));
-          progressBar.css('width', percent + '%').text(percent + '%');
-          statusText.text(`Trang ${page}/${totalPages} xong — đã xử lý ${processed} đơn.`);
-
-          if (page < totalPages) {
-            // Gọi trang kế tiếp
-            runSyncPages(page + 1, totalPages, pageSize, processed, filters);
-          } else {
-            // Hoàn tất tất cả
-            progressBar.addClass('progress-bar-success').css('width', '100%').text('100%');
-            statusText.text(`Hoàn tất! Đã xử lý toàn bộ ${totalPages} trang.`);
-            alert_float('success', 'Đồng bộ toàn bộ đơn hàng đã hoàn tất.');
-            setTimeout(function() { window.location.reload(); }, 1200);
-          }
-        } else if (res.status === 'error') {
-          alert_float('danger', res.message || `Có lỗi ở trang ${page}. Dừng lại.`);
-          resetSyncUI();
-        } else {
-          alert_float('danger', `Phản hồi không hợp lệ ở trang ${page}.`);
-          resetSyncUI();
+        if (endDateInput && !endDateInput.value) {
+            endDateInput.value = new Date().toISOString().slice(0, 16);
         }
-      },
-      error: function() {
-        alert_float('danger', `Mất kết nối khi đồng bộ trang ${page}.`);
-        resetSyncUI();
-      }
-    });
-  }
 
-  function resetSyncUI() {
-    syncButton.prop('disabled', false).html(originalButtonText);
-    progressContainer.hide();
-  }
-});
+        function stylePagination() {
+            const paginationContainer = document.querySelector('.pagination');
+            if (!paginationContainer) return;
+            const paginationLinks = paginationContainer.querySelectorAll('.page-link');
+            if (paginationLinks.length === 0) return;
+            const prevIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" /></svg>`;
+            const nextIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="20" height="20"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" /></svg>`;
+            paginationLinks.forEach(link => {
+                const content = link.innerHTML.trim();
+                if (content.includes('&lt;') || content.includes('«')) {
+                    link.innerHTML = prevIcon;
+                    link.setAttribute('aria-label', 'Previous');
+                } else if (content.includes('&gt;') || content.includes('»')) {
+                    link.innerHTML = nextIcon;
+                    link.setAttribute('aria-label', 'Next');
+                }
+            });
+        }
+        stylePagination();
+
+        // --- Helper: gom filter từ form (nếu có) ---
+        function collectFilters() {
+            const out = {};
+            ['search', 'filter_status', 'include_removed', 'updateStatus', 'startDateTime', 'endDateTime'].forEach(name => {
+                const el = document.querySelector(`[name="${name}"]`);
+                if (!el) return;
+                if (el.type === 'checkbox') {
+                    if (el.checked) out[name] = el.value || 1;
+                } else if (el.value !== '') {
+                    out[name] = el.value;
+                }
+            });
+            return out;
+        }
+
+        // --- Biến UI ---
+        const syncButton = $('#sync-button');
+        const originalButtonText = syncButton.html();
+        const progressContainer = $('#sync-progress-container');
+        const progressBar = $('#sync-progress-bar');
+        const statusText = $('#sync-status-text');
+
+        // --- Click đồng bộ: chạy ALL pages, mỗi lần 1.000 đơn ---
+        syncButton.on('click', function(e) {
+            e.preventDefault();
+
+            syncButton.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Bắt đầu...');
+            progressContainer.show();
+            progressBar.removeClass('progress-bar-success').css('width', '0%').text('0%');
+            statusText.text('Đang kết nối đến Pancake API...');
+
+            const filters = collectFilters();
+
+            // 1) Hỏi tổng số trang
+            $.ajax({
+                url: '<?= admin_url('pancake_sync/start_sync') ?>',
+                method: 'POST',
+                dataType: 'json',
+                data: filters, // gửi cùng filter để server tính đúng total_pages
+                timeout: 120000,
+                success: function(response) {
+                    if (response.success) {
+                        const totalPages = parseInt(response.total_pages || 1, 10);
+                        const pageSize = parseInt(response.page_size || 1000, 10);
+                        statusText.text(`Bắt đầu đồng bộ ${totalPages} trang (mỗi lần tối đa ${pageSize} đơn)...`);
+                        // 2) Chạy tuần tự 1 -> totalPages
+                        runSyncPages(1, totalPages, pageSize, 0, filters);
+                    } else {
+                        alert_float('danger', response.message || 'Không khởi tạo được đồng bộ.');
+                        resetSyncUI();
+                    }
+                },
+                error: function() {
+                    alert_float('danger', 'Lỗi khi bắt đầu quá trình đồng bộ. Không thể kết nối đến máy chủ.');
+                    resetSyncUI();
+                }
+            });
+        });
+
+        function runSyncPages(page, totalPages, pageSize, totalProcessed, filters) {
+            $.ajax({
+                url: '<?= admin_url('pancake_sync/sync_page') ?>',
+                method: 'POST',
+                dataType: 'json',
+                data: Object.assign({
+                    page: page
+                }, filters),
+                timeout: 180000, // 3 phút / trang
+                success: function(res) {
+                    if (res.status === 'complete') {
+                        const processed = totalProcessed + (parseInt(res.processed_count || 0, 10));
+                        const percent = Math.min(100, Math.round((page / totalPages) * 100));
+                        progressBar.css('width', percent + '%').text(percent + '%');
+                        statusText.text(`Trang ${page}/${totalPages} xong — đã xử lý ${processed} đơn.`);
+
+                        if (page < totalPages) {
+                            // Gọi trang kế tiếp
+                            runSyncPages(page + 1, totalPages, pageSize, processed, filters);
+                        } else {
+                            // Hoàn tất tất cả
+                            progressBar.addClass('progress-bar-success').css('width', '100%').text('100%');
+                            statusText.text(`Hoàn tất! Đã xử lý toàn bộ ${totalPages} trang.`);
+                            alert_float('success', 'Đồng bộ toàn bộ đơn hàng đã hoàn tất.');
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 1200);
+                        }
+                    } else if (res.status === 'error') {
+                        alert_float('danger', res.message || `Có lỗi ở trang ${page}. Dừng lại.`);
+                        resetSyncUI();
+                    } else {
+                        alert_float('danger', `Phản hồi không hợp lệ ở trang ${page}.`);
+                        resetSyncUI();
+                    }
+                },
+                error: function() {
+                    alert_float('danger', `Mất kết nối khi đồng bộ trang ${page}.`);
+                    resetSyncUI();
+                }
+            });
+        }
+
+        function resetSyncUI() {
+            syncButton.prop('disabled', false).html(originalButtonText);
+            progressContainer.hide();
+        }
+
+        /* ============================================================
+           BỔ SUNG: Đồng bộ 1.000 đơn gần nhất (không thay đổi nút cũ)
+           - Cần có nút #recent-sync-button trong view (nếu không có, đoạn dưới tự bỏ qua)
+           - Tái dùng progress UI hiện có
+           ============================================================ */
+        const recentBtn = $('#recent-sync-button');
+        if (recentBtn.length) {
+            const recentBtnText = recentBtn.html();
+
+            recentBtn.on('click', function(e) {
+                e.preventDefault();
+
+                // Khóa nút 1.000 đơn, giữ nguyên nút sync cũ
+                recentBtn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang đồng bộ 1.000 đơn...');
+                progressContainer.show();
+                progressBar.removeClass('progress-bar-success').css('width', '10%').text('Đang chạy…');
+                statusText.text('Đang gọi API để lấy 1.000 đơn gần nhất…');
+
+                const filters = collectFilters(); // nếu muốn kèm filter hiện tại
+
+                $.ajax({
+                    url: '<?= admin_url('pancake_sync/sync_recent_1000') ?>',
+                    method: 'GET', // endpoint mình đề xuất nhận GET; nếu bạn dùng POST thì đổi tại đây
+                    dataType: 'json',
+                    data: filters,
+                    timeout: 300000,
+                    success: function(res) {
+                        if (res && res.status === 'complete') {
+                            const processed = parseInt(res.processed_count || 0, 10);
+                            const ok = parseInt(res.rows_ok || 0, 10);
+                            const err = parseInt(res.rows_err || 0, 10);
+
+                            progressBar.addClass('progress-bar-success').css('width', '100%').text('100%');
+                            statusText.text(`Hoàn tất: xử lý ${processed} đơn — OK: ${ok}, Lỗi: ${err}.`);
+                            if (err > 0 && Array.isArray(res.errors) && res.errors.length) {
+                                const first3 = res.errors.slice(0, 3).map(e => {
+                                    const id = e.order_id ?? '(không rõ ID)';
+                                    const msg = e.error ?? 'Lỗi không xác định';
+                                    return `• ${id}: ${msg}`;
+                                }).join('<br>');
+                                alert_float('warning', 'Một số đơn lỗi:<br>' + first3);
+                            } else {
+                                alert_float('success', res.message || 'Đã đồng bộ 1.000 đơn gần nhất.');
+                            }
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 1000);
+                        } else {
+                            alert_float('danger', (res && res.message) ? res.message : 'Đồng bộ 1.000 đơn thất bại.');
+                            resetRecentBtn();
+                        }
+                    },
+                    error: function() {
+                        alert_float('danger', 'Lỗi kết nối khi đồng bộ 1.000 đơn.');
+                        resetRecentBtn();
+                    }
+                });
+            });
+
+            function resetRecentBtn() {
+                recentBtn.prop('disabled', false).html(recentBtnText);
+                // Không ẩn progress để bạn theo dõi; nếu muốn ẩn thì:
+                // progressContainer.hide();
+            }
+        }
+    });
 </script>
 
 <?php init_tail(); ?>
