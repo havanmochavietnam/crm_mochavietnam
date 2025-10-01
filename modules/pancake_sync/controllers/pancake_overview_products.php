@@ -25,7 +25,14 @@ class Pancake_overview_products extends AdminController
             'INTERVAL 7 HOUR'
         );
 
-        // Doanh thu theo sản phẩm lẻ (is_combo=0)
+        /* ======================= SẢN PHẨM (is_combo = 0) ======================= *
+         * Model đã trả về:
+         * - revenue: doanh thu đã phân bổ discount theo quantity
+         * - orders : số ĐƠN DISTINCT có chứa sản phẩm (đúng “có thì 1”)
+         * - aov    : revenue / orders
+         * - repurchase_rate: % khách mua lại (>=2 đơn/khách/sản phẩm trong khoảng)
+         * - image_url
+         */
         $products_metrics = $this->overview->get_product_revenue_breakdown(
             $date_from,
             $date_to,
@@ -37,61 +44,14 @@ class Pancake_overview_products extends AdminController
             0
         );
 
-        /* ================== NEW: Tính "Số lượng" = số ĐƠN DISTINCT cho từng sản phẩm ================== */
-        // Ưu tiên dùng hàm model nếu có; fallback tự đếm từ dữ liệu đã có.
-        $orders_by_product = [];
-
-        if (method_exists($this->overview, 'get_product_order_counts_distinct')) {
-            // Lấy số đơn distinct theo từng sản phẩm non-combo trong khoảng ngày & điều kiện lọc
-            $rows_cnt = $this->overview->get_product_order_counts_distinct(
-                $date_from,
-                $date_to,
-                1,                                   // status=1
-                ['Tiktok', 'Shopee', 'Affiliate'],   // loại trừ nguồn
-                true,                                // exclude_gifts
-                'INTERVAL 7 HOUR'
-            );
-            foreach ($rows_cnt as $r) {
-                $pid = $r['product_id'] ?? null;
-                $key = $pid !== null ? 'ID:' . (string)$pid : 'NAME:' . (string)($r['product_name'] ?? '');
-                if ($key !== 'NAME:') {
-                    $orders_by_product[$key] = (int)($r['orders'] ?? 0); // COUNT(DISTINCT order_id)
-                }
-            }
-        } else {
-            // Fallback: nếu $products_metrics có order_ids (mảng/CSV) thì tự đếm unique;
-            // hoặc nếu đã có 'orders' thì dùng luôn.
-            foreach ($products_metrics as $p) {
-                $pid = $p['product_id'] ?? null;
-                $key = $pid !== null ? 'ID:' . (string)$pid : 'NAME:' . (string)($p['product_name'] ?? '');
-                if ($key === 'NAME:') continue;
-
-                if (!empty($p['order_ids'])) {
-                    $ids  = is_array($p['order_ids']) ? $p['order_ids'] : explode(',', (string)$p['order_ids']);
-                    $uniq = [];
-                    foreach ($ids as $id) {
-                        $id = trim((string)$id);
-                        if ($id !== '') $uniq[$id] = true;
-                    }
-                    $orders_by_product[$key] = count($uniq);
-                } elseif (isset($p['orders']) && is_numeric($p['orders'])) {
-                    $orders_by_product[$key] = (int)$p['orders'];
-                }
-            }
-        }
-
-        // Merge số đơn vào $products_metrics (để view hiển thị cột "Số lượng")
+        // (Tuỳ chọn) sắp xếp theo revenue giảm dần để ổn định hiển thị
         if (!empty($products_metrics)) {
-            foreach ($products_metrics as &$p) {
-                $pid = $p['product_id'] ?? null;
-                $key = $pid !== null ? 'ID:' . (string)$pid : 'NAME:' . (string)($p['product_name'] ?? '');
-                $p['orders'] = $orders_by_product[$key] ?? (int)($p['orders'] ?? 0); // mặc định 0 nếu không có
-            }
-            unset($p);
+            usort($products_metrics, fn($a, $b) => (float)($b['revenue'] ?? 0) <=> (float)($a['revenue'] ?? 0));
         }
-        /* ================== /NEW ================== */
 
-        // Doanh thu theo combo (is_combo=1) + (orders, aov) đã tính ở model
+        /* ======================= COMBO (is_combo = 1) ======================= *
+         * Model đã có revenue, orders, aov; phía dưới build thêm top_combo & maps
+         */
         $combos_revenue = $this->overview->get_combo_revenue_breakdown(
             $date_from,
             $date_to,
@@ -103,18 +63,16 @@ class Pancake_overview_products extends AdminController
             0
         );
 
-        // Sắp xếp combos_revenue theo revenue desc (phòng model chưa sort)
         if (!empty($combos_revenue)) {
             usort($combos_revenue, fn($a, $b) => (float)($b['revenue'] ?? 0) <=> (float)($a['revenue'] ?? 0));
         }
 
-        // Xây AOV & Orders theo combo để dùng nhanh cho view
+        // Xây AOV & Orders theo combo để dùng nhanh cho view (map theo product_id / product_name)
         $aov_by_combo    = [];
         $orders_by_combo = [];
         if (!empty($combos_revenue)) {
             foreach ($combos_revenue as $row) {
                 $pid = $row['product_id'] ?? null;
-                // Ưu tiên dùng product_id; nếu null, fallback product_name
                 $key = $pid !== null ? (string)$pid : (string)($row['product_name'] ?? '');
                 if ($key === '') continue;
 
@@ -127,7 +85,7 @@ class Pancake_overview_products extends AdminController
             }
         }
 
-        // Top combo có thêm contribution %
+        // Top combo + tỷ lệ đóng góp
         $top_combo = null;
         if (!empty($combos_revenue)) {
             $top_combo = $combos_revenue[0];
@@ -143,7 +101,7 @@ class Pancake_overview_products extends AdminController
                 : null;
         }
 
-        // ====== TÍCH HỢP: Repeat-rate theo combo ======
+        /* ======================= Repeat-rate theo COMBO (để hiển thị bảng Combo) ======================= */
         $repurchase_by_combo = [];
         $combo_repeat_overall = [
             'unique_customer_combo_pairs' => 0,
@@ -151,7 +109,7 @@ class Pancake_overview_products extends AdminController
             'repeat_rate'                 => 0.0,
         ];
 
-        // 1) Lấy breakdown theo combo
+        // Breakdown theo combo
         $repeat_rows = [];
         if (method_exists($this->overview, 'get_combo_repeat_rate_breakdown')) {
             $repeat_rows = $this->overview->get_combo_repeat_rate_breakdown(
@@ -167,7 +125,7 @@ class Pancake_overview_products extends AdminController
             );
         }
 
-        // 2) Map repeat theo key (product_id ưu tiên, fallback product_name)
+        // Map repeat theo key
         $repeat_map = [];
         foreach ($repeat_rows as $rr) {
             $pid = $rr['product_id'] ?? null;
@@ -179,7 +137,7 @@ class Pancake_overview_products extends AdminController
             ];
         }
 
-        // 3) Dựng đúng cấu trúc cho VIEW (image_url, combo_code, combo_name, repurchase_rate %)
+        // Dựng mảng cho view (ảnh, mã/tên, repurchase_rate %)
         $repurchase_by_combo = [];
         $default_img = 'https://mochavietnam.com.vn/thumbs/600x600x2/upload/photo/tai-xuong-3278.png';
 
@@ -188,7 +146,6 @@ class Pancake_overview_products extends AdminController
             $key = $pid !== null ? 'ID:' . (string)$pid : 'NAME:' . (string)($row['product_name'] ?? '');
             $rep = $repeat_map[$key] ?? null;
 
-            // (tuỳ chọn) bỏ các combo chưa có khách mua trong khoảng
             if ($rep && $rep['unique_buyers'] <= 0) {
                 continue;
             }
@@ -200,20 +157,20 @@ class Pancake_overview_products extends AdminController
 
             $repurchase_by_combo[] = [
                 'image_url'       => !empty($row['image_url']) ? $row['image_url'] : $default_img,
-                'combo_code'      => $pid !== null ? (string)$pid : '-',          // mã combo
-                'combo_name'      => $row['product_name'] ?? '-',                 // tên combo
-                'repurchase_rate' => $rate_percent,                               // % để view format
+                'combo_code'      => $pid !== null ? (string)$pid : '-',
+                'combo_name'      => $row['product_name'] ?? '-',
+                'repurchase_rate' => $rate_percent,
             ];
         }
 
-        // 4) (tuỳ chọn) sắp xếp theo tỷ lệ mua lại giảm dần
+        // Sắp xếp theo tỷ lệ mua lại giảm dần
         usort($repurchase_by_combo, function ($a, $b) {
             $ra = $a['repurchase_rate'] ?? -1;
             $rb = $b['repurchase_rate'] ?? -1;
             return $rb <=> $ra;
         });
 
-        // 5) Tổng thể
+        // Repeat-rate tổng thể cho combo
         if (method_exists($this->overview, 'get_combo_repeat_rate_overall')) {
             $combo_repeat_overall = $this->overview->get_combo_repeat_rate_overall(
                 $date_from,
@@ -230,7 +187,7 @@ class Pancake_overview_products extends AdminController
             'date_from',
             'date_to',
             'total_revenue',
-            'products_metrics',
+            'products_metrics',    // đã có revenue, orders, aov, repurchase_rate (%)
             'combos_revenue',
             'aov_by_combo',
             'repurchase_by_combo',

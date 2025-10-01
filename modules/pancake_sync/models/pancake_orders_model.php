@@ -383,7 +383,6 @@ class Pancake_orders_model extends App_Model
         return $row;
     }
 
-    /* ==================== THEO NGUỒN + KH MỚI/CŨ THEO order_count (CACHE 60s) ==================== */
     public function get_channel_metrics($start_date, $end_date, $only_today = false)
     {
         $cache_key = 'dash_channels_' . $start_date . '_' . $end_date . ($only_today ? '_fast' : '_like_affiliate_formula');
@@ -436,27 +435,51 @@ class Pancake_orders_model extends App_Model
         WHERE ex.status_name NOT IN ('canceled','returned','returning')
         GROUP BY ex.channel";
 
-            $rows = $this->db->query($sql, [$startDT, $endDT])->result_array() ?: [];
+            $q = $this->db->query($sql, [$startDT, $endDT]);
+            $rows = is_object($q) ? ($q->result_array() ?: []) : [];
         } else {
-            // === PATH CŨ của bạn giữ nguyên ===
-            $sql = " /* nguyên bản của bạn ở đây */ ";
-            $bind = [
-                $startDT,
-                $endDT,
-                $startDT,
-                $endDT,
-                $startDT,
-                $endDT,
-                $startDT,
-                $endDT,
-                $startDT,
-                $endDT,
-                $startDT,
-                $endDT,
-                $startDT,
-                $endDT
-            ];
-            $rows = $this->db->query($sql, $bind)->result_array() ?: [];
+            // NON-FAST PATH: lọc theo thời gian confirmed_at trong khoảng người dùng chọn
+            $sql = "
+        SELECT
+            ex.channel,
+            SUM(ex.total_price - (ex.order_discount + ex.item_discount_sum)) AS revenue,
+            SUM(ex.total_price)                                            AS sales,
+            SUM(ex.order_discount + ex.item_discount_sum)                  AS discount,
+            COUNT(*)                                                       AS orders,
+            SUM(ex.total_quantity)                                         AS quantity,
+            COUNT(DISTINCT CASE WHEN ex.cust_order_count IN (0,1)  THEN ex.customer_uid END) AS cust_new,
+            COUNT(DISTINCT CASE WHEN ex.cust_order_count NOT IN (0,1) THEN ex.customer_uid END) AS cust_returning
+        FROM (
+            SELECT
+                po.pancake_order_id AS order_id,
+                {$customerUID}  AS customer_uid,
+                {$custOrderCnt} AS cust_order_count,
+                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) AS channel,
+                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name'))        AS status_name,
+                CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_price'),    0) AS DECIMAL(18,2)) AS total_price,
+                CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_quantity'), 0) AS DECIMAL(18,2)) AS total_quantity,
+                CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) AS DECIMAL(18,2)) AS order_discount,
+                (
+                    SELECT IFNULL(SUM(CAST(JSON_EXTRACT(i.value, '$.total_discount') AS DECIMAL(18,2))), 0)
+                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) i
+                ) AS item_discount_sum,
+                (
+                  SELECT MAX(DATE_ADD(h.updated_at, INTERVAL 7 HOUR))
+                  FROM JSON_TABLE(
+                        po.data,
+                        '$.status_history[*]'
+                        COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
+                  ) h
+                  WHERE h.status = 1
+                ) AS confirmed_at
+            FROM {$table} po
+        ) ex
+        WHERE ex.status_name NOT IN ('canceled','returned','returning')
+          AND ex.confirmed_at BETWEEN ? AND ?
+        GROUP BY ex.channel";
+
+            $q = $this->db->query($sql, [$startDT, $endDT]);
+            $rows = is_object($q) ? ($q->result_array() ?: []) : [];
         }
 
         // Chuẩn hoá output + fill kênh thiếu
@@ -484,7 +507,6 @@ class Pancake_orders_model extends App_Model
         $this->_cache_set($cache_key, $out, 300);
         return $out;
     }
-
 
     public function get_customer_segments_overall($start_date, $end_date, $only_today = false)
     {
