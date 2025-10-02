@@ -105,8 +105,9 @@ class Pancake_overview_products_model extends App_Model
         ";
         $bind = [];
         $bind[] = $status;
-        $bind = array_merge($bind, $exclude_sources); 
-        $bind[] = $startDT; $bind[] = $endDT;       
+        $bind = array_merge($bind, $exclude_sources);
+        $bind[] = $startDT;
+        $bind[] = $endDT;
         $bind = array_merge($bind, $exclude_sources);
 
         $row  = $this->db->query($sql, $bind)->row_array() ?: [];
@@ -197,11 +198,13 @@ class Pancake_overview_products_model extends App_Model
                   AND {$whereNonCombo}
                 GROUP BY {$nameKey}
             ),
+            /* ===== Repeat-rate (đã có) ===== */
             base_rep AS (
                 SELECT
                     {$nameKey} AS product_key,
                     o.pancake_order_id,
-                    {$custKey} AS customer_key
+                    {$custKey} AS customer_key,
+                    c.confirmed_at
                 FROM {$orders} o
                 JOIN c ON c.pancake_order_id = o.pancake_order_id
                 JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
@@ -227,6 +230,24 @@ class Pancake_overview_products_model extends App_Model
                             ELSE NULL END AS repeat_rate
                 FROM agg_rep
                 GROUP BY product_key
+            ),
+            /* ===== TG mua lại TB (ngày) ===== */
+            rep_time AS (
+                SELECT product_key, customer_key,
+                       AVG(DATEDIFF(next_confirmed_at, confirmed_at)) AS avg_days
+                FROM (
+                    SELECT product_key, customer_key, confirmed_at,
+                           LEAD(confirmed_at) OVER (PARTITION BY product_key, customer_key ORDER BY confirmed_at) AS next_confirmed_at
+                    FROM base_rep
+                ) t
+                WHERE next_confirmed_at IS NOT NULL
+                GROUP BY product_key, customer_key
+            ),
+            avg_time AS (
+                SELECT product_key,
+                       AVG(avg_days) AS avg_days_between
+                FROM rep_time
+                GROUP BY product_key
             )
             SELECT
                 NULL AS product_id,
@@ -235,20 +256,25 @@ class Pancake_overview_products_model extends App_Model
                 s.revenue,
                 s.orders,
                 CASE WHEN s.orders > 0 THEN s.revenue / s.orders ELSE 0 END AS aov,
-                rep.repeat_rate
+                rep.repeat_rate,
+                avg_time.avg_days_between
             FROM s
             LEFT JOIN rep ON rep.product_key = s.product_key
+            LEFT JOIN avg_time ON avg_time.product_key = s.product_key
             ORDER BY s.revenue DESC
             LIMIT ? OFFSET ?
         ";
         $bind = [];
         $bind[] = $status;
         $bind = array_merge($bind, $exclude_sources);
-        $bind[] = $startDT; $bind[] = $endDT;
+        $bind[] = $startDT;
+        $bind[] = $endDT;
         $bind = array_merge($bind, $exclude_sources);
-        $bind[] = $startDT; $bind[] = $endDT;
+        $bind[] = $startDT;
+        $bind[] = $endDT;
         $bind = array_merge($bind, $exclude_sources);
-        $bind[] = (int)$limit; $bind[] = (int)$offset; 
+        $bind[] = (int)$limit;
+        $bind[] = (int)$offset;
 
         $rows = $this->db->query($sql, $bind)->result_array() ?: [];
 
@@ -257,13 +283,14 @@ class Pancake_overview_products_model extends App_Model
             $ord  = (int)  ($r['orders']  ?? 0);
             $rate = isset($r['repeat_rate']) ? (float)$r['repeat_rate'] : null;
 
-            $r['revenue']         = $rev;
-            $r['orders']          = $ord;
-            $r['aov']             = $ord > 0 ? ($rev / $ord) : 0.0;
-            $r['repurchase_rate'] = is_null($rate) ? null : ($rate * 100.0);
-            $r['product_id']      = null;
-            $r['product_name']    = $r['product_name'] ?? '';
-            $r['image_url']       = $r['image_url'] ?? '';
+            $r['revenue']           = $rev;
+            $r['orders']            = $ord;
+            $r['aov']               = $ord > 0 ? ($rev / $ord) : 0.0;
+            $r['repurchase_rate']   = is_null($rate) ? null : ($rate * 100.0);
+            $r['avg_days_between']  = isset($r['avg_days_between']) ? (float)$r['avg_days_between'] : null;
+            $r['product_id']        = null;
+            $r['product_name']      = $r['product_name'] ?? '';
+            $r['image_url']         = $r['image_url'] ?? '';
         }
         unset($r);
         return $rows;
@@ -295,93 +322,158 @@ class Pancake_overview_products_model extends App_Model
         $whereAlloc = $exclude_gifts ? "(dd.is_gift IS NULL OR dd.is_gift = 0)" : "1=1";
 
         $nameKey = $this->_name_key_expr('d');
+        $custKey = $this->_customer_key_expr();
 
         $lineNet = "
-            (CAST(IFNULL(d.unit_price, 0) AS DECIMAL(18,6)) * CAST(IFNULL(d.quantity, 0) AS DECIMAL(18,6)))
-            - CAST(IFNULL(d.total_discount, 0) AS DECIMAL(18,6))
-        ";
+        (CAST(IFNULL(d.unit_price, 0) AS DECIMAL(18,6)) * CAST(IFNULL(d.quantity, 0) AS DECIMAL(18,6)))
+        - CAST(IFNULL(d.total_discount, 0) AS DECIMAL(18,6))
+    ";
 
         $sql = "
-            WITH c AS (
-                SELECT po2.pancake_order_id,
-                       MAX(DATE_ADD(h.updated_at, {$tz_offset_sql})) AS confirmed_at
-                FROM {$orders} po2
-                JOIN JSON_TABLE(
-                    CASE WHEN JSON_VALID(po2.data) THEN po2.data ELSE JSON_ARRAY() END,
-                    '$.status_history[*]'
-                    COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                ) h ON h.status = ?
-                GROUP BY po2.pancake_order_id
-            ),
-            q_all AS (
-                SELECT o.pancake_order_id,
-                       SUM(CAST(IFNULL(dd.quantity, 0) AS DECIMAL(18,6))) AS sum_qty_all
-                FROM {$orders} o
-                JOIN c ON c.pancake_order_id = o.pancake_order_id
-                JOIN {$details} dd ON dd.pancake_order_id = o.pancake_order_id
-                WHERE JSON_VALID(o.data) = 1
-                  AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
-                  AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
-                  AND {$whereAlloc}
-                GROUP BY o.pancake_order_id
-            ),
-            s AS (
-                SELECT
-                    {$nameKey}                          AS product_key,
-                    MIN(COALESCE(d.product_name, ''))   AS product_name,
-                    MIN(COALESCE(d.image_url, ''))      AS image_url,
-                    SUM(
-                        {$lineNet}
-                        - CASE
-                            WHEN COALESCE(q_all.sum_qty_all, 0) > 0
-                              THEN ( CAST(IFNULL(JSON_EXTRACT(o.data, '$.total_discount'), 0) AS DECIMAL(18,6))
-                                     / q_all.sum_qty_all
-                                   ) * CAST(IFNULL(d.quantity, 0) AS DECIMAL(18,6))
-                            ELSE 0
-                          END
-                    )                                    AS revenue,
-                    COUNT(DISTINCT o.pancake_order_id)   AS orders
-                FROM {$orders} o
-                JOIN c      ON c.pancake_order_id = o.pancake_order_id
-                JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
-                LEFT JOIN q_all ON q_all.pancake_order_id = o.pancake_order_id
-                WHERE JSON_VALID(o.data) = 1
-                  AND c.confirmed_at BETWEEN ? AND ?
-                  AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
-                  AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
-                  AND {$whereCombo}
-                GROUP BY {$nameKey}
-            )
+        WITH c AS (
+            SELECT po2.pancake_order_id,
+                   MAX(DATE_ADD(h.updated_at, {$tz_offset_sql})) AS confirmed_at
+            FROM {$orders} po2
+            JOIN JSON_TABLE(
+                CASE WHEN JSON_VALID(po2.data) THEN po2.data ELSE JSON_ARRAY() END,
+                '$.status_history[*]'
+                COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
+            ) h ON h.status = ?
+            GROUP BY po2.pancake_order_id
+        ),
+        q_all AS (
+            SELECT o.pancake_order_id,
+                   SUM(CAST(IFNULL(dd.quantity, 0) AS DECIMAL(18,6))) AS sum_qty_all
+            FROM {$orders} o
+            JOIN c ON c.pancake_order_id = o.pancake_order_id
+            JOIN {$details} dd ON dd.pancake_order_id = o.pancake_order_id
+            WHERE JSON_VALID(o.data) = 1
+              AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
+              AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
+              AND {$whereAlloc}
+            GROUP BY o.pancake_order_id
+        ),
+        -- Doanh thu/đơn theo combo (product_key)
+        s AS (
             SELECT
-                NULL AS product_id,
-                s.product_name,
-                s.image_url,
-                s.revenue,
-                s.orders,
-                CASE WHEN s.orders > 0 THEN s.revenue / s.orders ELSE 0 END AS aov
-            FROM s
-            ORDER BY s.revenue DESC
-            LIMIT ? OFFSET ?
-        ";
+                {$nameKey}                          AS product_key,
+                MIN(COALESCE(d.product_name, ''))   AS product_name,
+                MIN(COALESCE(d.image_url, ''))      AS image_url,
+                SUM(
+                    {$lineNet}
+                    - CASE
+                        WHEN COALESCE(q_all.sum_qty_all, 0) > 0
+                          THEN ( CAST(IFNULL(JSON_EXTRACT(o.data, '$.total_discount'), 0) AS DECIMAL(18,6))
+                                 / q_all.sum_qty_all
+                               ) * CAST(IFNULL(d.quantity, 0) AS DECIMAL(18,6))
+                        ELSE 0
+                      END
+                )                                    AS revenue,
+                COUNT(DISTINCT o.pancake_order_id)   AS orders
+            FROM {$orders} o
+            JOIN c      ON c.pancake_order_id = o.pancake_order_id
+            JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
+            LEFT JOIN q_all ON q_all.pancake_order_id = o.pancake_order_id
+            WHERE JSON_VALID(o.data) = 1
+              AND c.confirmed_at BETWEEN ? AND ?
+              AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
+              AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
+              AND {$whereCombo}
+            GROUP BY {$nameKey}
+        ),
+        -- Base cho tính repeat & thời gian mua lại
+        base_rep AS (
+            SELECT
+                {$nameKey} AS product_key,
+                o.pancake_order_id,
+                {$custKey} AS customer_key,
+                c.confirmed_at
+            FROM {$orders} o
+            JOIN c ON c.pancake_order_id = o.pancake_order_id
+            JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
+            WHERE JSON_VALID(o.data) = 1
+              AND c.confirmed_at BETWEEN ? AND ?
+              AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
+              AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
+              AND {$whereCombo}
+              AND {$custKey} IS NOT NULL
+        ),
+        agg_rep AS (
+            SELECT product_key, customer_key,
+                   COUNT(DISTINCT pancake_order_id) AS order_cnt
+            FROM base_rep
+            GROUP BY product_key, customer_key
+        ),
+        rep AS (
+            SELECT product_key,
+                   COUNT(*) AS unique_buyers,
+                   SUM(CASE WHEN order_cnt >= 2 THEN 1 ELSE 0 END) AS repeat_buyers,
+                   CASE WHEN COUNT(*) > 0
+                        THEN SUM(CASE WHEN order_cnt >= 2 THEN 1 ELSE 0 END) / COUNT(*)
+                        ELSE NULL END AS repeat_rate
+            FROM agg_rep
+            GROUP BY product_key
+        ),
+        rep_time AS (
+            SELECT product_key, customer_key,
+                   AVG(DATEDIFF(next_confirmed_at, confirmed_at)) AS avg_days
+            FROM (
+                SELECT product_key, customer_key, confirmed_at,
+                       LEAD(confirmed_at) OVER (PARTITION BY product_key, customer_key ORDER BY confirmed_at) AS next_confirmed_at
+                FROM base_rep
+            ) t
+            WHERE next_confirmed_at IS NOT NULL
+            GROUP BY product_key, customer_key
+        ),
+        avg_time AS (
+            SELECT product_key,
+                   AVG(avg_days) AS avg_days_between
+            FROM rep_time
+            GROUP BY product_key
+        )
+        SELECT
+            NULL AS product_id,
+            s.product_name,
+            s.image_url,
+            s.revenue,
+            s.orders,
+            CASE WHEN s.orders > 0 THEN s.revenue / s.orders ELSE 0 END AS aov,
+            rep.repeat_rate,
+            avg_time.avg_days_between
+        FROM s
+        LEFT JOIN rep ON rep.product_key = s.product_key
+        LEFT JOIN avg_time ON avg_time.product_key = s.product_key
+        ORDER BY s.revenue DESC
+        LIMIT ? OFFSET ?
+    ";
 
         $bind = [];
         $bind[] = $status;
-        $bind = array_merge($bind, $exclude_sources); 
-        $bind[] = $startDT; $bind[] = $endDT; 
         $bind = array_merge($bind, $exclude_sources);
-        $bind[] = (int)$limit; $bind[] = (int)$offset;
+        $bind[] = $startDT;
+        $bind[] = $endDT;
+        $bind = array_merge($bind, $exclude_sources);
+        $bind[] = $startDT;
+        $bind[] = $endDT;
+        $bind = array_merge($bind, $exclude_sources);
+        $bind[] = (int)$limit;
+        $bind[] = (int)$offset;
 
         $rows = $this->db->query($sql, $bind)->result_array() ?: [];
 
         foreach ($rows as &$r) {
-            $r['revenue']      = (float)($r['revenue'] ?? 0);
-            $r['orders']       = (int)  ($r['orders'] ?? 0);
-            $r['aov']          = $r['orders'] > 0 ? ((float)$r['revenue'] / (int)$r['orders']) : 0.0;
-            $r['product_id']   = null;
-            $r['product_name'] = $r['product_name'] ?? '';
-            $r['image_url']    = $r['image_url'] ?? '';
+            $r['revenue']          = (float)($r['revenue'] ?? 0);
+            $r['orders']           = (int)  ($r['orders'] ?? 0);
+            $r['aov']              = $r['orders'] > 0 ? ((float)$r['revenue'] / (int)$r['orders']) : 0.0;
+            $rate = isset($r['repeat_rate']) ? (float)$r['repeat_rate'] : null; // 0..1
+            $r['repurchase_rate']  = is_null($rate) ? null : ($rate * 100.0);   // %
+            $r['avg_days_between'] = isset($r['avg_days_between']) ? (float)$r['avg_days_between'] : null;
+            $r['product_id']       = null;
+            $r['product_name']     = $r['product_name'] ?? '';
+            $r['image_url']        = $r['image_url'] ?? '';
         }
         unset($r);
+
         return $rows;
     }
 
@@ -417,7 +509,7 @@ class Pancake_overview_products_model extends App_Model
             WITH c AS (
                 SELECT po2.pancake_order_id,
                        MAX(DATE_ADD(h.updated_at, {$tz_offset_sql})) AS confirmed_at
-                FROM {$orders} po2
+                FROM " . db_prefix() . "pancake_orders po2
                 JOIN JSON_TABLE(
                     CASE WHEN JSON_VALID(po2.data) THEN po2.data ELSE JSON_ARRAY() END,
                     '$.status_history[*]'
@@ -572,20 +664,31 @@ class Pancake_overview_products_model extends App_Model
     ): float {
         $today = date('Y-m-d');
         return $this->get_total_revenue_had_status_in_range(
-            $today,$today,1,$exclude_sources,true,$tz_offset_sql
+            $today,
+            $today,
+            1,
+            $exclude_sources,
+            true,
+            $tz_offset_sql
         );
     }
 
     /** Tuỳ chọn: số đơn distinct theo SP (non-combo) */
     public function get_product_order_counts_distinct(
-        $start_date,$end_date,$status_val=1,$exclude_channels=[],$exclude_gifts=true,$tz_shift='INTERVAL 7 HOUR'
-    ){
+        $start_date,
+        $end_date,
+        $status_val = 1,
+        $exclude_channels = [],
+        $exclude_gifts = true,
+        $tz_shift = 'INTERVAL 7 HOUR'
+    ) {
         $orders  = db_prefix() . 'pancake_orders';
         $details = db_prefix() . 'pancake_order_details';
         $startDT = $start_date . ' 00:00:00';
         $endDT   = $end_date   . ' 23:59:59';
 
-        $chPlace=''; $bind=[$status_val, $startDT, $endDT];
+        $chPlace = '';
+        $bind = [$status_val, $startDT, $endDT];
         if (!empty($exclude_channels)) {
             $chPlace = $this->placeholders(count($exclude_channels));
             $bind = array_merge($bind, $exclude_channels);
