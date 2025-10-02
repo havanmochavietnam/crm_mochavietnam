@@ -142,7 +142,7 @@
               </thead>
               <tbody>
               <?php if (!empty($rows_products)): foreach ($rows_products as $p):
-                $img   = !empty($p['image_url']) ? $p['image_url'] : 'https://via.placeholder.com/44x44?text=%20';
+                $img   = !empty($p['image_url']) ? $p['image_url'] : 'https://mochavietnam.com.vn/thumbs/600x600x2/upload/photo/tai-xuong-3278.png';
                 $code  = isset($p['product_id']) && $p['product_id'] !== null && $p['product_id'] !== '' ? (string)$p['product_id'] : '';
                 $name  = !empty($p['product_name']) ? $p['product_name'] : '-';
                 $rev   = (float)($p['revenue'] ?? 0);
@@ -252,10 +252,9 @@
           </div>
         </div>
       </div>
-
-    </div><!-- /.info-section -->
-  </div><!-- /.content -->
-</div><!-- /#wrapper -->
+    </div>
+  </div>
+</div>
 
 <?php init_tail(); ?>
 </body>

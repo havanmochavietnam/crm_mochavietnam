@@ -103,14 +103,11 @@ class Pancake_overview_products_model extends App_Model
               AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
               AND {$whereLine}
         ";
-
-        // BIND THEO THỨ TỰ XUẤT HIỆN CỦA ? TRONG SQL:
-        // 1) status (c), 2) exclude (q_all), 3-4) between, 5) exclude (outer)
         $bind = [];
-        $bind[] = $status;                          // c.status
-        $bind = array_merge($bind, $exclude_sources); // q_all exclude
-        $bind[] = $startDT; $bind[] = $endDT;       // outer BETWEEN
-        $bind = array_merge($bind, $exclude_sources); // outer exclude
+        $bind[] = $status;
+        $bind = array_merge($bind, $exclude_sources); 
+        $bind[] = $startDT; $bind[] = $endDT;       
+        $bind = array_merge($bind, $exclude_sources);
 
         $row  = $this->db->query($sql, $bind)->row_array() ?: [];
         return (float)($row['total_revenue'] ?? 0);
@@ -244,23 +241,14 @@ class Pancake_overview_products_model extends App_Model
             ORDER BY s.revenue DESC
             LIMIT ? OFFSET ?
         ";
-
-        // THỨ TỰ BIND:
-        // 1) status (c)
-        // 2) exclude (q_all)
-        // 3-4) BETWEEN (s)
-        // 5) exclude (s)
-        // 6-7) BETWEEN (base_rep)
-        // 8) exclude (base_rep)
-        // 9-10) limit, offset
         $bind = [];
-        $bind[] = $status;                             // c.status
-        $bind = array_merge($bind, $exclude_sources);  // q_all exclude
-        $bind[] = $startDT; $bind[] = $endDT;          // s BETWEEN
-        $bind = array_merge($bind, $exclude_sources);  // s exclude
-        $bind[] = $startDT; $bind[] = $endDT;          // base_rep BETWEEN
-        $bind = array_merge($bind, $exclude_sources);  // base_rep exclude
-        $bind[] = (int)$limit; $bind[] = (int)$offset; // limit/offset
+        $bind[] = $status;
+        $bind = array_merge($bind, $exclude_sources);
+        $bind[] = $startDT; $bind[] = $endDT;
+        $bind = array_merge($bind, $exclude_sources);
+        $bind[] = $startDT; $bind[] = $endDT;
+        $bind = array_merge($bind, $exclude_sources);
+        $bind[] = (int)$limit; $bind[] = (int)$offset; 
 
         $rows = $this->db->query($sql, $bind)->result_array() ?: [];
 
@@ -376,17 +364,11 @@ class Pancake_overview_products_model extends App_Model
             LIMIT ? OFFSET ?
         ";
 
-        // THỨ TỰ BIND:
-        // 1) status (c)
-        // 2) exclude (q_all)
-        // 3-4) BETWEEN (s)
-        // 5) exclude (s)
-        // 6-7) limit, offset
         $bind = [];
-        $bind[] = $status;                            // c.status
-        $bind = array_merge($bind, $exclude_sources); // q_all exclude
-        $bind[] = $startDT; $bind[] = $endDT;         // s BETWEEN
-        $bind = array_merge($bind, $exclude_sources); // s exclude
+        $bind[] = $status;
+        $bind = array_merge($bind, $exclude_sources); 
+        $bind[] = $startDT; $bind[] = $endDT; 
+        $bind = array_merge($bind, $exclude_sources);
         $bind[] = (int)$limit; $bind[] = (int)$offset;
 
         $rows = $this->db->query($sql, $bind)->result_array() ?: [];
@@ -592,7 +574,6 @@ class Pancake_overview_products_model extends App_Model
         return $this->get_total_revenue_had_status_in_range(
             $today,$today,1,$exclude_sources,true,$tz_offset_sql
         );
-        // Lưu ý: tham số thứ 5 là $exclude_gifts (bool), đã truyền true.
     }
 
     /** Tuỳ chọn: số đơn distinct theo SP (non-combo) */
