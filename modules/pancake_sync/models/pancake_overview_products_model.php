@@ -114,7 +114,7 @@ class Pancake_overview_products_model extends App_Model
         return (float)($row['total_revenue'] ?? 0);
     }
 
-    /* ======================== PRODUCT breakdown ======================== */
+    /* ======================== PRODUCT breakdown (có lọc ≥ lần 2) ======================== */
     public function get_product_revenue_breakdown(
         string $start_date,
         string $end_date,
@@ -122,6 +122,7 @@ class Pancake_overview_products_model extends App_Model
         array $exclude_sources = ['Tiktok', 'Shopee', 'Affiliate'],
         bool $exclude_gifts = true,
         string $tz_offset_sql = 'INTERVAL 7 HOUR',
+        bool $exclude_first = false,      // <--- THÊM
         int $limit = 100,
         int $offset = 0
     ): array {
@@ -139,8 +140,9 @@ class Pancake_overview_products_model extends App_Model
         if ($exclude_gifts) $whereNonCombo .= " AND (d.is_gift IS NULL OR d.is_gift = 0)";
         $whereAlloc = $exclude_gifts ? "(dd.is_gift IS NULL OR dd.is_gift = 0)" : "1=1";
 
-        $nameKey = $this->_name_key_expr('d');
-        $custKey = $this->_customer_key_expr();
+        $nameKey    = $this->_name_key_expr('d');
+        $nameKeyAll = $this->_name_key_expr('d_all');
+        $custKey    = $this->_customer_key_expr();
 
         $lineNet = "
             (CAST(IFNULL(d.unit_price, 0) AS DECIMAL(18,6)) * CAST(IFNULL(d.quantity, 0) AS DECIMAL(18,6)))
@@ -171,6 +173,30 @@ class Pancake_overview_products_model extends App_Model
                   AND {$whereAlloc}
                 GROUP BY o.pancake_order_id
             ),
+            /* Lifetime history to rank purchases per (product_key, customer_key) */
+            base_all AS (
+                SELECT
+                    {$nameKeyAll} AS product_key,
+                    o.pancake_order_id,
+                    {$custKey} AS customer_key,
+                    c.confirmed_at
+                FROM {$orders} o
+                JOIN c ON c.pancake_order_id = o.pancake_order_id
+                JOIN {$details} d_all ON d_all.pancake_order_id = o.pancake_order_id
+                WHERE JSON_VALID(o.data) = 1
+                  AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
+                  AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
+                  AND d_all.is_combo = 0
+                  " . ($exclude_gifts ? " AND (d_all.is_gift IS NULL OR d_all.is_gift = 0)" : "") . "
+                  AND {$custKey} IS NOT NULL
+                GROUP BY {$nameKeyAll}, o.pancake_order_id, {$custKey}, c.confirmed_at
+            ),
+            ranked AS (
+                SELECT
+                    product_key, pancake_order_id, customer_key, confirmed_at,
+                    ROW_NUMBER() OVER (PARTITION BY product_key, customer_key ORDER BY confirmed_at) AS rn
+                FROM base_all
+            ),
             s AS (
                 SELECT
                     {$nameKey}                          AS product_key,
@@ -191,14 +217,18 @@ class Pancake_overview_products_model extends App_Model
                 JOIN c      ON c.pancake_order_id = o.pancake_order_id
                 JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
                 LEFT JOIN q_all ON q_all.pancake_order_id = o.pancake_order_id
+                LEFT JOIN ranked r
+                       ON r.pancake_order_id = o.pancake_order_id
+                      AND r.product_key      = {$nameKey}
                 WHERE JSON_VALID(o.data) = 1
                   AND c.confirmed_at BETWEEN ? AND ?
                   AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
                   AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
                   AND {$whereNonCombo}
+                  AND ( ? = 0 OR r.rn >= 2 )
                 GROUP BY {$nameKey}
             ),
-            /* ===== Repeat-rate (đã có) ===== */
+            /* ===== Repeat-rate & Avg repurchase time ===== */
             base_rep AS (
                 SELECT
                     {$nameKey} AS product_key,
@@ -231,7 +261,6 @@ class Pancake_overview_products_model extends App_Model
                 FROM agg_rep
                 GROUP BY product_key
             ),
-            /* ===== TG mua lại TB (ngày) ===== */
             rep_time AS (
                 SELECT product_key, customer_key,
                        AVG(DATEDIFF(next_confirmed_at, confirmed_at)) AS avg_days
@@ -264,15 +293,18 @@ class Pancake_overview_products_model extends App_Model
             ORDER BY s.revenue DESC
             LIMIT ? OFFSET ?
         ";
+
         $bind = [];
-        $bind[] = $status;
-        $bind = array_merge($bind, $exclude_sources);
-        $bind[] = $startDT;
-        $bind[] = $endDT;
-        $bind = array_merge($bind, $exclude_sources);
-        $bind[] = $startDT;
-        $bind[] = $endDT;
-        $bind = array_merge($bind, $exclude_sources);
+        $bind[] = $status;                               // c
+        $bind = array_merge($bind, $exclude_sources);    // q_all
+        $bind = array_merge($bind, $exclude_sources);    // base_all
+        $bind[] = $startDT;                              // s BETWEEN
+        $bind[] = $endDT;                                // s BETWEEN
+        $bind = array_merge($bind, $exclude_sources);    // s NOT IN (sources)
+        $bind[] = $exclude_first ? 1 : 0;               // toggle rn>=2
+        $bind[] = $startDT;                              // base_rep BETWEEN
+        $bind[] = $endDT;                                // base_rep BETWEEN
+        $bind = array_merge($bind, $exclude_sources);    // base_rep NOT IN
         $bind[] = (int)$limit;
         $bind[] = (int)$offset;
 
@@ -296,7 +328,7 @@ class Pancake_overview_products_model extends App_Model
         return $rows;
     }
 
-    /* ======================== COMBO breakdown ======================== */
+    /* ======================== COMBO breakdown (có lọc ≥ lần 2) ======================== */
     public function get_combo_revenue_breakdown(
         string $start_date,
         string $end_date,
@@ -304,6 +336,7 @@ class Pancake_overview_products_model extends App_Model
         array $exclude_sources = ['Tiktok', 'Shopee', 'Affiliate'],
         bool $exclude_gifts = true,
         string $tz_offset_sql = 'INTERVAL 7 HOUR',
+        bool $exclude_first = false,     // <--- THÊM
         int $limit = 100,
         int $offset = 0
     ): array {
@@ -321,13 +354,14 @@ class Pancake_overview_products_model extends App_Model
         if ($exclude_gifts) $whereCombo .= " AND (d.is_gift IS NULL OR d.is_gift = 0)";
         $whereAlloc = $exclude_gifts ? "(dd.is_gift IS NULL OR dd.is_gift = 0)" : "1=1";
 
-        $nameKey = $this->_name_key_expr('d');
-        $custKey = $this->_customer_key_expr();
+        $nameKey     = $this->_name_key_expr('d');
+        $nameKeyAll  = $this->_name_key_expr('d_all');
+        $custKey     = $this->_customer_key_expr();
 
         $lineNet = "
-        (CAST(IFNULL(d.unit_price, 0) AS DECIMAL(18,6)) * CAST(IFNULL(d.quantity, 0) AS DECIMAL(18,6)))
-        - CAST(IFNULL(d.total_discount, 0) AS DECIMAL(18,6))
-    ";
+            (CAST(IFNULL(d.unit_price, 0) AS DECIMAL(18,6)) * CAST(IFNULL(d.quantity, 0) AS DECIMAL(18,6)))
+            - CAST(IFNULL(d.total_discount, 0) AS DECIMAL(18,6))
+        ";
 
         $sql = "
         WITH c AS (
@@ -353,7 +387,29 @@ class Pancake_overview_products_model extends App_Model
               AND {$whereAlloc}
             GROUP BY o.pancake_order_id
         ),
-        -- Doanh thu/đơn theo combo (product_key)
+        base_all AS (
+            SELECT
+                {$nameKeyAll} AS product_key,
+                o.pancake_order_id,
+                {$custKey} AS customer_key,
+                c.confirmed_at
+            FROM {$orders} o
+            JOIN c ON c.pancake_order_id = o.pancake_order_id
+            JOIN {$details} d_all ON d_all.pancake_order_id = o.pancake_order_id
+            WHERE JSON_VALID(o.data) = 1
+              AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
+              AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
+              AND d_all.is_combo = 1
+              " . ($exclude_gifts ? " AND (d_all.is_gift IS NULL OR d_all.is_gift = 0)" : "") . "
+              AND {$custKey} IS NOT NULL
+            GROUP BY {$nameKeyAll}, o.pancake_order_id, {$custKey}, c.confirmed_at
+        ),
+        ranked AS (
+            SELECT
+                product_key, pancake_order_id, customer_key, confirmed_at,
+                ROW_NUMBER() OVER (PARTITION BY product_key, customer_key ORDER BY confirmed_at) AS rn
+            FROM base_all
+        ),
         s AS (
             SELECT
                 {$nameKey}                          AS product_key,
@@ -374,14 +430,18 @@ class Pancake_overview_products_model extends App_Model
             JOIN c      ON c.pancake_order_id = o.pancake_order_id
             JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
             LEFT JOIN q_all ON q_all.pancake_order_id = o.pancake_order_id
+            LEFT JOIN ranked r
+                   ON r.pancake_order_id = o.pancake_order_id
+                  AND r.product_key      = {$nameKey}
             WHERE JSON_VALID(o.data) = 1
               AND c.confirmed_at BETWEEN ? AND ?
               AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
               AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
               AND {$whereCombo}
+              AND ( ? = 0 OR r.rn >= 2 )
             GROUP BY {$nameKey}
         ),
-        -- Base cho tính repeat & thời gian mua lại
+        /* ===== Repeat-rate & Avg repurchase time giữ nguyên ===== */
         base_rep AS (
             SELECT
                 {$nameKey} AS product_key,
@@ -395,7 +455,8 @@ class Pancake_overview_products_model extends App_Model
               AND c.confirmed_at BETWEEN ? AND ?
               AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
               AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
-              AND {$whereCombo}
+              AND d.is_combo = 1
+              " . ($exclude_gifts ? " AND (d.is_gift IS NULL OR d.is_gift = 0)" : "") . "
               AND {$custKey} IS NOT NULL
         ),
         agg_rep AS (
@@ -445,17 +506,19 @@ class Pancake_overview_products_model extends App_Model
         LEFT JOIN avg_time ON avg_time.product_key = s.product_key
         ORDER BY s.revenue DESC
         LIMIT ? OFFSET ?
-    ";
+        ";
 
         $bind = [];
-        $bind[] = $status;
-        $bind = array_merge($bind, $exclude_sources);
-        $bind[] = $startDT;
-        $bind[] = $endDT;
-        $bind = array_merge($bind, $exclude_sources);
-        $bind[] = $startDT;
-        $bind[] = $endDT;
-        $bind = array_merge($bind, $exclude_sources);
+        $bind[] = $status;                               // c
+        $bind = array_merge($bind, $exclude_sources);    // q_all
+        $bind = array_merge($bind, $exclude_sources);    // base_all
+        $bind[] = $startDT;                              // s BETWEEN
+        $bind[] = $endDT;                                // s BETWEEN
+        $bind = array_merge($bind, $exclude_sources);    // s NOT IN
+        $bind[] = $exclude_first ? 1 : 0;               // toggle rn>=2
+        $bind[] = $startDT;                              // base_rep BETWEEN
+        $bind[] = $endDT;                                // base_rep BETWEEN
+        $bind = array_merge($bind, $exclude_sources);    // base_rep NOT IN
         $bind[] = (int)$limit;
         $bind[] = (int)$offset;
 

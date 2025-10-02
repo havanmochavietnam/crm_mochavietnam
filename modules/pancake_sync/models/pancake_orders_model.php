@@ -106,6 +106,8 @@ class Pancake_orders_model extends App_Model
                     'customer_name'      => $str($o['shipping_address']['full_name']    ?? null, 191),
                     'customer_phone'     => $str($o['shipping_address']['phone_number'] ?? null, 32),
                     'assigning_care_name'=> $str($o['assigning_care']['name'] ?? null,255),
+                    'marketer_name'=> $str($o['marketer']['name'] ?? null,255),
+                    'assigning_seller_name'=> $str($o['assigning_seller']['name'] ?? null,255),
                     'status_name'        => $str($o['status_name'] ?? $o['status'] ?? null, 64),
                     'order_sources_name' => $str($o['order_sources_name'] ?? null, 191),
                     'cod'                => $num($o['cod'] ?? $o['cash_on_delivery'] ?? 0),
@@ -168,7 +170,8 @@ class Pancake_orders_model extends App_Model
                     . "cod=VALUES(cod),"
                     . "created_at=VALUES(created_at),"
                     . "`data`=VALUES(`data`),"
-                    . "assigning_care_name=VALUES(assigning_care_name)";
+                    . "assigning_care_name=VALUES(assigning_care_name),"
+                    . "marketer_name=VALUES(marketer_name)";
                 if (!$this->db->simple_query($sql)) {
                     $e = $this->db->error();
                     $this->db->trans_rollback();

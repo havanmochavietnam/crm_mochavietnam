@@ -14,6 +14,9 @@ class Pancake_overview_products extends AdminController
         $date_from = $this->input->get('date_from') ?: date('Y-m-d');
         $date_to   = $this->input->get('date_to')   ?: date('Y-m-d');
 
+        // Toggle: Chỉ tính doanh số mua lại (≥ lần 2)
+        $rep_only = (int)($this->input->get('rep_only') ?? 0) === 1;
+
         $total_revenue = $this->overview->get_total_revenue_had_status_in_range(
             $date_from,
             $date_to,
@@ -23,6 +26,7 @@ class Pancake_overview_products extends AdminController
             'INTERVAL 7 HOUR'
         );
 
+        // SẢN PHẨM (non-combo) — có lọc ≥ lần 2 nếu rep_only = true
         $products_metrics = $this->overview->get_product_revenue_breakdown(
             $date_from,
             $date_to,
@@ -30,6 +34,7 @@ class Pancake_overview_products extends AdminController
             ['Tiktok', 'Shopee', 'Affiliate'],
             true,
             'INTERVAL 7 HOUR',
+            $rep_only,     // <--- toggle
             100,
             0
         );
@@ -37,6 +42,7 @@ class Pancake_overview_products extends AdminController
             usort($products_metrics, fn($a, $b) => (float)($b['revenue'] ?? 0) <=> (float)($a['revenue'] ?? 0));
         }
 
+        // COMBO — có lọc ≥ lần 2 nếu rep_only = true
         $combos_revenue = $this->overview->get_combo_revenue_breakdown(
             $date_from,
             $date_to,
@@ -44,6 +50,7 @@ class Pancake_overview_products extends AdminController
             ['Tiktok', 'Shopee', 'Affiliate'],
             true,
             'INTERVAL 7 HOUR',
+            $rep_only,     // <--- toggle
             100,
             0
         );
@@ -51,6 +58,7 @@ class Pancake_overview_products extends AdminController
             usort($combos_revenue, fn($a, $b) => (float)($b['revenue'] ?? 0) <=> (float)($a['revenue'] ?? 0));
         }
 
+        // AOV & Orders map theo Combo
         $aov_by_combo = [];
         $orders_by_combo = [];
         if (!empty($combos_revenue)) {
@@ -66,17 +74,19 @@ class Pancake_overview_products extends AdminController
             }
         }
 
+        // Top combo & tỷ lệ đóng góp (so với tổng doanh thu đã lọc)
         $top_combo = null;
         if (!empty($combos_revenue)) {
-            $top_combo = $combos_revenue[0];
+            $top_combo   = $combos_revenue[0];
             $top_revenue = (float)($top_combo['revenue'] ?? 0);
-            $top_orders  = (int)($top_combo['orders'] ?? 0);
+            $top_orders  = (int)  ($top_combo['orders']  ?? 0);
             $top_aov     = $top_orders > 0 ? $top_revenue / $top_orders : 0.0;
             $top_combo['orders'] = $top_orders;
             $top_combo['aov']    = $top_aov;
             $top_combo['contribution_pct'] = ($total_revenue > 0) ? round($top_revenue * 100 / $total_revenue, 2) : null;
         }
 
+        // Repeat-rate theo combo (để render bảng phụ)
         $repurchase_by_combo = [];
         $combo_repeat_overall = [
             'unique_customer_combo_pairs' => 0,
@@ -153,7 +163,8 @@ class Pancake_overview_products extends AdminController
             'repurchase_by_combo',
             'top_combo',
             'orders_by_combo',
-            'combo_repeat_overall'
+            'combo_repeat_overall',
+            'rep_only' // <--- truyền sang View
         );
 
         $this->load->view('pancake_sync/dashboard_product_pancake', $data);

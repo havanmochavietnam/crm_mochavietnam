@@ -9,152 +9,28 @@
     white-space: nowrap;
     text-align: left;
   }
-
-  .product-table tbody td {
-    vertical-align: middle;
-    padding: 10px 8px;
-    font-size: 13px;
-  }
-
-  .product-cell {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .product-thumb {
-    width: 44px;
-    height: 44px;
-    border-radius: 6px;
-    object-fit: cover;
-    background: #f3f4f6;
-    flex: 0 0 44px;
-  }
-
-  .product-info .code {
-    font-weight: 700;
-    font-size: 13px;
-    line-height: 1.1;
-  }
-
-  .product-info .name {
-    color: #555;
-    font-size: 13px;
-    line-height: 1.2;
-  }
-
-  .product-value {
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .filter-bar {
-    text-align: end;
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-  }
-
-  .filter-bar .form-group {
-    margin-right: 10px;
-    margin-bottom: 0;
-  }
-
-  .kpi-wrap {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-  }
-
-  .kpi-card {
-    flex: 1 1 260px;
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 14px 16px;
-  }
-
-  .kpi-title {
-    color: #6c757d;
-    font-weight: 600;
-    font-size: 12px;
-    letter-spacing: .3px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .kpi-value {
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .kpi-sub {
-    color: #6c757d;
-    font-size: 13px;
-  }
-
-  .kpi-combo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .kpi-combo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
-    object-fit: cover;
-    background: #f3f4f6;
-  }
-
-  .dash-panel {
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 16px;
-  }
-
-  .dash-panel .panel-head {
-    padding: 12px 16px;
-    border-bottom: 1px solid #e9ecef;
-    background: #f8f9fa;
-    font-weight: 600;
-  }
-
-  .dash-panel .panel-body {
-    padding: 0;
-  }
-
-  .table-wrap {
-    max-height: 560px;
-    overflow-y: auto;
-    position: relative;
-  }
-
-  .product-table thead th.sticky {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background: #f8f9fa;
-  }
-
-  .product-table tfoot th,
-  .product-table tfoot td {
-    position: sticky;
-    bottom: 0;
-    z-index: 3;
-    background: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, .04);
-  }
-
-  .text-right {
-    text-align: right !important;
-  }
+  .product-table tbody td { vertical-align: middle; padding: 10px 8px; font-size: 13px; }
+  .product-cell { display: flex; align-items: center; gap: 12px; }
+  .product-thumb { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; background: #f3f4f6; flex: 0 0 44px; }
+  .product-info .code { font-weight: 700; font-size: 13px; line-height: 1.1; }
+  .product-info .name { color: #555; font-size: 13px; line-height: 1.2; }
+  .product-value { text-align: right; white-space: nowrap; }
+  .filter-bar { text-align: end; background: #fff; border: 1px solid #e9ecef; border-radius: 8px; padding: 12px; margin-bottom: 16px; }
+  .filter-bar .form-group { margin-right: 10px; margin-bottom: 0; }
+  .kpi-wrap { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+  .kpi-card { flex: 1 1 260px; background: #fff; border: 1px solid #e9ecef; border-radius: 8px; padding: 14px 16px; }
+  .kpi-title { color: #6c757d; font-weight: 600; font-size: 12px; letter-spacing: .3px; text-transform: uppercase; margin-bottom: 6px; }
+  .kpi-value { font-size: 20px; font-weight: 700; }
+  .kpi-sub { color: #6c757d; font-size: 13px; }
+  .kpi-combo { display: flex; align-items: center; gap: 10px; }
+  .kpi-combo img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; background: #f3f4f6; }
+  .dash-panel { background: #fff; border: 1px solid #e9ecef; border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .dash-panel .panel-head { padding: 12px 16px; border-bottom: 1px solid #e9ecef; background: #f8f9fa; font-weight: 600; }
+  .dash-panel .panel-body { padding: 0; }
+  .table-wrap { max-height: 560px; overflow-y: auto; position: relative; }
+  .product-table thead th.sticky { position: sticky; top: 0; z-index: 2; background: #f8f9fa; }
+  .product-table tfoot th, .product-table tfoot td { position: sticky; bottom: 0; z-index: 3; background: #f8f9fa; border-top: 1px solid #e9ecef; box-shadow: 0 -4px 6px rgba(0, 0, 0, .04); }
+  .text-right { text-align: right !important; }
 </style>
 
 <div id="wrapper">
@@ -172,6 +48,19 @@
             <label for="date_to" class="control-label me-1">Đến ngày</label>
             <input type="date" id="date_to" name="date_to" class="form-control" value="<?= html_escape($date_to ?? date('Y-m-d')); ?>">
           </div>
+
+          <!-- Toggle: Chỉ tính doanh số mua lại (≥ lần 2) -->
+          <div class="form-group me-2">
+            <div class="form-check" style="margin-top:6px;">
+              <input class="form-check-input" type="checkbox" id="rep_only" name="rep_only" value="1"
+                     <?= !empty($rep_only) ? 'checked' : ''; ?>
+                     onchange="this.form.submit()">
+              <label class="form-check-label" for="rep_only">
+                Chỉ tính doanh số mua lại (≥ lần 2)
+              </label>
+            </div>
+          </div>
+
           <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Tìm</button>
         </form>
       </div>
@@ -216,7 +105,6 @@
       </div>
 
       <?php
-      // (giữ nguyên helper & map y như bạn đang dùng)
       if (!function_exists('view_extract_order_count')) {
         function view_extract_order_count($row)
         {
@@ -251,7 +139,7 @@
 
       <!-- ======================= BẢNG SẢN PHẨM ======================= -->
       <div class="dash-panel">
-        <div class="panel-head"><i class="fa fa-cubes"></i> Sản phẩm tổng</div>
+        <div class="panel-head"><i class="fa fa-cubes"></i> Sản phẩm</div>
         <div class="panel-body">
           <div class="table-wrap">
             <table class="table table-hover table-sm product-table">
@@ -282,7 +170,7 @@
                     $total_products_revenue += $rev;
                     $total_products_orders  += $orders;
 
-                    $pct  = ($total_revenue > 0) ? ($rev * 100 / $total_revenue) : 0;
+                    $pct  = ($total_revenue > 0) ? ($rev * 100 / $total_revenue) : 0; // giữ logic so với tổng doanh thu đã lọc
                     $aov  = isset($p['aov']) ? (float)$p['aov'] : ($orders > 0 ? ($rev / $orders) : 0.0);
                     $rate = isset($p['repurchase_rate']) ? $p['repurchase_rate'] : null; // %
                     $avgd = isset($p['avg_days_between']) ? $p['avg_days_between'] : null;
@@ -330,7 +218,7 @@
 
       <!-- ======================= BẢNG COMBO ======================= -->
       <div class="dash-panel">
-        <div class="panel-head"><i class="fa fa-layer-group"></i> Combo tổng</div>
+        <div class="panel-head"><i class="fa fa-layer-group"></i> Combo</div>
         <div class="panel-body">
           <div class="table-wrap">
             <table class="table table-hover table-sm product-table">
@@ -348,7 +236,7 @@
               <tbody>
                 <?php
                 $all_combos = is_array($combos_revenue ?? null) ? $combos_revenue : [];
-                $rows_combos = $all_combos; // hiển thị như logic đang có
+                $rows_combos = $all_combos;
                 $all_combo_rev = 0.0;
                 $all_combo_orders = 0;
                 foreach ($all_combos as $c) {
@@ -363,7 +251,7 @@
                     $name  = !empty($c['product_name']) ? $c['product_name'] : '-';
                     $rev   = (float)($c['revenue'] ?? 0);
                     $orders = view_extract_order_count($c);
-                    $pct   = ($total_revenue > 0) ? ($rev * 100 / $total_revenue) : 0;
+                    $pct   = ($total_revenue > 0) ? ($rev * 100 / $total_revenue) : 0; // giữ logic so với tổng doanh thu đã lọc
                     $aov   = isset($c['aov']) ? (float)$c['aov'] : ($orders > 0 ? ($rev / $orders) : 0.0);
                     $rate  = isset($c['repurchase_rate']) ? normalize_percent($c['repurchase_rate']) : null;
                     $avgd  = isset($c['avg_days_between']) ? $c['avg_days_between'] : null;
@@ -416,5 +304,4 @@
 
 <?php init_tail(); ?>
 </body>
-
 </html>
