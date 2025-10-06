@@ -6,7 +6,6 @@ class Pancake_dashboard extends AdminController
     public function __construct()
     {
         parent::__construct();
-        // Chỉ đổi model nạp vào: dùng model dashboard chuyên trách
         $this->load->model('pancake_dashboard_model', 'dash');
     }
 
@@ -15,20 +14,32 @@ class Pancake_dashboard extends AdminController
         $start_param = $this->input->get('start_date');
         $end_param   = $this->input->get('end_date');
 
-        // Lần mở đầu: không có query params -> chỉ quét hôm nay (fast path)
+        // Mặc định hôm nay nếu không có query
         $is_initial = ($start_param === null && $end_param === null);
-
-        // Default: hôm nay
         $start_date = $start_param ?: date('Y-m-d');
         $end_date   = $end_param   ?: date('Y-m-d');
 
-        // ==== LẤY SỐ LIỆU (có cache; only_today cho lần mở đầu) ====
-        // Giữ nguyên tên biến & cách tính phía dưới
+        // ===== SỐ LIỆU CHÍNH =====
         $m        = $this->dash->get_dashboard_metrics($start_date, $end_date, $is_initial);
         $channels = $this->dash->get_channel_metrics($start_date, $end_date, $is_initial);
         $custSeg  = $this->dash->get_customer_segments_overall($start_date, $end_date, $is_initial);
 
-        // ==== TÍNH TOÁN PHÁI SINH (KHOẢNG NGÀY) ====
+        // ===== MARKETER (lọc theo time_status_submitted; chỉ tên + doanh thu + chiết khấu) =====
+        // Hàm model bạn đã viết để gom đúng theo marketer_name, SUM(total_order_amount), SUM(total_discount)
+        // và loại canceled/returned/returning.
+        $mk_rows = $this->dash->get_marketer_metrics($start_date, $end_date);
+
+        // Chuẩn hóa để chắc chắn chỉ trả về 3 cột cần dùng trong view
+        $marketers = [];
+        foreach ((array)$mk_rows as $r) {
+            $marketers[] = [
+                'marketer_name' => (string)($r['marketer_name'] ?? 'Chưa gán'),
+                'revenue'       => (float)  ($r['revenue']       ?? 0),
+                'discount'      => (float)  ($r['discount']      ?? 0),
+            ];
+        }
+
+        // ===== TÍNH TOÁN PHÁI SINH (giữ nguyên phần của bạn) =====
         $count_confirmed_in_range        = (int)($m['count_confirmed_in_range'] ?? 0);
         $revenue_confirmed_in_range      = (float)($m['revenue_confirmed_in_range'] ?? 0);
         $sales_volume_confirmed_in_range = (float)($m['sales_volume_confirmed_in_range'] ?? 0);
@@ -39,17 +50,15 @@ class Pancake_dashboard extends AdminController
         $avg_products_per_order_in_range = $count_confirmed_in_range > 0 ? ($product_quantity_in_range / $count_confirmed_in_range) : 0;
         $closing_rate_in_range           = $count_created_in_range > 0 ? ($count_confirmed_in_range / $count_created_in_range * 100) : 0;
 
-        // ==== Hôm nay (nếu only_today=true thì các số này = in_range) ====
         $count_created_today   = (int)($m['count_created_today'] ?? 0);
         $count_confirmed_today = (int)($m['count_confirmed_today'] ?? 0);
         $closing_rate_today    = $count_created_today > 0 ? ($count_confirmed_today / $count_created_today * 100) : 0;
 
-        // ==== MAP KÊNH CHUẨN ====
         $get = function ($ch) use ($channels) {
             return $channels[$ch] ?? ['revenue' => 0, 'sales' => 0, 'discount' => 0, 'orders' => 0, 'quantity' => 0, 'aov' => 0, 'cust_new' => 0, 'cust_returning' => 0];
         };
         $aff   = $get('Affiliate');
-        $fb    = $get('Facebook');  
+        $fb    = $get('Facebook');
         $shp   = $get('Shopee');
         $zl    = $get('Zalo');
         $tt    = $get('Tiktok');
@@ -58,10 +67,10 @@ class Pancake_dashboard extends AdminController
         $ladi  = $get('LadiPage');
         $other = $get('Khác');
 
-        // ==== DATA CHO VIEW ====
+        // ===== DATA CHO VIEW =====
         $data = [];
 
-        // Tổng quan (khoảng ngày)
+        // Tổng quan
         $data['count_confirmed']            = $count_confirmed_in_range;
         $data['revenue_confirmed']          = $revenue_confirmed_in_range;
         $data['sales_volume_confirmed']     = $sales_volume_confirmed_in_range;
@@ -80,7 +89,7 @@ class Pancake_dashboard extends AdminController
         $data['closing_rate_today']                   = $closing_rate_today;
         $data['get_product_quantity_confirmed_today'] = (int)($m['product_quantity_confirmed_today'] ?? 0);
 
-        // Doanh thu (net) theo nguồn (khoảng ngày)
+        // Theo nguồn (giữ nguyên các biến cũ của bạn)
         $data['get_revenue_of_affiliate_orders_confirmed_in_range']   = $aff['revenue'];
         $data['get_revenue_of_facebook_orders_confirmed_in_range']    = $fb['revenue'];
         $data['get_revenue_of_shopee_orders_confirmed_in_range']      = $shp['revenue'];
@@ -91,7 +100,6 @@ class Pancake_dashboard extends AdminController
         $data['get_revenue_of_ladipage_orders_confirmed_in_range']    = $ladi['revenue'];
         $data['get_revenue_of_others_orders_confirmed_in_range']      = $other['revenue'];
 
-        // Doanh số (gross + shipping)
         $data['get_sale_of_ctv_orders_confirmed_in_range']         = $aff['sales'];
         $data['get_sale_of_facebook_orders_confirmed_in_range']    = $fb['sales'];
         $data['get_sale_of_shopee_orders_confirmed_in_range']      = $shp['sales'];
@@ -102,7 +110,6 @@ class Pancake_dashboard extends AdminController
         $data['get_sale_of_ladipage_orders_confirmed_in_range']    = $ladi['sales'];
         $data['get_sale_of_others_orders_confirmed_in_range']      = $other['sales'];
 
-        // Chiết khấu theo nguồn
         $data['get_discount_of_ctv_orders_confirmed_in_range']    = $aff['discount'];
         $data['get_discount_of_facebook_confirmed_in_range']      = $fb['discount'];
         $data['get_discount_of_shopee_orders_confirmed_in_range'] = $shp['discount'];
@@ -113,7 +120,6 @@ class Pancake_dashboard extends AdminController
         $data['get_discount_of_ladipage_confirmed_in_range']      = $ladi['discount'];
         $data['get_discount_of_others_confirmed_in_range']        = $other['discount'];
 
-        // Số đơn chốt theo nguồn
         $data['count_ctv_orders_confirmed_in_range']         = $aff['orders'];
         $data['count_facebook_orders_confirmed_in_range']    = $fb['orders'];
         $data['count_shopee_orders_confirmed_in_range']      = $shp['orders'];
@@ -124,7 +130,6 @@ class Pancake_dashboard extends AdminController
         $data['count_ladipage_orders_confirmed_in_range']    = $ladi['orders'];
         $data['count_others_orders_confirmed_in_range']      = $other['orders'];
 
-        // SL sản phẩm chốt theo nguồn
         $data['get_product_ctv_quantity_of_orders_confirmed_in_range']         = $aff['quantity'];
         $data['get_product_facebook_quantity_of_orders_confirmed_in_range']    = $fb['quantity'];
         $data['get_product_Shopee_quantity_of_orders_confirmed_in_range']      = $shp['quantity'];
@@ -135,7 +140,6 @@ class Pancake_dashboard extends AdminController
         $data['get_product_ladipage_quantity_of_orders_confirmed_in_range']    = $ladi['quantity'];
         $data['get_product_others_quantity_of_orders_confirmed_in_range']      = $other['quantity'];
 
-        // AOV theo nguồn
         $data['get_aov_of_ctv_orders_confirmed_in_range']         = $aff['aov'];
         $data['get_aov_of_facebook_orders_confirmed_in_range']    = $fb['aov'];
         $data['get_aov_of_shopee_orders_confirmed_in_range']      = $shp['aov'];
@@ -146,7 +150,6 @@ class Pancake_dashboard extends AdminController
         $data['get_aov_of_ladipage_orders_confirmed_in_range']    = $ladi['aov'];
         $data['get_aov_of_others_orders_confirmed_in_range']      = $other['aov'];
 
-        // KH mới/cũ theo nguồn
         $data['cust_new_affiliate']        = $aff['cust_new'];
         $data['cust_new_facebook']         = $fb['cust_new'];
         $data['cust_new_shopee']           = $shp['cust_new'];
@@ -167,16 +170,15 @@ class Pancake_dashboard extends AdminController
         $data['cust_returning_ladipage']   = $ladi['cust_returning'];
         $data['cust_returning_others']     = $other['cust_returning'];
 
-        // Tổng KH mới/cũ (toàn hệ thống)
         $data['cust_new_total']       = (int)($custSeg['cust_new'] ?? 0);
         $data['cust_returning_total'] = (int)($custSeg['cust_returning'] ?? 0);
 
-        // Biến view cũ
         $data['count_hotline_ladipage_confirmed_in_range'] = $data['count_ladipage_orders_confirmed_in_range'];
-
-        // Fallback
         $data['tai_quay_doanh_thu'] = 0;
         $data['tai_quay_don_chot']  = 0;
+
+        // ✨ Quan trọng: truyền đúng tên biến mà view Marketer đang dùng
+        $data['marketers'] = $marketers;
 
         // Điều khiển view
         $data['start_date'] = $start_date;

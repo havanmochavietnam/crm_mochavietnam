@@ -9,28 +9,152 @@
     white-space: nowrap;
     text-align: left;
   }
-  .product-table tbody td { vertical-align: middle; padding: 10px 8px; font-size: 13px; }
-  .product-cell { display: flex; align-items: center; gap: 12px; }
-  .product-thumb { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; background: #f3f4f6; flex: 0 0 44px; }
-  .product-info .code { font-weight: 700; font-size: 13px; line-height: 1.1; }
-  .product-info .name { color: #555; font-size: 13px; line-height: 1.2; }
-  .product-value { text-align: right; white-space: nowrap; }
-  .filter-bar { text-align: end; background: #fff; border: 1px solid #e9ecef; border-radius: 8px; padding: 12px; margin-bottom: 16px; }
-  .filter-bar .form-group { margin-right: 10px; margin-bottom: 0; }
-  .kpi-wrap { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-  .kpi-card { flex: 1 1 260px; background: #fff; border: 1px solid #e9ecef; border-radius: 8px; padding: 14px 16px; }
-  .kpi-title { color: #6c757d; font-weight: 600; font-size: 12px; letter-spacing: .3px; text-transform: uppercase; margin-bottom: 6px; }
-  .kpi-value { font-size: 20px; font-weight: 700; }
-  .kpi-sub { color: #6c757d; font-size: 13px; }
-  .kpi-combo { display: flex; align-items: center; gap: 10px; }
-  .kpi-combo img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; background: #f3f4f6; }
-  .dash-panel { background: #fff; border: 1px solid #e9ecef; border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
-  .dash-panel .panel-head { padding: 12px 16px; border-bottom: 1px solid #e9ecef; background: #f8f9fa; font-weight: 600; }
-  .dash-panel .panel-body { padding: 0; }
-  .table-wrap { max-height: 560px; overflow-y: auto; position: relative; }
-  .product-table thead th.sticky { position: sticky; top: 0; z-index: 2; background: #f8f9fa; }
-  .product-table tfoot th, .product-table tfoot td { position: sticky; bottom: 0; z-index: 3; background: #f8f9fa; border-top: 1px solid #e9ecef; box-shadow: 0 -4px 6px rgba(0, 0, 0, .04); }
-  .text-right { text-align: right !important; }
+
+  .product-table tbody td {
+    vertical-align: middle;
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  .product-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .product-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #f3f4f6;
+    flex: 0 0 44px;
+  }
+
+  .product-info .code {
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 1.1;
+  }
+
+  .product-info .name {
+    color: #555;
+    font-size: 13px;
+    line-height: 1.2;
+  }
+
+  .product-value {
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .filter-bar {
+    text-align: end;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  .filter-bar .form-group {
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+
+  .kpi-wrap {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .kpi-card {
+    flex: 1 1 260px;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+
+  .kpi-title {
+    color: #6c757d;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: .3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .kpi-value {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .kpi-sub {
+    color: #6c757d;
+    font-size: 13px;
+  }
+
+  .kpi-combo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .kpi-combo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #f3f4f6;
+  }
+
+  .dash-panel {
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .dash-panel .panel-head {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+    font-weight: 600;
+  }
+
+  .dash-panel .panel-body {
+    padding: 0;
+  }
+
+  .table-wrap {
+    max-height: 560px;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .product-table thead th.sticky {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #f8f9fa;
+  }
+
+  .product-table tfoot th,
+  .product-table tfoot td {
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, .04);
+  }
+
+  .text-right {
+    text-align: right !important;
+  }
 </style>
 
 <div id="wrapper">
@@ -53,8 +177,8 @@
           <div class="form-group me-2">
             <div class="form-check" style="margin-top:6px;">
               <input class="form-check-input" type="checkbox" id="rep_only" name="rep_only" value="1"
-                     <?= !empty($rep_only) ? 'checked' : ''; ?>
-                     onchange="this.form.submit()">
+                <?= !empty($rep_only) ? 'checked' : ''; ?>
+                onchange="this.form.submit()">
               <label class="form-check-label" for="rep_only">
                 Chỉ tính doanh số mua lại (≥ lần 2)
               </label>
@@ -145,21 +269,23 @@
             <table class="table table-hover table-sm product-table">
               <thead>
                 <tr>
-                  <th class="sticky" style="width:38%;">Thông tin sản phẩm</th>
+                  <th class="sticky" style="width:28%;">Thông tin sản phẩm</th>
                   <th class="sticky text-right" style="width:13%;">Doanh thu</th>
                   <th class="sticky text-right" style="width:10%;">Số lượng</th>
                   <th class="sticky text-right" style="width:10%;">Tỷ lệ đóng góp</th>
                   <th class="sticky text-right" style="width:11%;">AOV</th>
                   <th class="sticky text-right" style="width:9%;">Tỷ lệ mua lại</th>
                   <th class="sticky text-right" style="width:9%;">TG mua lại TB (ngày)</th>
+                  <th class="sticky text-left" style="width:20%;">Mã đơn hàng</th>
                 </tr>
               </thead>
               <tbody>
+                <?php
+                // ✅ luôn có giá trị mặc định để tránh Warning khi không có dữ liệu
+                $total_products_revenue = 0.0;
+                $total_products_orders  = 0;
+                ?>
                 <?php if (!empty($products_metrics)): ?>
-                  <?php
-                  $total_products_revenue = 0.0;
-                  $total_products_orders  = 0;
-                  ?>
                   <?php foreach ($products_metrics as $p):
                     $img    = !empty($p['image_url']) ? $p['image_url'] : 'https://mochavietnam.com.vn/thumbs/600x600x2/upload/photo/tai-xuong-3278.png';
                     $code   = isset($p['product_id']) && $p['product_id'] !== null && $p['product_id'] !== '' ? (string)$p['product_id'] : '';
@@ -170,10 +296,11 @@
                     $total_products_revenue += $rev;
                     $total_products_orders  += $orders;
 
-                    $pct  = ($total_revenue > 0) ? ($rev * 100 / $total_revenue) : 0; // giữ logic so với tổng doanh thu đã lọc
+                    $pct  = ($total_revenue > 0) ? ($rev * 100 / $total_revenue) : 0;
                     $aov  = isset($p['aov']) ? (float)$p['aov'] : ($orders > 0 ? ($rev / $orders) : 0.0);
-                    $rate = isset($p['repurchase_rate']) ? $p['repurchase_rate'] : null; // %
+                    $rate = isset($p['repurchase_rate']) ? $p['repurchase_rate'] : null;
                     $avgd = isset($p['avg_days_between']) ? $p['avg_days_between'] : null;
+                    $order_ids = !empty($p['order_ids']) ? $p['order_ids'] : '';
                   ?>
                     <tr>
                       <td>
@@ -191,22 +318,23 @@
                       <td class="product-value"><strong><?= number_format($aov, 0, ',', '.'); ?></strong></td>
                       <td class="product-value"><strong><?= is_null($rate) ? '—' : (number_format($rate, 2, ',', '.') . '%'); ?></strong></td>
                       <td class="product-value"><strong><?= is_null($avgd) ? '—' : number_format($avgd, 0, ',', '.'); ?></strong></td>
+                      <td class="product-value text-left"><small><?= htmlspecialchars($order_ids, ENT_QUOTES, 'UTF-8'); ?></small></td>
                     </tr>
                   <?php endforeach; ?>
                 <?php else: ?>
                   <tr>
-                    <td colspan="7" class="text-center">Không có dữ liệu sản phẩm.</td>
+                    <td colspan="8" class="text-center">Không có dữ liệu sản phẩm.</td>
                   </tr>
                 <?php endif; ?>
               </tbody>
-              <?php $weightedAOV_products = ($total_products_orders > 0) ? ($total_products_revenue / $total_products_orders) : null; ?>
               <tfoot>
                 <tr>
                   <th class="text-right">TỔNG</th>
                   <th class="product-value"><strong><?= number_format($total_products_revenue, 0, ',', '.'); ?></strong></th>
                   <th class="product-value"><strong><?= number_format($total_products_orders, 0, ',', '.'); ?></strong></th>
                   <th class="product-value"><strong><?= ($total_revenue > 0) ? number_format(($total_products_revenue * 100 / $total_revenue), 2, ',', '.') . '%' : '0%'; ?></strong></th>
-                  <th class="product-value"><strong><?= is_null($weightedAOV_products) ? '—' : number_format($weightedAOV_products, 0, ',', '.'); ?></strong></th>
+                  <th class="product-value"><strong><?= ($total_products_orders > 0) ? number_format(($total_products_revenue / $total_products_orders), 0, ',', '.') : '—'; ?></strong></th>
+                  <th class="product-value"><strong>—</strong></th>
                   <th class="product-value"><strong>—</strong></th>
                   <th class="product-value"><strong>—</strong></th>
                 </tr>
@@ -215,6 +343,7 @@
           </div>
         </div>
       </div>
+
 
       <!-- ======================= BẢNG COMBO ======================= -->
       <div class="dash-panel">
@@ -304,4 +433,5 @@
 
 <?php init_tail(); ?>
 </body>
+
 </html>

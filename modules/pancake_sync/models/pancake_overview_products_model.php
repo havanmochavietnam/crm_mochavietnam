@@ -219,6 +219,7 @@ class Pancake_overview_products_model extends App_Model
                 MIN(COALESCE(d.product_name, ''))   AS product_name,
                 MIN(COALESCE(d.image_url, ''))      AS image_url,
                 GROUP_CONCAT(DISTINCT o.pancake_order_id ORDER BY o.pancake_order_id SEPARATOR ', ') AS order_ids,
+                /* Doanh thu: gross - detail.discount - phần order.discount phân bổ theo quantity */
                 SUM(
                     {$lineNet}
                     - CASE
@@ -229,7 +230,10 @@ class Pancake_overview_products_model extends App_Model
                         ELSE 0
                       END
                 )                                    AS revenue,
-                COUNT(DISTINCT o.pancake_order_id)   AS orders
+                /* Số lượng sản phẩm bán ra (đáp ứng yêu cầu đếm 2 dòng giống nhau trong 1 đơn) */
+                SUM(CAST(IFNULL(d.quantity, 0) AS DECIMAL(18,6)))     AS units,
+                /* Số đơn duy nhất có chứa sản phẩm */
+                COUNT(DISTINCT o.pancake_order_id)                     AS orders
             FROM {$orders} o
             JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
             LEFT JOIN q_all ON q_all.pancake_order_id = o.pancake_order_id
@@ -299,6 +303,7 @@ class Pancake_overview_products_model extends App_Model
             s.image_url,
             s.revenue,
             s.orders,
+            s.units,
             s.order_ids,
             CASE WHEN s.orders > 0 THEN s.revenue / s.orders ELSE 0 END AS aov,
             rep.repeat_rate,
@@ -338,12 +343,15 @@ class Pancake_overview_products_model extends App_Model
         $rows = $this->db->query($sql, $bind)->result_array() ?: [];
 
         foreach ($rows as &$r) {
-            $rev  = (float)($r['revenue'] ?? 0);
-            $ord  = (int)  ($r['orders']  ?? 0);
-            $rate = isset($r['repeat_rate']) ? (float)$r['repeat_rate'] : null;
+            $rev   = (float)($r['revenue'] ?? 0);
+            $ord   = (int)  ($r['orders']  ?? 0);          // số ĐƠN
+            $units = (float)($r['units']   ?? 0);          // số LƯỢNG SP
+            $rate  = isset($r['repeat_rate']) ? (float)$r['repeat_rate'] : null;
+
             $r['revenue']           = $rev;                          // có thể âm
-            $r['orders']            = $ord;
-            $r['aov']               = $ord > 0 ? ($rev / $ord) : 0.0; // có thể âm
+            $r['orders']            = $ord;                          // giữ nguyên field 'orders' = số đơn
+            $r['units']             = $units;                        // thêm field 'units' = số lượng bán
+            $r['aov']               = $ord > 0 ? ($rev / $ord) : 0.0; // AOV theo đơn (giữ nguyên)
             $r['repurchase_rate']   = is_null($rate) ? null : ($rate * 100.0);
             $r['avg_days_between']  = isset($r['avg_days_between']) ? (float)$r['avg_days_between'] : null;
             $r['product_id']        = null;
@@ -354,6 +362,7 @@ class Pancake_overview_products_model extends App_Model
         unset($r);
         return $rows;
     }
+
 
     /* ======================== Tổng thể Combo (có lọc ≥ lần 2) ======================== */
     public function get_combo_revenue_breakdown(
