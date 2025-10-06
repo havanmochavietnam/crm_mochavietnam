@@ -14,42 +14,59 @@ class Pancake_overview_products_model extends App_Model
         return implode(',', array_fill(0, max(1, (int)$n), '?'));
     }
 
+    // Gộp nguồn từ cột DB hoặc JSON; chuẩn hoá UPPER + TRIM (không dùng REGEXP_REPLACE)
     private function _order_source_key_expr($alias = 'o')
     {
-        // Ưu tiên cột DB, nếu NULL thì lấy JSON $.order_sources_name
-        // Chuẩn hóa: UPPER + TRIM + rút gọn khoảng trắng
         return "
         UPPER(
             TRIM(
-                REGEXP_REPLACE(
-                    COALESCE(
-                        {$alias}.order_sources_name,
-                        JSON_UNQUOTE(JSON_EXTRACT({$alias}.data, '$.order_sources_name'))
-                    ),
-                    '[[:space:]]+',
-                    ' '
+                COALESCE(
+                    {$alias}.order_sources_name,
+                    JSON_UNQUOTE(JSON_EXTRACT({$alias}.data, '$.order_sources_name'))
                 )
             )
         )
     ";
     }
 
+    // Gom theo tên: dùng UPPER + TRIM, bỏ REGEXP_REPLACE (không collapse spaces phức tạp trên 5.x)
     private function _name_key_expr($alias = 'd')
     {
-        return "UPPER(TRIM(REGEXP_REPLACE(COALESCE({$alias}.product_name, ''), '[[:space:]]+', ' ')))";
+        return "UPPER(TRIM(COALESCE({$alias}.product_name, '')))";
     }
 
+    // Khoá khách hàng: loại ký tự phổ biến khỏi số điện thoại bằng REPLACE xếp lớp (MySQL 5.x không có REGEXP_REPLACE)
     private function _customer_key_expr()
     {
+        // Loại các ký tự hay gặp: khoảng trắng, -, +, (, ), ., /
+        $phoneNorm = "
+        NULLIF(
+            REPLACE(
+            REPLACE(
+            REPLACE(
+            REPLACE(
+            REPLACE(
+            REPLACE(
+                REPLACE(COALESCE(o.customer_phone, ''), ' ', ''),
+            '-', ''),
+            '+', ''),
+            '(', ''),
+            ')', ''),
+            '.', ''),
+            '/', ''),
+        '')
+    ";
+
         return "
-            COALESCE(
-                NULLIF(REGEXP_REPLACE(COALESCE(o.customer_phone, ''), '[^0-9]', ''), ''),
-                JSON_UNQUOTE(JSON_EXTRACT(o.data, '$.customer.id')),
-                JSON_UNQUOTE(JSON_EXTRACT(o.data, '$.customer.referral_code')),
-                CAST(o.pancake_order_id AS CHAR)
-            )
-        ";
+        COALESCE(
+            {$phoneNorm},
+            JSON_UNQUOTE(JSON_EXTRACT(o.data, '$.customer.id')),
+            JSON_UNQUOTE(JSON_EXTRACT(o.data, '$.customer.referral_code')),
+            CAST(o.pancake_order_id AS CHAR)
+        )
+    ";
     }
+
 
     /* ======================== Tổng doanh thu ======================== */
     public function get_total_revenue_had_status_in_range(
