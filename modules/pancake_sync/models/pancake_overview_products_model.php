@@ -107,7 +107,7 @@ class Pancake_overview_products_model extends App_Model
         return (float)($row['total_revenue'] ?? 0);
     }
 
-    /* ======================== PRODUCT breakdown (có lọc ≥ lần 2) ======================== */
+    /* ======================== Tổng thể sản phẩm lẻ(có lọc ≥ lần 2) ======================== */
     public function get_product_revenue_breakdown(
         string $start_date,
         string $end_date,
@@ -338,7 +338,7 @@ class Pancake_overview_products_model extends App_Model
         return $rows;
     }
 
-    /* ======================== COMBO breakdown (có lọc ≥ lần 2) ======================== */
+    /* ======================== Tổng thể Combo (có lọc ≥ lần 2) ======================== */
     public function get_combo_revenue_breakdown(
         string $start_date,
         string $end_date,
