@@ -6,7 +6,8 @@ class Pancake_dashboard extends AdminController
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('pancake_orders_model');
+        // Chỉ đổi model nạp vào: dùng model dashboard chuyên trách
+        $this->load->model('pancake_dashboard_model', 'dash');
     }
 
     public function index()
@@ -22,9 +23,10 @@ class Pancake_dashboard extends AdminController
         $end_date   = $end_param   ?: date('Y-m-d');
 
         // ==== LẤY SỐ LIỆU (có cache; only_today cho lần mở đầu) ====
-        $m        = $this->pancake_orders_model->get_dashboard_metrics($start_date, $end_date, $is_initial);
-        $channels = $this->pancake_orders_model->get_channel_metrics($start_date, $end_date, $is_initial);
-        $custSeg  = $this->pancake_orders_model->get_customer_segments_overall($start_date, $end_date, $is_initial);
+        // Giữ nguyên tên biến & cách tính phía dưới
+        $m        = $this->dash->get_dashboard_metrics($start_date, $end_date, $is_initial);
+        $channels = $this->dash->get_channel_metrics($start_date, $end_date, $is_initial);
+        $custSeg  = $this->dash->get_customer_segments_overall($start_date, $end_date, $is_initial);
 
         // ==== TÍNH TOÁN PHÁI SINH (KHOẢNG NGÀY) ====
         $count_confirmed_in_range        = (int)($m['count_confirmed_in_range'] ?? 0);
@@ -47,7 +49,7 @@ class Pancake_dashboard extends AdminController
             return $channels[$ch] ?? ['revenue' => 0, 'sales' => 0, 'discount' => 0, 'orders' => 0, 'quantity' => 0, 'aov' => 0, 'cust_new' => 0, 'cust_returning' => 0];
         };
         $aff   = $get('Affiliate');
-        $fb    = $get('Facebook');
+        $fb    = $get('Facebook');  
         $shp   = $get('Shopee');
         $zl    = $get('Zalo');
         $tt    = $get('Tiktok');

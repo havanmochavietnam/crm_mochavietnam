@@ -3,64 +3,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Pancake_orders_model extends App_Model
 {
-    private $cache_dir;
-
     public function __construct()
     {
         parent::__construct();
-        $this->cache_dir = APPPATH . 'cache/pancake/';
-        if (!is_dir($this->cache_dir)) {
-            @mkdir($this->cache_dir, 0755, true);
-        }
+        // Không cần cache ở model Orders nữa
     }
 
-    /* ==================== FILE CACHE TỐI GIẢN ==================== */
-    private function _cache_path($key)
-    {
-        return $this->cache_dir . md5($key) . '.cache';
-    }
-
-    /* ==================== TTL tính bằng giây ==================== */
-    private function _cache_get($key, $ttl)
-    {
-        $file = $this->_cache_path($key);
-        if (!is_file($file)) return false;
-        if (filemtime($file) + $ttl < time()) {
-            @unlink($file);
-            return false;
-        }
-        $raw = @file_get_contents($file);
-        if ($raw === false) return false;
-        $data = @unserialize($raw);
-        return $data !== false ? $data : false;
-    }
-
-    private function _cache_set($key, $value, $ttl)
-    {
-        $file = $this->_cache_path($key);
-        @file_put_contents($file, serialize($value), LOCK_EX);
-        @touch($file, time()); // mtime = now
-        return true;
-    }
-
-    private function _customer_uid_expr()
-    {
-        return "COALESCE(
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.customer.id')),
-                NULLIF(REGEXP_REPLACE(JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.shipping_address.phone_number')), '[^0-9]', ''), ''),
-                NULLIF(REGEXP_REPLACE(JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.bill_phone_number')), '[^0-9]', ''), ''),
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.customer.referral_code')),
-                CAST(po.pancake_order_id AS CHAR)
-            )";
-    }
-
-    /* ==================== Số đơn hàng cuar khách hàng ==================== */
-    private function _customer_order_count_expr()
-    {
-        return "CAST(IFNULL(JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.customer.order_count')), '0') AS UNSIGNED)";
-    }
-
-    /* ==================== SYNC ORDERS (GIỮ NGUYÊN) ==================== */
+    /* ==================== SYNC ORDERS (NGUYÊN VẸN NHƯ BẠN GỬI) ==================== */
     public function sync_orders($orders)
     {
         if (empty($orders)) {
@@ -71,7 +20,7 @@ class Pancake_orders_model extends App_Model
         $err = 0;
         $errors = [];
 
-        // helpers
+        // ===== Helpers =====
         $str = function ($v, $max = null) {
             if ($v === null) return null;
             if (!is_string($v)) $v = (string)$v;
@@ -85,10 +34,53 @@ class Pancake_orders_model extends App_Model
             $x = filter_var($v, FILTER_VALIDATE_FLOAT);
             return $x !== false ? (float)$x : 0;
         };
-        $dt  = function ($v) {
-            if (empty($v)) return null;
-            $t = strtotime($v);
-            return $t ? date('Y-m-d H:i:s', $t) : null;
+        $dt_auto = function ($v) {
+            if ($v === null || $v === '') return null;
+
+            // 1) Epoch number (giây hoặc millis)
+            if (is_int($v) || (is_string($v) && ctype_digit($v))) {
+                $ts = (int)$v;
+                if ($ts > 2000000000) { // có thể là millis
+                    $ts = (int)round($ts / 1000);
+                }
+                // Epoch luôn là UTC -> cộng +7
+                return date('Y-m-d H:i:s', $ts + 7 * 3600);
+            }
+
+            // 2) ISO string / các chuỗi ngày-giờ
+            $s = trim((string)$v);
+
+            // Bỏ phần mili-giây để strtotime đỡ kén
+            $s_norm = preg_replace('/\.\d{1,6}(?=(Z|[+\-]\d{2}:\d{2}|$))/', '', $s);
+
+            $ts = strtotime($s_norm);
+            if ($ts === false) return null;
+
+            $has_offset = (bool)preg_match('/(Z|[+\-]\d{2}:\d{2}| \+\d{4})$/i', $s_norm);
+            $is_utc     = (bool)preg_match('/(Z|[+\-]00:00| \+0000)$/i', $s_norm);
+            $is_plus7   = (bool)preg_match('/(\+07:00| \+0700)$/i', $s_norm);
+            $has_T      = strpos($s_norm, 'T') !== false;
+
+            if ($is_utc) {
+                $ts += 7 * 3600;
+            } elseif ($is_plus7) {
+                // giữ nguyên
+            } else {
+                // Không có offset rõ ràng
+                // Quy ước: ISO có 'T' mà KHÔNG có offset => coi là UTC -> +7
+                // Còn định dạng local kiểu 'Y-m-d H:i:s' => giữ nguyên
+                if ($has_T && !$has_offset) {
+                    $ts += 7 * 3600;
+                }
+            }
+
+            return date('Y-m-d H:i:s', $ts);
+        };
+        // So sánh & lấy MAX theo thời gian (input là 'Y-m-d H:i:s' hoặc null)
+        $max_time = function ($a, $b) {
+            if ($a === null) return $b;
+            if ($b === null) return $a;
+            return (strtotime($a) >= strtotime($b)) ? $a : $b;
         };
         $js  = function ($v) {
             return json_encode($v, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
@@ -99,26 +91,178 @@ class Pancake_orders_model extends App_Model
 
         foreach ($orders as $o) {
             try {
+                // ====== Phần tính toán giữ nguyên ý tưởng của bạn ======
+                $items_discount_sum = 0;
+                if (!empty($o['items']) && is_array($o['items'])) {
+                    foreach ($o['items'] as $item) {
+                        $items_discount_sum += $item['total_discount'] ?? 0;
+                    }
+                }
+                $final_discount = ($o['total_discount'] ?? 0) + $items_discount_sum;
+
+                // Thu thập MAX thời gian cho từng trạng thái
+                $status_times = [
+                    'time_status_new'        => null,
+                    'time_status_submitted'  => null,
+                    'time_status_shipped'    => null,
+                    'time_status_delivered'  => null,
+                    'time_status_returning'  => null,
+                    'time_status_returned'   => null,
+                    'time_status_canceled'   => null,
+                ];
+                if (!empty($o['status_history']) && is_array($o['status_history'])) {
+                    foreach ($o['status_history'] as $history) {
+                        $t = $dt_auto($history['updated_at'] ?? null);
+                        if (!$t) continue;
+                        switch ((int)($history['status'] ?? -1)) {
+                            case 0:
+                                $status_times['time_status_new']        = $max_time($status_times['time_status_new'],        $t);
+                                break;
+                            case 1:
+                                $status_times['time_status_submitted']  = $max_time($status_times['time_status_submitted'],  $t);
+                                break;
+                            case 2:
+                                $status_times['time_status_shipped']    = $max_time($status_times['time_status_shipped'],    $t);
+                                break;
+                            case 3:
+                                $status_times['time_status_delivered']  = $max_time($status_times['time_status_delivered'],  $t);
+                                break;
+                            case 6:
+                                $status_times['time_status_returning']  = $max_time($status_times['time_status_returning'],  $t);
+                                break;
+                            case 7:
+                                $status_times['time_status_returned']   = $max_time($status_times['time_status_returned'],   $t);
+                                break;
+                            case 5:
+                                $status_times['time_status_canceled']   = $max_time($status_times['time_status_canceled'],   $t);
+                                break;
+                        }
+                    }
+                }
+
+                // Tổng sau tất cả discount (dựa trên items + discount đơn)
+                $total_after_all_discounts = 0;
+                if (!empty($o['items']) && is_array($o['items'])) {
+                    foreach ($o['items'] as $item) {
+                        $qty = (int)($item['quantity'] ?? 0);
+                        $retail_price = (float)($item['variation_info']['retail_price'] ?? 0);
+                        $total_after_all_discounts += ($retail_price * $qty) - (float)($item['total_discount'] ?? 0);
+                    }
+                }
+                $total_after_all_discounts -= (float)($o['total_discount'] ?? 0);
+                // ====== Hết phần tính ======
+
+                // created_at: đồng bộ theo dt_auto
                 $createdRaw = $o['inserted_at'] ?? $o['created_at'] ?? $o['created_time'] ?? $o['createdAt'] ?? null;
 
+                // phone format
+                $raw_phone       = $o['shipping_address']['phone_number'] ?? '';
+                $formatted_phone = preg_replace('/^\+84/', '0', $raw_phone);
+
+                // tags
+                $tags = null;
+                if (!empty($o['tags']) && is_array($o['tags'])) {
+                    $names = array_map(function ($t) {
+                        return is_array($t) ? ($t['name'] ?? null) : $t;
+                    }, $o['tags']);
+                    $names = array_filter($names, fn($x) => !empty($x));
+                    $tags  = implode(', ', $names);
+                }
+
+                // customer type
+                $customer_level_name = $o['customer']['level']['name'] ?? null;
+                $customer_type = (in_array($customer_level_name, [null, 'Mua lần 1'], true)) ? 'Mới' : 'Cũ';
+
+                // nguồn: map Affiliate -> CTV
+                $order_sources_name = $o['order_sources_name'] ?? null;
+                if ($order_sources_name === 'Affiliate') $order_sources_name = 'CTV';
+
                 $data = [
-                    'pancake_order_id'   => $str($o['id'] ?? null, 64),
-                    'customer_name'      => $str($o['shipping_address']['full_name']    ?? null, 191),
-                    'customer_phone'     => $str($o['shipping_address']['phone_number'] ?? null, 32),
-                    'assigning_care_name'=> $str($o['assigning_care']['name'] ?? null,255),
-                    'marketer_name'=> $str($o['marketer']['name'] ?? null,255),
-                    'assigning_seller_name'=> $str($o['assigning_seller']['name'] ?? null,255),
-                    'status_name'        => $str($o['status_name'] ?? $o['status'] ?? null, 64),
-                    'order_sources_name' => $str($o['order_sources_name'] ?? null, 191),
-                    'cod'                => $num($o['cod'] ?? $o['cash_on_delivery'] ?? 0),
-                    'created_at'         => $dt($createdRaw),
-                    'data'               => $js($o),
+                    'pancake_order_id'        => $str($o['id'] ?? null, 64),
+
+                    'customer_name'           => $str($o['shipping_address']['full_name'] ?? null, 191),
+                    'customer_phone'          => $str($formatted_phone, 32),
+
+                    'assigning_seller_id'     => $o['assigning_seller']['id'] ?? null,
+                    'assigning_seller_name'   => $str($o['assigning_seller']['name'] ?? null, 255),
+                    'assigning_care_id'       => $o['assigning_care']['id'] ?? null,
+                    'assigning_care_name'     => $str($o['assigning_care']['name'] ?? null, 255),
+                    'time_assign_care'        => $dt_auto($o['time_assign_care'] ?? null),
+
+                    'marketer_id'             => $o['marketer']['id'] ?? null,
+                    'marketer_name'           => $str($o['marketer']['name'] ?? null, 255),
+
+                    'status_name'             => $str($o['status_name'] ?? null, 64),
+                    'order_source'            => $str($o['order_sources'] ?? null, 191),
+                    'order_sources_name'      => $str($order_sources_name, 191),
+
+                    'cod'                     => $num($o['cod'] ?? $o['cash_on_delivery'] ?? 0),
+                    'total_discount'          => $num($final_discount),
+                    'shipping_fee'            => $num($o['shipping_fee'] ?? 0),
+                    'total_order_amount'      => $num($total_after_all_discounts),
+                    'total_price'             => $num($o['total_price'] ?? 0),
+                    'revenue'                 => $num($o['total_price_after_sub_discount'] ?? 0),
+
+                    'partner_fee'             => $num($o['partner_fee'] ?? 0),
+                    'fee_marketplace_voucher' => $num($o['advanced_platform_fee']['marketplace_voucher'] ?? 0),
+                    'fee_payment'             => $num($o['advanced_platform_fee']['payment_fee'] ?? 0),
+                    'fee_platform_commission' => $num($o['advanced_platform_fee']['platform_commission'] ?? 0),
+                    'fee_affiliate_commission' => $num($o['advanced_platform_fee']['affiliate_commission'] ?? 0),
+                    'fee_sfp_service'         => $num($o['advanced_platform_fee']['sfp_service_fee'] ?? 0),
+                    'fee_seller_transaction'  => $num($o['advanced_platform_fee']['seller_transaction_fee'] ?? 0),
+                    'fee_service'             => $num($o['advanced_platform_fee']['service_fee'] ?? 0),
+
+                    'shipping_code'           => $str($o['partner']['order_number_vtp'] ?? null, 191),
+                    'shipping_partner'        => $str($o['partner']['partner_name'] ?? null, 191),
+                    'shipping_status'         => $str($o['partner']['extend_update'][0]['status'] ?? null, 191),
+                    'time_send_partner'       => $dt_auto($o['time_send_partner'] ?? null),
+
+                    'tags'                    => $str($tags, 1024),
+                    'customer_type'           => $str($customer_type, 32),
+                    'province'                => $str($o['shipping_address']['province_name'] ?? null, 191),
+                    'district'                => $str($o['shipping_address']['district_name'] ?? null, 191),
+                    'ward'                    => $str($o['shipping_address']['commune_name'] ?? null, 191),
+
+                    'page_id'                 => $str($o['page_id'] ?? null, 64),
+                    'ad_id'                   => $str($o['ad_id'] ?? null, 64),
+                    'ads_source'              => $str($o['ads_source'] ?? null, 191),
+                    'detailed_source'         => $str($o['account_name'] ?? null, 191),
+                    'chat_page'               => $str($o['page']['name'] ?? null, 191),
+
+                    'creator_id'              => $o['creator']['id'] ?? null,
+                    'creator_name'            => $str($o['creator']['name'] ?? 'Hệ thống', 191),
+
+                    'warehouse_info'          => $str($o['warehouse_info']['name'] ?? null, 191),
+
+                    'p_utm_source'            => $str($o['p_utm_source'] ?? null, 191),
+                    'p_utm_medium'            => $str($o['p_utm_medium'] ?? null, 191),
+                    'p_utm_campaign'          => $str($o['p_utm_campaign'] ?? null, 191),
+                    'p_utm_term'              => $str($o['p_utm_term'] ?? null, 191),
+                    'p_utm_content'           => $str($o['p_utm_content'] ?? null, 191),
+                    'p_utm_id'                => $str($o['p_utm_id'] ?? null, 191),
+
+                    'post_id'                 => $str($o['post_id'] ?? null, 64),
+
+                    // created_at thống nhất theo dt_auto
+                    'created_at'              => $dt_auto($createdRaw),
+
+                    'data'                    => $js($o),
+
+                    // Các mốc trạng thái (đã lấy MAX)
+                    'time_status_new'         => $status_times['time_status_new'],
+                    'time_status_submitted'   => $status_times['time_status_submitted'],
+                    'time_status_shipped'     => $status_times['time_status_shipped'],
+                    'time_status_delivered'   => $status_times['time_status_delivered'],
+                    'time_status_returning'   => $status_times['time_status_returning'],
+                    'time_status_returned'    => $status_times['time_status_returned'],
+                    'time_status_canceled'    => $status_times['time_status_canceled'],
                 ];
 
                 if ($data['pancake_order_id'] === null) {
                     throw new Exception('missing pancake_order_id');
                 }
 
+                // Lấy items (tương thích nhiều schema)
                 $items = $o['items'] ?? $o['order_items'] ?? $o['products'] ?? $o['line_items'] ?? [];
                 if (empty($items) && isset($o['order']['items']) && is_array($o['order']['items'])) {
                     $items = $o['order']['items'];
@@ -128,9 +272,9 @@ class Pancake_orders_model extends App_Model
                 foreach ($items as $it) {
                     $vi = $it['variation_info'] ?? $it['variationInfo'] ?? $it['product'] ?? $it;
 
-                    $product_id = $vi['display_id'] ?? ($it['variation_info']['display_id'] ?? ($vi['id'] ?? null));
+                    $product_id   = $vi['display_id'] ?? ($it['variation_info']['display_id'] ?? ($vi['id'] ?? null));
                     $product_name = $str($vi['name'] ?? $it['product_name'] ?? $it['title'] ?? null, 191);
-                    $quantity = (int)($it['quantity'] ?? $vi['quantity'] ?? 0);
+                    $quantity     = (int)($it['quantity'] ?? $vi['quantity'] ?? 0);
 
                     $img = null;
                     if (!empty($vi['images']) && is_array($vi['images'])) {
@@ -139,7 +283,7 @@ class Pancake_orders_model extends App_Model
                     if (!$img) $img = $vi['image_url'] ?? $vi['image'] ?? $it['image_url'] ?? $it['image'] ?? null;
                     $image_url = $str($img, 255);
 
-                    $unit_price = $num($vi['retail_price'] ?? $vi['price'] ?? $it['unit_price'] ?? $it['price'] ?? 0);
+                    $unit_price     = $num($vi['retail_price'] ?? $vi['price'] ?? $it['unit_price'] ?? $it['price'] ?? 0);
                     $total_discount = $num($it['total_discount'] ?? $it['discount'] ?? $vi['discount'] ?? 0);
 
                     $is_combo = (!empty($it['is_composite']) || !empty($it['is_combo'])) ? 1 : 0;
@@ -157,26 +301,28 @@ class Pancake_orders_model extends App_Model
                         'is_gift'          => $is_gift,
                     ];
                 }
+
+                // ===== DB write (upsert master + replace details) =====
                 $this->db->db_debug = FALSE;
                 $this->db->trans_strict(TRUE);
                 $this->db->trans_begin();
+
+                // Upsert orders
                 $this->db->set($data);
                 $sql = $this->db->get_compiled_insert($tableOrders);
-                $sql .= " ON DUPLICATE KEY UPDATE "
-                    . "customer_name=VALUES(customer_name),"
-                    . "customer_phone=VALUES(customer_phone),"
-                    . "status_name=VALUES(status_name),"
-                    . "order_sources_name=VALUES(order_sources_name),"
-                    . "cod=VALUES(cod),"
-                    . "created_at=VALUES(created_at),"
-                    . "`data`=VALUES(`data`),"
-                    . "assigning_care_name=VALUES(assigning_care_name),"
-                    . "marketer_name=VALUES(marketer_name)";
+                $updateFields = array_diff(array_keys($data), ['pancake_order_id']);
+                $assignments = implode(',', array_map(function ($k) {
+                    return "`{$k}`=VALUES(`{$k}`)";
+                }, $updateFields));
+                $sql .= " ON DUPLICATE KEY UPDATE {$assignments}";
+
                 if (!$this->db->simple_query($sql)) {
                     $e = $this->db->error();
                     $this->db->trans_rollback();
                     throw new Exception("Upsert orders failed [{$e['code']}]: {$e['message']}");
                 }
+
+                // Replace details
                 if (!empty($rows)) {
                     $this->db->where('pancake_order_id', $data['pancake_order_id'])->delete($tableDetails);
                     if (!$this->db->insert_batch($tableDetails, $rows)) {
@@ -185,11 +331,13 @@ class Pancake_orders_model extends App_Model
                         throw new Exception("Insert details failed [{$e['code']}]: {$e['message']}");
                     }
                 }
+
                 if ($this->db->trans_status() === FALSE) {
                     $e = $this->db->error();
                     $this->db->trans_rollback();
                     throw new Exception("DB transaction failed [{$e['code']}]: {$e['message']}");
                 }
+
                 $this->db->trans_commit();
                 $ok++;
             } catch (Throwable $e) {
@@ -203,7 +351,7 @@ class Pancake_orders_model extends App_Model
     }
 
 
-    /* ==================== SELLERS (GIỮ NGUYÊN) ==================== */
+    /* ==================== SELLERS ==================== */
     public function get_sellers_from_orders()
     {
         $this->db->select("JSON_UNQUOTE(JSON_EXTRACT(data, '$.assigning_seller.id')) as seller_id");
@@ -215,7 +363,7 @@ class Pancake_orders_model extends App_Model
         return $this->db->get()->result_array();
     }
 
-    /* ==================== LIST ORDERS (GIỮ NGUYÊN) ==================== */
+    /* ==================== LIST ORDERS ==================== */
     public function get_orders_from_db($filters = [])
     {
         if (!empty($filters['startDateTime'])) {
@@ -259,333 +407,5 @@ class Pancake_orders_model extends App_Model
             'data'  => $orders_formatted,
             'total' => $total_rows
         ];
-    }
-
-    /* ==================== DASHBOARD METRICS (TỔNG QUAN) ==================== */
-    public function get_dashboard_metrics($start_date, $end_date, $only_today = false)
-    {
-        $cache_key = 'dash_metrics_' . $start_date . '_' . $end_date . ($only_today ? '_fast' : '');
-        if (($cached = $this->_cache_get($cache_key, 300)) !== false) return $cached;
-
-        $table   = db_prefix() . 'pancake_orders';
-        $startDT = $start_date . ' 00:00:00';
-        $endDT   = $end_date   . ' 23:59:59';
-
-        if ($only_today) {
-            // FAST PATH: chỉ quét trong [startDT, endDT]
-            $sql = "
-        SELECT
-            -- In-range (và cũng là 'today' khi only_today = true)
-            agg.count_confirmed                         AS count_confirmed_in_range,
-            agg.revenue                                  AS revenue_confirmed_in_range,
-            agg.sales                                    AS sales_volume_confirmed_in_range,
-            agg.quantity                                 AS product_quantity_confirmed_in_range,
-            created.count_created_in_range               AS count_created_in_range,
-
-            -- Hôm nay (trùng in-range)
-            agg.count_confirmed                         AS count_confirmed_today,
-            agg.revenue                                  AS revenue_confirmed_today,
-            created.count_created_in_range               AS count_created_today,
-            created.count_canceled_in_range              AS count_canceled_today,
-            created.count_removed_in_range               AS count_removed_today,
-            agg.unique_customers                         AS unique_customers_today,
-            agg.quantity                                 AS product_quantity_confirmed_today
-        FROM
-        (
-            SELECT
-                COUNT(*)                                   AS count_confirmed,
-                SUM(ex.net_revenue)                        AS revenue,
-                SUM(ex.total_price)                        AS sales,
-                SUM(ex.total_quantity)                     AS quantity,
-                COUNT(DISTINCT ex.customer_id)             AS unique_customers
-            FROM (
-                SELECT
-                    po.pancake_order_id AS order_id,
-                    JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.customer.id'))                   AS customer_id,
-                    CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_price_after_sub_discount'), 0) AS DECIMAL(18,2)) AS net_revenue,
-                    CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_price'), 0) AS DECIMAL(18,2)) AS total_price,
-                    CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_quantity'), 0) AS DECIMAL(18,2)) AS total_quantity,
-                    JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name'))                    AS status_name
-                FROM {$table} po
-                JOIN (
-                    SELECT po2.pancake_order_id
-                    FROM {$table} po2
-                    JOIN JSON_TABLE(
-                        po2.data,
-                        '$.status_history[*]'
-                        COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                    ) h ON h.status = 1
-                    WHERE DATE_ADD(h.updated_at, INTERVAL 7 HOUR) BETWEEN ? AND ?
-                    GROUP BY po2.pancake_order_id
-                ) hr ON hr.pancake_order_id = po.pancake_order_id
-            ) ex
-            WHERE ex.status_name NOT IN ('canceled','returned','returning')
-        ) agg
-        CROSS JOIN
-        (
-            SELECT
-                COUNT(*) AS count_created_in_range,
-                SUM(JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name'))='canceled') AS count_canceled_in_range,
-                SUM(JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name'))='removed')  AS count_removed_in_range
-            FROM {$table} po
-            WHERE DATE_ADD(po.created_at, INTERVAL 7 HOUR) BETWEEN ? AND ?
-        ) created";
-            $bind = [$startDT, $endDT, $startDT, $endDT];
-            $row  = $this->db->query($sql, $bind)->row_array() ?: [];
-            $this->_cache_set($cache_key, $row, 300);
-            return $row;
-        }
-
-        // === PATH CŨ (khi người dùng chọn range khác) ===
-        $sql = "
-        SELECT
-            /* Today */
-            SUM(CASE WHEN DATE(h.confirmed_at) = CURDATE() AND ex.status_name NOT IN ('canceled','returned','returning') THEN 1 ELSE 0 END) AS count_confirmed_today,
-            SUM(CASE WHEN DATE(h.confirmed_at) = CURDATE() AND ex.status_name NOT IN ('canceled','returned','returning') THEN ex.net_revenue ELSE 0 END) AS revenue_confirmed_today,
-            SUM(CASE WHEN DATE(DATE_ADD(ex.created_at, INTERVAL 7 HOUR)) = CURDATE() THEN 1 ELSE 0 END) AS count_created_today,
-            SUM(CASE WHEN DATE(DATE_ADD(ex.created_at, INTERVAL 7 HOUR)) = CURDATE() AND ex.status_name='canceled' THEN 1 ELSE 0 END) AS count_canceled_today,
-            SUM(CASE WHEN DATE(DATE_ADD(ex.created_at, INTERVAL 7 HOUR)) = CURDATE() AND ex.status_name='removed'  THEN 1 ELSE 0 END) AS count_removed_today,
-            COUNT(DISTINCT CASE WHEN DATE(h.confirmed_at) = CURDATE() AND ex.status_name NOT IN ('canceled','returned','returning') THEN ex.customer_id END) AS unique_customers_today,
-            SUM(CASE WHEN DATE(h.confirmed_at) = CURDATE() AND ex.status_name NOT IN ('canceled','returned','returning') THEN ex.total_quantity ELSE 0 END) AS product_quantity_confirmed_today,
-
-            /* In range */
-            SUM(CASE WHEN h.confirmed_at BETWEEN ? AND ? AND ex.status_name NOT IN ('canceled','returned','returning') THEN 1 ELSE 0 END) AS count_confirmed_in_range,
-            SUM(CASE WHEN h.confirmed_at BETWEEN ? AND ? AND ex.status_name NOT IN ('canceled','returned','returning') THEN ex.net_revenue ELSE 0 END) AS revenue_confirmed_in_range,
-            SUM(CASE WHEN h.confirmed_at BETWEEN ? AND ? AND ex.status_name NOT IN ('canceled','returned','returning') THEN ex.total_price ELSE 0 END) AS sales_volume_confirmed_in_range,
-            SUM(CASE WHEN h.confirmed_at BETWEEN ? AND ? AND ex.status_name NOT IN ('canceled','returned','returning') THEN ex.total_quantity ELSE 0 END) AS product_quantity_confirmed_in_range,
-            SUM(CASE WHEN DATE(DATE_ADD(ex.created_at, INTERVAL 7 HOUR)) BETWEEN ? AND ? THEN 1 ELSE 0 END) AS count_created_in_range
-        FROM
-        (
-            SELECT
-                po.pancake_order_id AS order_id,
-                po.created_at,
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) AS status_name,
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) AS channel,
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.customer.id')) AS customer_id,
-                CAST(JSON_EXTRACT(po.data, '$.total_price_after_sub_discount') AS DECIMAL(18,2)) AS net_revenue,
-                CAST(JSON_EXTRACT(po.data, '$.total_price') AS DECIMAL(18,2)) AS total_price,
-                CAST(JSON_EXTRACT(po.data, '$.shipping_fee') AS DECIMAL(18,2)) AS shipping_fee,
-                CAST(JSON_EXTRACT(po.data, '$.total_quantity') AS DECIMAL(18,2)) AS total_quantity
-            FROM {$table} po
-        ) ex
-        LEFT JOIN
-        (
-            SELECT
-                po.pancake_order_id AS order_id,
-                MAX(DATE_ADD(h.updated_at, INTERVAL 7 HOUR)) AS confirmed_at
-            FROM {$table} po
-            JOIN JSON_TABLE(
-                po.data,
-                '$.status_history[*]'
-                COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-            ) h
-            WHERE h.status = 1
-            GROUP BY po.pancake_order_id
-        ) h ON h.order_id = ex.order_id";
-        $bind = [$startDT, $endDT, $startDT, $endDT, $startDT, $endDT, $startDT, $endDT, $startDT, $endDT];
-        $row  = $this->db->query($sql, $bind)->row_array() ?: [];
-        $this->_cache_set($cache_key, $row, 300);
-        return $row;
-    }
-
-    public function get_channel_metrics($start_date, $end_date, $only_today = false)
-    {
-        $cache_key = 'dash_channels_' . $start_date . '_' . $end_date . ($only_today ? '_fast' : '_like_affiliate_formula');
-        if (($cached = $this->_cache_get($cache_key, 300)) !== false) return $cached;
-
-        $table         = db_prefix() . 'pancake_orders';
-        $startDT       = $start_date . ' 00:00:00';
-        $endDT         = $end_date   . ' 23:59:59';
-        $customerUID   = $this->_customer_uid_expr();
-        $custOrderCnt  = $this->_customer_order_count_expr();
-
-        if ($only_today) {
-            $sql = "
-        SELECT
-            ex.channel,
-            SUM(ex.total_price - (ex.order_discount + ex.item_discount_sum)) AS revenue,
-            SUM(ex.total_price)                                            AS sales,
-            SUM(ex.order_discount + ex.item_discount_sum)                  AS discount,
-            COUNT(*)                                                       AS orders,
-            SUM(ex.total_quantity)                                         AS quantity,
-            COUNT(DISTINCT CASE WHEN ex.cust_order_count IN (0,1)  THEN ex.customer_uid END) AS cust_new,
-            COUNT(DISTINCT CASE WHEN ex.cust_order_count NOT IN (0,1) THEN ex.customer_uid END) AS cust_returning
-        FROM (
-            SELECT
-                po.pancake_order_id AS order_id,
-                {$customerUID}  AS customer_uid,
-                {$custOrderCnt} AS cust_order_count,
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) AS channel,
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name'))        AS status_name,
-                CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_price'),    0) AS DECIMAL(18,2)) AS total_price,
-                CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_quantity'), 0) AS DECIMAL(18,2)) AS total_quantity,
-                CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) AS DECIMAL(18,2)) AS order_discount,
-                (
-                    SELECT IFNULL(SUM(CAST(JSON_EXTRACT(i.value, '$.total_discount') AS DECIMAL(18,2))), 0)
-                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) i
-                ) AS item_discount_sum
-            FROM {$table} po
-            JOIN (
-                SELECT po2.pancake_order_id
-                FROM {$table} po2
-                JOIN JSON_TABLE(
-                    po2.data,
-                    '$.status_history[*]'
-                    COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                ) h ON h.status = 1
-                WHERE DATE_ADD(h.updated_at, INTERVAL 7 HOUR) BETWEEN ? AND ?
-                GROUP BY po2.pancake_order_id
-            ) hr ON hr.pancake_order_id = po.pancake_order_id
-        ) ex
-        WHERE ex.status_name NOT IN ('canceled','returned','returning')
-        GROUP BY ex.channel";
-
-            $q = $this->db->query($sql, [$startDT, $endDT]);
-            $rows = is_object($q) ? ($q->result_array() ?: []) : [];
-        } else {
-            // NON-FAST PATH: lọc theo thời gian confirmed_at trong khoảng người dùng chọn
-            $sql = "
-        SELECT
-            ex.channel,
-            SUM(ex.total_price - (ex.order_discount + ex.item_discount_sum)) AS revenue,
-            SUM(ex.total_price)                                            AS sales,
-            SUM(ex.order_discount + ex.item_discount_sum)                  AS discount,
-            COUNT(*)                                                       AS orders,
-            SUM(ex.total_quantity)                                         AS quantity,
-            COUNT(DISTINCT CASE WHEN ex.cust_order_count IN (0,1)  THEN ex.customer_uid END) AS cust_new,
-            COUNT(DISTINCT CASE WHEN ex.cust_order_count NOT IN (0,1) THEN ex.customer_uid END) AS cust_returning
-        FROM (
-            SELECT
-                po.pancake_order_id AS order_id,
-                {$customerUID}  AS customer_uid,
-                {$custOrderCnt} AS cust_order_count,
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) AS channel,
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name'))        AS status_name,
-                CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_price'),    0) AS DECIMAL(18,2)) AS total_price,
-                CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_quantity'), 0) AS DECIMAL(18,2)) AS total_quantity,
-                CAST(IFNULL(JSON_EXTRACT(po.data, '$.total_discount'), 0) AS DECIMAL(18,2)) AS order_discount,
-                (
-                    SELECT IFNULL(SUM(CAST(JSON_EXTRACT(i.value, '$.total_discount') AS DECIMAL(18,2))), 0)
-                    FROM JSON_TABLE(po.data, '$.items[*]' COLUMNS (value JSON PATH '$')) i
-                ) AS item_discount_sum,
-                (
-                  SELECT MAX(DATE_ADD(h.updated_at, INTERVAL 7 HOUR))
-                  FROM JSON_TABLE(
-                        po.data,
-                        '$.status_history[*]'
-                        COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                  ) h
-                  WHERE h.status = 1
-                ) AS confirmed_at
-            FROM {$table} po
-        ) ex
-        WHERE ex.status_name NOT IN ('canceled','returned','returning')
-          AND ex.confirmed_at BETWEEN ? AND ?
-        GROUP BY ex.channel";
-
-            $q = $this->db->query($sql, [$startDT, $endDT]);
-            $rows = is_object($q) ? ($q->result_array() ?: []) : [];
-        }
-
-        // Chuẩn hoá output + fill kênh thiếu
-        $out = [];
-        foreach ($rows as $r) {
-            $ch     = $r['channel'] ?: 'Khác';
-            $orders = (int)($r['orders'] ?? 0);
-            $rev    = (float)($r['revenue'] ?? 0);
-            $out[$ch] = [
-                'revenue'        => $rev,
-                'sales'          => (float)($r['sales'] ?? 0),
-                'discount'       => (float)($r['discount'] ?? 0),
-                'orders'         => $orders,
-                'quantity'       => (int)($r['quantity'] ?? 0),
-                'aov'            => $orders > 0 ? ($rev / $orders) : 0,
-                'cust_new'       => (int)($r['cust_new'] ?? 0),
-                'cust_returning' => (int)($r['cust_returning'] ?? 0),
-            ];
-        }
-        foreach (['Affiliate', 'Facebook', 'Shopee', 'Zalo', 'Tiktok', 'Woocommerce', 'Hotline', 'LadiPage', 'Khác'] as $c) {
-            if (!isset($out[$c])) {
-                $out[$c] = ['revenue' => 0, 'sales' => 0, 'discount' => 0, 'orders' => 0, 'quantity' => 0, 'aov' => 0, 'cust_new' => 0, 'cust_returning' => 0];
-            }
-        }
-        $this->_cache_set($cache_key, $out, 300);
-        return $out;
-    }
-
-    public function get_customer_segments_overall($start_date, $end_date, $only_today = false)
-    {
-        $cache_key = 'cust_segments_overall_' . $start_date . '_' . $end_date . ($only_today ? '_fast' : '');
-        if (($cached = $this->_cache_get($cache_key, 300)) !== false) return $cached;
-
-        $table        = db_prefix() . 'pancake_orders';
-        $startDT      = $start_date . ' 00:00:00';
-        $endDT        = $end_date   . ' 23:59:59';
-        $customerUID  = $this->_customer_uid_expr();
-        $custOrderCnt = $this->_customer_order_count_expr();
-
-        if ($only_today) {
-            $sql = "
-        SELECT
-            COUNT(DISTINCT CASE WHEN ex.cust_order_count IN (0,1)  THEN ex.customer_uid END) AS cust_new,
-            COUNT(DISTINCT CASE WHEN ex.cust_order_count NOT IN (0,1) THEN ex.customer_uid END) AS cust_returning
-        FROM (
-            SELECT
-                {$customerUID}  AS customer_uid,
-                {$custOrderCnt} AS cust_order_count,
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) AS status_name
-            FROM {$table} po
-            JOIN (
-                SELECT po2.pancake_order_id
-                FROM {$table} po2
-                JOIN JSON_TABLE(
-                    po2.data,
-                    '$.status_history[*]'
-                    COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                ) h ON h.status = 1
-                WHERE DATE_ADD(h.updated_at, INTERVAL 7 HOUR) BETWEEN ? AND ?
-                GROUP BY po2.pancake_order_id
-            ) hr ON hr.pancake_order_id = po.pancake_order_id
-        ) ex
-        WHERE ex.status_name NOT IN ('canceled','returned','returning')";
-            $row = $this->db->query($sql, [$startDT, $endDT])->row_array() ?: ['cust_new' => 0, 'cust_returning' => 0];
-        } else {
-            // === PATH CŨ của bạn giữ nguyên ===
-            $sql = "
-        SELECT
-            COUNT(DISTINCT CASE
-                WHEN ord.confirmed_at BETWEEN ? AND ?
-                 AND ord.status_name NOT IN ('canceled','returned','returning')
-                 AND ord.cust_order_count IN (0,1)
-                THEN ord.customer_uid END) AS cust_new,
-            COUNT(DISTINCT CASE
-                WHEN ord.confirmed_at BETWEEN ? AND ?
-                 AND ord.status_name NOT IN ('canceled','returned','returning')
-                 AND ord.cust_order_count NOT IN (0,1)
-                THEN ord.customer_uid END) AS cust_returning
-        FROM
-        (
-            SELECT
-                po.pancake_order_id AS order_id,
-                {$customerUID}  AS customer_uid,
-                {$custOrderCnt} AS cust_order_count,
-                JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name'))  AS status_name,
-                (
-                  SELECT MAX(DATE_ADD(h.updated_at, INTERVAL 7 HOUR))
-                  FROM JSON_TABLE(
-                        po.data,
-                        '$.status_history[*]'
-                        COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                  ) h
-                  WHERE h.status = 1
-                ) AS confirmed_at
-            FROM {$table} po
-        ) ord";
-            $row = $this->db->query($sql, [$startDT, $endDT, $startDT, $endDT])->row_array() ?: ['cust_new' => 0, 'cust_returning' => 0];
-        }
-
-        $row['total'] = (int)$row['cust_new'] + (int)$row['cust_returning'];
-        $this->_cache_set($cache_key, $row, 300);
-        return $row;
     }
 }
