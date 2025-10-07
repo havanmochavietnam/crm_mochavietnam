@@ -352,11 +352,6 @@
         color: var(--ink)
     }
 
-    .perf th,
-    .perf td {
-        padding: 12px 16px;
-    }
-
     .perf tbody td {
         white-space: nowrap;
         vertical-align: middle;
@@ -431,6 +426,105 @@
         .filter-row .row {
             flex-direction: column;
             gap: 8px
+        }
+    }
+
+    /* ---- Match look & feel of "Hiệu suất theo nguồn đơn" ---- */
+    .table-wrap {
+        width: 100%;
+        overflow: auto;
+    }
+
+    .table.perf {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .table.perf thead th {
+        background: #f8fafc;
+        color: #0f172a;
+        font-weight: 700;
+        padding: 12px 16px;
+        border-bottom: 1px solid #e5e7eb;
+        white-space: nowrap;
+    }
+
+    .table.perf tbody td,
+    .table.perf tfoot td {
+        padding: 12px 16px;
+        border-bottom: 1px solid #f1f5f9;
+        vertical-align: middle;
+    }
+
+    .table-hover.perf tbody tr:hover {
+        background: #f9fafb;
+    }
+
+    .table.perf .money {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .mk-cell {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    .mk-avatar {
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #4f46e5;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .chip {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 12px;
+        line-height: 1;
+        background: #f1f5f9;
+        color: #0f172a;
+        font-weight: 600;
+    }
+
+    .rate-good {
+        background: #ecfdf5;
+        color: #047857;
+    }
+
+    .rate-mid {
+        background: #fffbeb;
+        color: #b45309;
+    }
+
+    .rate-bad {
+        background: #fef2f2;
+        color: #b91c1c;
+    }
+
+    tfoot td {
+        background: #fafafa;
+        font-weight: 800;
+    }
+
+    @media (max-width:768px) {
+        .section-sub {
+            font-size: 13px
+        }
+
+        .table.perf thead th:first-child {
+            min-width: 220px
         }
     }
 </style>
@@ -726,110 +820,110 @@
                         <tbody>
                             <tr>
                                 <td><i class="fa-solid fa-users" style="color:#16a34a; margin-right:8px;"></i> CTV</td>
-                                <td><?= number_format($get_revenue_of_affiliate_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_sale_of_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_discount_of_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($count_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_product_ctv_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_aov_of_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_new_affiliate ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_returning_affiliate ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_revenue_of_affiliate_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_sale_of_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_discount_of_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($count_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_product_ctv_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_aov_of_ctv_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_new_affiliate ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_returning_affiliate ?? 0, 0, ',', '.'); ?></td>
                             </tr>
 
                             <tr>
                                 <td><img src="https://www.freeiconspng.com/uploads/facebook-png-icon-follow-us-facebook-1.png" alt="Facebook" class="source-icon">Facebook</td>
-                                <td><?= number_format($get_revenue_of_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_sale_of_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_discount_of_facebook_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($count_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_product_facebook_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_aov_of_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_new_facebook ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_returning_facebook ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_revenue_of_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_sale_of_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_discount_of_facebook_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($count_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_product_facebook_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_aov_of_facebook_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_new_facebook ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_returning_facebook ?? 0, 0, ',', '.'); ?></td>
                             </tr>
 
                             <tr>
                                 <td><img src="https://classic.vn/wp-content/uploads/2022/04/logo-shopee-764x800.png" alt="Shopee" class="source-icon">Shopee</td>
-                                <td><?= number_format($get_revenue_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_sale_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_discount_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($count_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_product_Shopee_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_aov_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_new_shopee ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_returning_shopee ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_revenue_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_sale_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_discount_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($count_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_product_Shopee_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_aov_of_shopee_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_new_shopee ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_returning_shopee ?? 0, 0, ',', '.'); ?></td>
                             </tr>
 
                             <tr>
                                 <td><img src="https://hidosport.vn/wp-content/uploads/2023/09/zalo-icon.png" alt="Zalo" class="source-icon">Zalo</td>
-                                <td><?= number_format($get_revenue_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_sale_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_discount_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($count_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_product_zalo_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_aov_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_new_zalo ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_returning_zalo ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_revenue_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_sale_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_discount_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($count_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_product_zalo_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_aov_of_zalo_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_new_zalo ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_returning_zalo ?? 0, 0, ',', '.'); ?></td>
                             </tr>
 
                             <tr>
                                 <td><img src="https://cdn-icons-png.flaticon.com/512/3116/3116491.png" alt="TikTok" class="source-icon">Tiktok</td>
-                                <td><?= number_format($get_revenue_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_sale_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_discount_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($count_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_product_tiktok_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_aov_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_new_tiktok ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_returning_tiktok ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_revenue_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_sale_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_discount_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($count_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_product_tiktok_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_aov_of_tiktok_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_new_tiktok ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_returning_tiktok ?? 0, 0, ',', '.'); ?></td>
                             </tr>
 
                             <tr>
                                 <td><img src="https://retailexpress.com.au/hs-fs/hubfs/Retail%20Express/Integrations/60eef77f10da6dae6d5793a8_Group%201998.png?width=286&name=60eef77f10da6dae6d5793a8_Group%201998.png" alt="WooCommerce" class="source-icon">Woocommerce</td>
-                                <td><?= number_format($get_revenue_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_sale_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_discount_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($count_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_product_woocommerce_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_aov_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_new_woocommerce ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_returning_woocommerce ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_revenue_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_sale_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_discount_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($count_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_product_woocommerce_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_aov_of_woocommerce_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_new_woocommerce ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_returning_woocommerce ?? 0, 0, ',', '.'); ?></td>
                             </tr>
 
                             <tr>
                                 <td><img src="https://static.vecteezy.com/system/resources/previews/036/269/966/non_2x/phone-call-icon-answer-accept-call-icon-with-green-button-contact-us-telephone-sign-yes-button-incoming-call-icon-vector.jpg" alt="Hotline" class="source-icon">Hotline</td>
-                                <td><?= number_format($get_revenue_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_sale_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_discount_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($count_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_product_hotline_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_aov_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_new_hotline ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_returning_hotline ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_revenue_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_sale_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_discount_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($count_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_product_hotline_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_aov_of_hotline_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_new_hotline ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_returning_hotline ?? 0, 0, ',', '.'); ?></td>
                             </tr>
 
                             <tr>
                                 <td><img src="https://helpv3.ladipage.vn/~gitbook/image?url=https%3A%2F%2F4163873660-files.gitbook.io%2F%7E%2Ffiles%2Fv0%2Fb%2Fgitbook-x-prod.appspot.com%2Fo%2Fspaces%252FVlMUbaIjYt7SY2R8v2az%252Ficon%252Fhdr8lmBqrumyQd8I249v%252Flogo-white.svg%3Falt%3Dmedia%26token%3Df2464a07-be53-4fb1-bf06-a0c2c6b6a9a7&width=32&dpr=4&quality=100&sign=407bcf19&sv=2" alt="LadiPage" class="source-icon">LadiPage</td>
-                                <td><?= number_format($get_revenue_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_sale_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_discount_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($count_hotline_ladipage_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_product_ladipage_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_aov_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_new_ladipage ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_returning_ladipage ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_revenue_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_sale_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_discount_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($count_hotline_ladipage_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_product_ladipage_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_aov_of_ladipage_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_new_ladipage ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_returning_ladipage ?? 0, 0, ',', '.'); ?></td>
                             </tr>
 
                             <tr>
                                 <td><i class="fa-solid fa-circle-question" style="color:#64748b; margin-right:8px;"></i> Khác</td>
-                                <td><?= number_format($get_revenue_of_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_sale_of_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_discount_of_others_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($count_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_product_others_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($get_aov_of_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_new_others ?? 0, 0, ',', '.'); ?></td>
-                                <td><?= number_format($cust_returning_others ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_revenue_of_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_sale_of_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_discount_of_others_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($count_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_product_others_quantity_of_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($get_aov_of_others_orders_confirmed_in_range ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_new_others ?? 0, 0, ',', '.'); ?></td>
+                                <td style="text-align: center;"><?= number_format($cust_returning_others ?? 0, 0, ',', '.'); ?></td>
                             </tr>
                         </tbody>
                     </table>
@@ -838,7 +932,7 @@
         </div>
     </div>
 
-    <!-- ========== HIỆU SUẤT THEO MARKETER ========== -->
+    <!-- Hiệu suất theo Marketer (revamped) -->
     <div class="dashboard-shell">
         <div class="section">
             <div class="section-head">
@@ -846,7 +940,7 @@
                     <span class="icon"><i class="fa-solid fa-user-tie"></i></span>
                     Hiệu suất theo Marketer
                 </div>
-                <div class="section-sub">Gom theo người phụ trách marketing · Doanh thu & chiết khấu (lọc theo time_status_submitted).</div>
+                <div class="section-sub">Gom theo người phụ trách marketing · Doanh thu, doanh số, đơn chốt, SL hàng chốt, GTTB (lọc theo khoảng thời gian đã xác nhận).</div>
             </div>
 
             <div class="card pad" style="padding:0;">
@@ -856,47 +950,81 @@
                             <tr>
                                 <th style="min-width:220px; text-align:left;">Marketer</th>
                                 <th>Doanh thu</th>
+                                <th>Doanh số</th>
                                 <th>Chiết khấu</th>
+                                <th>Đơn chốt</th>
+                                <th>SL hàng chốt</th>
+                                <th>GTTB</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <?php
-                            $marketers = isset($marketers) && is_array($marketers) ? $marketers : [];
-                            $mk_total_rev  = 0.0;
-                            $mk_total_disc = 0.0;
+                            // Data guard
+                            $marketers       = isset($marketers) && is_array($marketers) ? $marketers : [];
+                            $mk_total_rev    = 0.0;
+                            $mk_total_disc   = 0.0;
+                            $mk_total_sales  = 0.0;
+                            $mk_total_orders = 0;
+                            $mk_total_qty    = 0;
 
                             if (!empty($marketers)):
                                 foreach ($marketers as $mk):
-                                    $name = !empty($mk['marketer_name']) ? $mk['marketer_name'] : 'Chưa gán';
-                                    $rev  = (float)($mk['revenue']  ?? 0);
-                                    $disc = (float)($mk['discount'] ?? 0);
+                                    $name    = !empty($mk['marketer_name']) ? $mk['marketer_name'] : 'Chưa gán';
+                                    $rev     = (float)($mk['revenue']  ?? 0);      // SUM(total_order_amount)
+                                    $disc    = (float)($mk['discount'] ?? 0);      // SUM(total_discount)
+                                    $sales   = (float)($mk['sales']    ?? 0);      // SUM(total_price)
+                                    $orders  = (int)  ($mk['orders']   ?? 0);      // COUNT(*)
+                                    $qty     = (int)  ($mk['quantity'] ?? 0);      // SUM(details.quantity)
+                                    $aov     = $orders > 0 ? ($rev / $orders) : 0; // GTTB theo doanh thu
 
-                                    $mk_total_rev  += $rev;
-                                    $mk_total_disc += $disc;
+                                    // Cộng dồn tổng
+                                    $mk_total_rev    += $rev;
+                                    $mk_total_disc   += $disc;
+                                    $mk_total_sales  += $sales;
+                                    $mk_total_orders += $orders;
+                                    $mk_total_qty    += $qty;
+
+                                    // Tỉ lệ chiết khấu
+                                    $rate = $rev > 0 ? ($disc / $rev) * 100 : 0;
+                                    $rate_class = $rate <= 10 ? 'rate-good' : ($rate <= 20 ? 'rate-mid' : 'rate-bad');
                             ?>
                                     <tr>
                                         <td style="text-align:left;font-weight:700;color:#1f2937;">
                                             <i class="fa-solid fa-user" style="color:#6366f1; margin-right:8px;"></i>
                                             <?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>
                                         </td>
-                                        <td class="money"><?= number_format($rev, 0, ',', '.'); ?></td>
-                                        <td class="money"><?= number_format($disc, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($rev, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($sales, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($disc, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($orders, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($qty, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($aov, 0, ',', '.'); ?></td>
                                     </tr>
                                 <?php
                                 endforeach;
                             else:
                                 ?>
                                 <tr>
-                                    <td colspan="3" class="text-center">Không có dữ liệu marketer trong khoảng đã chọn.</td>
+                                    <td colspan="8" class="text-center">Không có dữ liệu marketer trong khoảng đã chọn.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
 
                         <tfoot>
+                            <?php
+                            $total_rate = $mk_total_rev > 0 ? ($mk_total_disc / $mk_total_rev) * 100 : 0;
+                            $t_rate_class = $total_rate <= 10 ? 'rate-good' : ($total_rate <= 20 ? 'rate-mid' : 'rate-bad');
+                            $total_aov = $mk_total_orders > 0 ? ($mk_total_rev / $mk_total_orders) : 0; // GTTB tổng
+                            ?>
                             <tr>
                                 <td style="text-align:left;"><strong>TỔNG</strong></td>
-                                <td class="money"><strong><?= number_format($mk_total_rev, 0, ',', '.'); ?></strong></td>
-                                <td class="money"><strong><?= number_format($mk_total_disc, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($mk_total_rev, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($mk_total_sales, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($mk_total_disc, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($mk_total_orders, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($mk_total_qty, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($total_aov, 0, ',', '.'); ?></strong></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -905,7 +1033,195 @@
         </div>
     </div>
 
+    <!-- Hiệu suất theo CSKH (revamped) -->
+    <div class="dashboard-shell">
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    <span class="icon"><i class="fa-solid fa-headset"></i></span>
+                    Hiệu suất theo CSKH
+                </div>
+                <div class="section-sub">Gom theo nhân sự CSKH · Doanh thu, doanh số, đơn chốt, SL hàng chốt, GTTB (lọc theo khoảng thời gian đã xác nhận).</div>
+            </div>
 
+            <div class="card pad" style="padding:0;">
+                <div class="table-wrap">
+                    <table class="table table-hover perf">
+                        <thead>
+                            <tr>
+                                <th style="min-width:220px; text-align:left;">CSKH</th>
+                                <th>Doanh thu</th>
+                                <th>Doanh số</th>
+                                <th>Chiết khấu</th>
+                                <th>Đơn chốt</th>
+                                <th>SL hàng chốt</th>
+                                <th>GTTB</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                            // Data guard
+                            $cskhs           = isset($cskhs) && is_array($cskhs) ? $cskhs : [];
+                            $cs_total_rev    = 0.0;
+                            $cs_total_disc   = 0.0;
+                            $cs_total_sales  = 0.0;
+                            $cs_total_orders = 0;
+                            $cs_total_qty    = 0;
+
+                            if (!empty($cskhs)):
+                                foreach ($cskhs as $cs):
+                                    $name   = !empty($cs['cskh_name']) ? $cs['cskh_name'] : 'Chưa gán';
+                                    $rev    = (float)($cs['revenue']  ?? 0);
+                                    $disc   = (float)($cs['discount'] ?? 0);
+                                    $sales  = (float)($cs['sales']    ?? 0);
+                                    $orders = (int)  ($cs['orders']   ?? 0);
+                                    $qty    = (int)  ($cs['quantity'] ?? 0);
+                                    $aov    = $orders > 0 ? ($rev / $orders) : 0; // GTTB theo doanh thu
+
+                                    // Cộng dồn tổng
+                                    $cs_total_rev    += $rev;
+                                    $cs_total_disc   += $disc;
+                                    $cs_total_sales  += $sales;
+                                    $cs_total_orders += $orders;
+                                    $cs_total_qty    += $qty;
+                            ?>
+                                    <tr>
+                                        <td style="text-align:left;font-weight:700;color:#1f2937;">
+                                            <i class="fa-solid fa-user-headset" style="color:#06b6d4; margin-right:8px;"></i>
+                                            <?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>
+                                        </td>
+                                        <td class="money" style="text-align:center;"><?= number_format($rev, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($sales, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($disc, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($orders, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($qty, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($aov, 0, ',', '.'); ?></td>
+                                    </tr>
+                                <?php
+                                endforeach;
+                            else:
+                                ?>
+                                <tr>
+                                    <td colspan="7" class="text-center">Không có dữ liệu CSKH trong khoảng đã chọn.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+
+                        <tfoot>
+                            <?php
+                            $total_aov = $cs_total_orders > 0 ? ($cs_total_rev / $cs_total_orders) : 0; // GTTB tổng
+                            ?>
+                            <tr>
+                                <td style="text-align:left;"><strong>TỔNG</strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_rev, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_sales, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_disc, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_orders, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_qty, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($total_aov, 0, ',', '.'); ?></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hiệu suất theo SALE (revamped) -->
+    <div class="dashboard-shell">
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">
+                    <span class="icon"><i class="fa-solid fa-headset"></i></span>
+                    Hiệu suất theo Sale
+                </div>
+                <div class="section-sub">Gom theo nhân sự Sale · Doanh thu, doanh số, đơn chốt, SL hàng chốt, GTTB (lọc theo khoảng thời gian đã xác nhận).</div>
+            </div>
+
+            <div class="card pad" style="padding:0;">
+                <div class="table-wrap">
+                    <table class="table table-hover perf">
+                        <thead>
+                            <tr>
+                                <th style="min-width:220px; text-align:left;">SALE</th>
+                                <th>Doanh thu</th>
+                                <th>Doanh số</th>
+                                <th>Chiết khấu</th>
+                                <th>Đơn chốt</th>
+                                <th>SL hàng chốt</th>
+                                <th>GTTB</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                            // Data guard
+                            $saless           = isset($saless) && is_array($saless) ? $saless : [];
+                            $cs_total_rev    = 0.0;
+                            $cs_total_disc   = 0.0;
+                            $cs_total_sales  = 0.0;
+                            $cs_total_orders = 0;
+                            $cs_total_qty    = 0;
+
+                            if (!empty($saless)):
+                                foreach ($saless as $cs):
+                                    $name   = !empty($cs['sale_name']) ? $cs['sale_name'] : 'Chưa gán';
+                                    $rev    = (float)($cs['revenue']  ?? 0);
+                                    $disc   = (float)($cs['discount'] ?? 0);
+                                    $sales  = (float)($cs['sales']    ?? 0);
+                                    $orders = (int)  ($cs['orders']   ?? 0);
+                                    $qty    = (int)  ($cs['quantity'] ?? 0);
+                                    $aov    = $orders > 0 ? ($rev / $orders) : 0; // GTTB theo doanh thu
+
+                                    // Cộng dồn tổng
+                                    $cs_total_rev    += $rev;
+                                    $cs_total_disc   += $disc;
+                                    $cs_total_sales  += $sales;
+                                    $cs_total_orders += $orders;
+                                    $cs_total_qty    += $qty;
+                            ?>
+                                    <tr>
+                                        <td style="text-align:left;font-weight:700;color:#1f2937;">
+                                            <i class="fa-solid fa-user-headset" style="color:#06b6d4; margin-right:8px;"></i>
+                                            <?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?>
+                                        </td>
+                                        <td class="money" style="text-align:center;"><?= number_format($rev, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($sales, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($disc, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($orders, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($qty, 0, ',', '.'); ?></td>
+                                        <td class="money" style="text-align:center;"><?= number_format($aov, 0, ',', '.'); ?></td>
+                                    </tr>
+                                <?php
+                                endforeach;
+                            else:
+                                ?>
+                                <tr>
+                                    <td colspan="7" class="text-center">Không có dữ liệu SALE</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+
+                        <tfoot>
+                            <?php
+                            $total_aov = $cs_total_orders > 0 ? ($cs_total_rev / $cs_total_orders) : 0; // GTTB tổng
+                            ?>
+                            <tr>
+                                <td style="text-align:left;"><strong>TỔNG</strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_rev, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_sales, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_disc, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_orders, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($cs_total_qty, 0, ',', '.'); ?></strong></td>
+                                <td class="money" style="text-align:center;"><strong><?= number_format($total_aov, 0, ',', '.'); ?></strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php init_tail(); ?>

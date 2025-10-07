@@ -24,22 +24,52 @@ class Pancake_dashboard extends AdminController
         $channels = $this->dash->get_channel_metrics($start_date, $end_date, $is_initial);
         $custSeg  = $this->dash->get_customer_segments_overall($start_date, $end_date, $is_initial);
 
-        // ===== MARKETER (lọc theo time_status_submitted; chỉ tên + doanh thu + chiết khấu) =====
-        // Hàm model bạn đã viết để gom đúng theo marketer_name, SUM(total_order_amount), SUM(total_discount)
-        // và loại canceled/returned/returning.
+        // ===== MARKETER =====
         $mk_rows = $this->dash->get_marketer_metrics($start_date, $end_date);
-
-        // Chuẩn hóa để chắc chắn chỉ trả về 3 cột cần dùng trong view
         $marketers = [];
         foreach ((array)$mk_rows as $r) {
             $marketers[] = [
                 'marketer_name' => (string)($r['marketer_name'] ?? 'Chưa gán'),
-                'revenue'       => (float)  ($r['revenue']       ?? 0),
-                'discount'      => (float)  ($r['discount']      ?? 0),
+                'revenue'       => (float)  ($r['revenue']  ?? 0),
+                'sales'         => (float)  ($r['sales']    ?? 0),
+                'orders'        => (int)    ($r['orders']   ?? 0),
+                'quantity'      => (int)    ($r['quantity'] ?? 0),
+                'aov'           => (float)  ($r['aov']      ?? 0),
+                'discount'      => (float)  ($r['discount'] ?? 0),
             ];
         }
 
-        // ===== TÍNH TOÁN PHÁI SINH (giữ nguyên phần của bạn) =====
+        // ===== CSKH =====
+        $cskh_rows = $this->dash->get_cskh_metrics($start_date, $end_date);
+        $cskhs = [];
+        foreach ((array)$cskh_rows as $r) {
+            $cskhs[] = [
+                'cskh_name' => (string)($r['cskh_name'] ?? 'Chưa gán'),
+                'revenue'   => (float)  ($r['revenue']   ?? 0),
+                'sales'     => (float)  ($r['sales']     ?? 0),
+                'orders'    => (int)    ($r['orders']    ?? 0),
+                'quantity'  => (int)    ($r['quantity']  ?? 0),
+                'aov'       => (float)  ($r['aov']       ?? 0),
+                'discount'  => (float)  ($r['discount']  ?? 0),
+            ];
+        }
+
+        // SALE
+        $sale_rows = $this->dash->get_sale_metrics($start_date, $end_date);
+        $saless = [];
+        foreach ((array)$sale_rows as $r) {
+            $saless[] = [
+                'sale_name' => (string)($r['sale_name'] ?? 'Chưa gán'),
+                'revenue'   => (float)  ($r['revenue']   ?? 0),
+                'sales'     => (float)  ($r['sales']     ?? 0),
+                'orders'    => (int)    ($r['orders']    ?? 0),
+                'quantity'  => (int)    ($r['quantity']  ?? 0),
+                'aov'       => (float)  ($r['aov']       ?? 0),
+                'discount'  => (float)  ($r['discount']  ?? 0),
+            ];
+        }
+
+        // ===== TÍNH TOÁN PHÁI SINH =====
         $count_confirmed_in_range        = (int)($m['count_confirmed_in_range'] ?? 0);
         $revenue_confirmed_in_range      = (float)($m['revenue_confirmed_in_range'] ?? 0);
         $sales_volume_confirmed_in_range = (float)($m['sales_volume_confirmed_in_range'] ?? 0);
@@ -54,10 +84,13 @@ class Pancake_dashboard extends AdminController
         $count_confirmed_today = (int)($m['count_confirmed_today'] ?? 0);
         $closing_rate_today    = $count_created_today > 0 ? ($count_confirmed_today / $count_created_today * 100) : 0;
 
+        // Helper lấy channel; ưu tiên CTV, fallback 'Affiliate' để không vỡ nếu dữ liệu cũ
         $get = function ($ch) use ($channels) {
             return $channels[$ch] ?? ['revenue' => 0, 'sales' => 0, 'discount' => 0, 'orders' => 0, 'quantity' => 0, 'aov' => 0, 'cust_new' => 0, 'cust_returning' => 0];
         };
-        $aff   = $get('Affiliate');
+
+        // ⚠️ Đổi nguồn: dùng 'CTV' thay cho 'Affiliate'
+        $aff   = !empty($channels['CTV']) ? $channels['CTV'] : $get('Affiliate');
         $fb    = $get('Facebook');
         $shp   = $get('Shopee');
         $zl    = $get('Zalo');
@@ -89,7 +122,7 @@ class Pancake_dashboard extends AdminController
         $data['closing_rate_today']                   = $closing_rate_today;
         $data['get_product_quantity_confirmed_today'] = (int)($m['product_quantity_confirmed_today'] ?? 0);
 
-        // Theo nguồn (giữ nguyên các biến cũ của bạn)
+        // Theo nguồn (giữ nguyên tên biến cũ để không phải sửa view)
         $data['get_revenue_of_affiliate_orders_confirmed_in_range']   = $aff['revenue'];
         $data['get_revenue_of_facebook_orders_confirmed_in_range']    = $fb['revenue'];
         $data['get_revenue_of_shopee_orders_confirmed_in_range']      = $shp['revenue'];
@@ -165,7 +198,7 @@ class Pancake_dashboard extends AdminController
         $data['cust_returning_shopee']     = $shp['cust_returning'];
         $data['cust_returning_zalo']       = $zl['cust_returning'];
         $data['cust_returning_tiktok']     = $tt['cust_returning'];
-        $data['cust_returning_woocommerce']= $woo['cust_returning'];
+        $data['cust_returning_woocommerce'] = $woo['cust_returning'];
         $data['cust_returning_hotline']    = $hl['cust_returning'];
         $data['cust_returning_ladipage']   = $ladi['cust_returning'];
         $data['cust_returning_others']     = $other['cust_returning'];
@@ -177,8 +210,10 @@ class Pancake_dashboard extends AdminController
         $data['tai_quay_doanh_thu'] = 0;
         $data['tai_quay_don_chot']  = 0;
 
-        // ✨ Quan trọng: truyền đúng tên biến mà view Marketer đang dùng
+        // Truyền mảng cho 3 bảng
         $data['marketers'] = $marketers;
+        $data['cskhs']     = $cskhs;
+        $data['saless']     = $saless;
 
         // Điều khiển view
         $data['start_date'] = $start_date;

@@ -6,7 +6,6 @@ class Pancake_orders_model extends App_Model
     public function __construct()
     {
         parent::__construct();
-        // Không cần cache ở model Orders nữa
     }
 
     /* ==================== SYNC ORDERS (NGUYÊN VẸN NHƯ BẠN GỬI) ==================== */
@@ -349,7 +348,6 @@ class Pancake_orders_model extends App_Model
 
         return ['ok' => $ok, 'err' => $err, 'errors' => array_slice($errors, 0, 10)];
     }
-
 
     /* ==================== SELLERS ==================== */
     public function get_sellers_from_orders()
