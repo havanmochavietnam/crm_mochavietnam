@@ -55,6 +55,8 @@ class Pancake_sync_products extends AdminController
             }
         }
 
+        $data['title']      = 'Sản phẩm của Mocha';
+
         $this->load->view('pancake_sync/products', $data);
     }
 

@@ -52,9 +52,7 @@ class Pancake_sync extends AdminController
         $data['current_page'] = (int)($filters['page_number'] ?? 1);
         $data['total_pages']  = ($pageSize > 0 && $data['total'] > 0) ? ceil($data['total'] / $pageSize) : 0;
 
-        hooks()->add_action('app_admin_head', function () {
-            echo '<link rel="stylesheet" href="' . base_url('assets/css/orders.css?v=' . time()) . '">';
-        });
+        $data['title']      = 'Tất cả đơn hàng Mocha';
 
         $this->load->view('pancake_sync/orders', $data);
     }

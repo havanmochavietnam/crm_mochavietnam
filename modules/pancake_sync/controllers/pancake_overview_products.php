@@ -149,9 +149,10 @@ class Pancake_overview_products extends AdminController
             'top_combo',
             'orders_by_combo',
             'combo_repeat_overall',
-            'rep_only' // <--- truyền sang View
+            'rep_only'
         );
 
+        $data['title']      = 'Tổng thể về doanh thu sản phẩm';
         $this->load->view('pancake_sync/dashboard_product_pancake', $data);
     }
 }

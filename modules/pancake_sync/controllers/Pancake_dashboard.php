@@ -123,6 +123,7 @@ class Pancake_dashboard extends AdminController
         $data['get_product_quantity_confirmed_today'] = (int)($m['product_quantity_confirmed_today'] ?? 0);
 
         // Theo nguồn (giữ nguyên tên biến cũ để không phải sửa view)
+        // DOANH THU THEO NGUỒN
         $data['get_revenue_of_affiliate_orders_confirmed_in_range']   = $aff['revenue'];
         $data['get_revenue_of_facebook_orders_confirmed_in_range']    = $fb['revenue'];
         $data['get_revenue_of_shopee_orders_confirmed_in_range']      = $shp['revenue'];
@@ -133,6 +134,7 @@ class Pancake_dashboard extends AdminController
         $data['get_revenue_of_ladipage_orders_confirmed_in_range']    = $ladi['revenue'];
         $data['get_revenue_of_others_orders_confirmed_in_range']      = $other['revenue'];
 
+        // DOANH SỐ THEO NGUỒN
         $data['get_sale_of_ctv_orders_confirmed_in_range']         = $aff['sales'];
         $data['get_sale_of_facebook_orders_confirmed_in_range']    = $fb['sales'];
         $data['get_sale_of_shopee_orders_confirmed_in_range']      = $shp['sales'];
@@ -143,6 +145,7 @@ class Pancake_dashboard extends AdminController
         $data['get_sale_of_ladipage_orders_confirmed_in_range']    = $ladi['sales'];
         $data['get_sale_of_others_orders_confirmed_in_range']      = $other['sales'];
 
+        // CHIẾT KHẤU THEO NGUỒN
         $data['get_discount_of_ctv_orders_confirmed_in_range']    = $aff['discount'];
         $data['get_discount_of_facebook_confirmed_in_range']      = $fb['discount'];
         $data['get_discount_of_shopee_orders_confirmed_in_range'] = $shp['discount'];
@@ -153,6 +156,7 @@ class Pancake_dashboard extends AdminController
         $data['get_discount_of_ladipage_confirmed_in_range']      = $ladi['discount'];
         $data['get_discount_of_others_confirmed_in_range']        = $other['discount'];
 
+        // ĐƠN CHỐT
         $data['count_ctv_orders_confirmed_in_range']         = $aff['orders'];
         $data['count_facebook_orders_confirmed_in_range']    = $fb['orders'];
         $data['count_shopee_orders_confirmed_in_range']      = $shp['orders'];
@@ -162,7 +166,9 @@ class Pancake_dashboard extends AdminController
         $data['count_hotline_orders_confirmed_in_range']     = $hl['orders'];
         $data['count_ladipage_orders_confirmed_in_range']    = $ladi['orders'];
         $data['count_others_orders_confirmed_in_range']      = $other['orders'];
+        $data['count_hotline_ladipage_confirmed_in_range']   = $data['count_ladipage_orders_confirmed_in_range'];
 
+        // SL HÀNG CHỐT
         $data['get_product_ctv_quantity_of_orders_confirmed_in_range']         = $aff['quantity'];
         $data['get_product_facebook_quantity_of_orders_confirmed_in_range']    = $fb['quantity'];
         $data['get_product_Shopee_quantity_of_orders_confirmed_in_range']      = $shp['quantity'];
@@ -173,6 +179,7 @@ class Pancake_dashboard extends AdminController
         $data['get_product_ladipage_quantity_of_orders_confirmed_in_range']    = $ladi['quantity'];
         $data['get_product_others_quantity_of_orders_confirmed_in_range']      = $other['quantity'];
 
+        //GTTB
         $data['get_aov_of_ctv_orders_confirmed_in_range']         = $aff['aov'];
         $data['get_aov_of_facebook_orders_confirmed_in_range']    = $fb['aov'];
         $data['get_aov_of_shopee_orders_confirmed_in_range']      = $shp['aov'];
@@ -183,6 +190,7 @@ class Pancake_dashboard extends AdminController
         $data['get_aov_of_ladipage_orders_confirmed_in_range']    = $ladi['aov'];
         $data['get_aov_of_others_orders_confirmed_in_range']      = $other['aov'];
 
+        // SL KHÁCH MỚI
         $data['cust_new_affiliate']        = $aff['cust_new'];
         $data['cust_new_facebook']         = $fb['cust_new'];
         $data['cust_new_shopee']           = $shp['cust_new'];
@@ -193,6 +201,7 @@ class Pancake_dashboard extends AdminController
         $data['cust_new_ladipage']         = $ladi['cust_new'];
         $data['cust_new_others']           = $other['cust_new'];
 
+        // SỐ LƯỢNG KHÁCH CŨ
         $data['cust_returning_affiliate']  = $aff['cust_returning'];
         $data['cust_returning_facebook']   = $fb['cust_returning'];
         $data['cust_returning_shopee']     = $shp['cust_returning'];
@@ -203,22 +212,31 @@ class Pancake_dashboard extends AdminController
         $data['cust_returning_ladipage']   = $ladi['cust_returning'];
         $data['cust_returning_others']     = $other['cust_returning'];
 
+        // TỎNG KHÁCH MỚI
         $data['cust_new_total']       = (int)($custSeg['cust_new'] ?? 0);
+
+        // TỔNG KHÁCH CŨ
         $data['cust_returning_total'] = (int)($custSeg['cust_returning'] ?? 0);
 
-        $data['count_hotline_ladipage_confirmed_in_range'] = $data['count_ladipage_orders_confirmed_in_range'];
+        // BÁN TẠI QUẦY
         $data['tai_quay_doanh_thu'] = 0;
         $data['tai_quay_don_chot']  = 0;
 
-        // Truyền mảng cho 3 bảng
+        // MAKETER
         $data['marketers'] = $marketers;
+
+        // CSKH
         $data['cskhs']     = $cskhs;
+
+        // SALE
         $data['saless']     = $saless;
 
-        // Điều khiển view
+        // NGÀY BẮT ĐẦU ------> NGÀY KẾT THÚC
         $data['start_date'] = $start_date;
         $data['end_date']   = $end_date;
-        $data['title']      = 'Dashboard Đơn Hàng Pancake';
+
+        // TÊN THẺ WEBSITE
+        $data['title']      = 'Dashboard';
 
         $this->load->view('pancake_sync/dashboard', $data);
     }

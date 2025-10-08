@@ -57,6 +57,8 @@ class Pancake_sync_customers extends AdminController
             }
         }
 
+        $data['title']      = 'Tổng quan khách hàng';
+
         $this->load->view('pancake_sync/customers', $data);
     }
 

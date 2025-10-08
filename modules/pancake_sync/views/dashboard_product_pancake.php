@@ -1,167 +1,12 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php init_head(); ?>
-
-<style>
-  .product-table thead th {
-    background-color: #f8f9fa;
-    font-weight: 600;
-    vertical-align: middle;
-    white-space: nowrap;
-    text-align: left;
-  }
-
-  .product-table tbody td {
-    vertical-align: middle;
-    padding: 10px 8px;
-    font-size: 13px;
-  }
-
-  .product-cell {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .product-thumb {
-    width: 44px;
-    height: 44px;
-    border-radius: 6px;
-    object-fit: cover;
-    background: #f3f4f6;
-    flex: 0 0 44px;
-  }
-
-  .product-info .code {
-    font-weight: 700;
-    font-size: 13px;
-    line-height: 1.1;
-  }
-
-  .product-info .name {
-    color: #555;
-    font-size: 13px;
-    line-height: 1.2;
-  }
-
-  .product-value {
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .filter-bar {
-    text-align: end;
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 12px;
-    margin-bottom: 16px;
-  }
-
-  .filter-bar .form-group {
-    margin-right: 10px;
-    margin-bottom: 0;
-  }
-
-  .kpi-wrap {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-  }
-
-  .kpi-card {
-    flex: 1 1 260px;
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    padding: 14px 16px;
-  }
-
-  .kpi-title {
-    color: #6c757d;
-    font-weight: 600;
-    font-size: 12px;
-    letter-spacing: .3px;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .kpi-value {
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  .kpi-sub {
-    color: #6c757d;
-    font-size: 13px;
-  }
-
-  .kpi-combo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .kpi-combo img {
-    width: 40px;
-    height: 40px;
-    border-radius: 6px;
-    object-fit: cover;
-    background: #f3f4f6;
-  }
-
-  .dash-panel {
-    background: #fff;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 16px;
-  }
-
-  .dash-panel .panel-head {
-    padding: 12px 16px;
-    border-bottom: 1px solid #e9ecef;
-    background: #f8f9fa;
-    font-weight: 600;
-  }
-
-  .dash-panel .panel-body {
-    padding: 0;
-  }
-
-  .table-wrap {
-    max-height: 560px;
-    overflow-y: auto;
-    position: relative;
-  }
-
-  .product-table thead th.sticky {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background: #f8f9fa;
-  }
-
-  .product-table tfoot th,
-  .product-table tfoot td {
-    position: sticky;
-    bottom: 0;
-    z-index: 3;
-    background: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, .04);
-  }
-
-  .text-right {
-    text-align: right !important;
-  }
-</style>
+<link rel="stylesheet" href="<?= module_dir_url('pancake_sync', 'assets/css/product_overview.css'); ?>?v=<?= time(); ?>">
 
 <div id="wrapper">
   <div class="content">
     <div class="info-section">
 
-      <!-- Filter -->
+      <!-- BỘ LỌC THEO NGÀY VÀ LỌC DOANH SỐ MUA LẠI (>= 2) -->
       <div class="d-flex justify-content-end">
         <form method="GET" action="<?= html_escape(current_url()); ?>" class="filter-bar form-inline w-auto ms-auto">
           <div class="form-group me-2">
@@ -189,7 +34,7 @@
         </form>
       </div>
 
-      <!-- KPIs -->
+      <!-- DOANH THU TỔNG -- COMBO ĐƯỢC ĐƯỢC MUA NHIỀU NHẤT -- TỶ LỆ ĐÓNG GÓP DOANH THU (TOP COMBO) -->
       <div class="kpi-wrap">
         <div class="kpi-card">
           <div class="kpi-title">Doanh thu tổng</div>
@@ -228,6 +73,7 @@
         </div>
       </div>
 
+      <!-- ĐẾM SỐ DÒNG VÀ CHUẨN HÓA PHẦN TRĂM  -->
       <?php
       if (!function_exists('view_extract_order_count')) {
         function view_extract_order_count($row)
