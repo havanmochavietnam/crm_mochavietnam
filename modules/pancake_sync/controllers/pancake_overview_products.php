@@ -9,6 +9,7 @@ class Pancake_overview_products extends AdminController
         $this->load->model('pancake_overview_products_model', 'overview');
     }
 
+    // INDEX CHO TRANG PRODUCT
     public function index()
     {
         $date_from = $this->input->get('date_from') ?: date('Y-m-d');

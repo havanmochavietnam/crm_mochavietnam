@@ -9,6 +9,7 @@ class Pancake_dashboard extends AdminController
         $this->load->model('pancake_dashboard_model', 'dash');
     }
 
+    // INDEX
     public function index()
     {
         $start_param = $this->input->get('start_date');
@@ -122,7 +123,6 @@ class Pancake_dashboard extends AdminController
         $data['closing_rate_today']                   = $closing_rate_today;
         $data['get_product_quantity_confirmed_today'] = (int)($m['product_quantity_confirmed_today'] ?? 0);
 
-        // Theo nguồn (giữ nguyên tên biến cũ để không phải sửa view)
         // DOANH THU THEO NGUỒN
         $data['get_revenue_of_affiliate_orders_confirmed_in_range']   = $aff['revenue'];
         $data['get_revenue_of_facebook_orders_confirmed_in_range']    = $fb['revenue'];

@@ -15,6 +15,7 @@ class Pancake_products_model extends CI_Model
         }
     }
 
+    // TẠO BẢNG
     private function create_table()
     {
         $fields = [
@@ -90,9 +91,7 @@ class Pancake_products_model extends CI_Model
         $this->dbforge->create_table($this->table, true);
     }
 
-    /**
-     * Đồng bộ dữ liệu từ API
-     */
+    // ĐỒNG BỘ DỮ LIỆU TỪ API
     public function sync_products(array $products)
     {
         $count = 0;

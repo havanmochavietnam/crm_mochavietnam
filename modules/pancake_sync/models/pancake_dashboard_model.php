@@ -27,7 +27,7 @@ class Pancake_dashboard_model extends App_Model
         return "CAST(IFNULL(JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.customer.order_count')), '0') AS UNSIGNED)";
     }
 
-    /* ==================== DASHBOARD METRICS (TỔNG QUAN) ==================== */
+    /* ==================== DASHBOARD (TỔNG QUAN) ==================== */
     public function get_dashboard_metrics($start_date, $end_date, $only_today = false)
     {
         $tableOrders  = db_prefix() . 'pancake_orders';          // = tblpancake_orders
@@ -173,7 +173,7 @@ class Pancake_dashboard_model extends App_Model
         return $this->db->query($sql, $bind)->row_array() ?: [];
     }
 
-    /* ==================== KPI THEO KÊNH ==================== */
+    /* ==================== DASHBOARD THEO KÊNH ==================== */
     public function get_channel_metrics($start_date, $end_date, $only_today = false)
     {
         $tableOrders  = db_prefix() . 'pancake_orders';          // tblpancake_orders
@@ -304,7 +304,6 @@ class Pancake_dashboard_model extends App_Model
 
         return $out;
     }
-
 
     /* ==================== PHÂN KHÚC KHÁCH HÀNG TỔNG ==================== */
     public function get_customer_segments_overall($start_date, $end_date, $only_today = false)

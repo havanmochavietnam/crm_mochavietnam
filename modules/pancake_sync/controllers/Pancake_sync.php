@@ -17,7 +17,7 @@ class Pancake_sync extends AdminController
         $this->apiKey = get_option('api_key') ?: "fde1951a7d0e4c3b976aedb1776e731e";
     }
 
-    // Giữ nguyên hàm index của bạn
+    // INDEX CHO CONTROLLER
     public function index()
     {
         $filters = $this->input->get();
@@ -57,6 +57,7 @@ class Pancake_sync extends AdminController
         $this->load->view('pancake_sync/orders', $data);
     }
 
+    // BẮT ĐẦU ĐỒNG BỘ
     public function start_sync()
     {
         header('Content-Type: application/json');
@@ -89,6 +90,7 @@ class Pancake_sync extends AdminController
         ]);
     }
 
+    // CẤU TRÚC ĐỒNG BỘ
     public function sync_page()
     {
         header('Content-Type: application/json');
@@ -149,6 +151,7 @@ class Pancake_sync extends AdminController
         ]);
     }
 
+    // LẤY THÔNG TIN ĐƠN HÀNG
     private function getOrdersFromApi(array $params = []): array
     {
         $queryParams = [
@@ -192,6 +195,7 @@ class Pancake_sync extends AdminController
         ];
     }
 
+    // ĐỒNG BỘ 1000 ĐƠN GẦN NHẤT
     public function sync_recent_1000()
     {
         header('Content-Type: application/json');

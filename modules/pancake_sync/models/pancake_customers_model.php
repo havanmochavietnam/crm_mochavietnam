@@ -15,9 +15,7 @@ class Pancake_customers_model extends CI_Model
         }
     }
 
-    /**
-     * Tạo bảng database với cấu trúc ĐÚNG.
-     */
+    // TẠO BẢNG
     private function create_table()
     {
         $fields = [
@@ -47,9 +45,7 @@ class Pancake_customers_model extends CI_Model
         $this->dbforge->create_table($this->table, TRUE);
     }
 
-    /**
-     * Đồng bộ dữ liệu bằng batch processing để tối ưu hiệu năng.
-     */
+    // ĐỒNG BỘ VỀ API
     public function sync_customers(array $customers)
     {
         if (empty($customers)) {

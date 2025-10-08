@@ -14,7 +14,7 @@ class Pancake_overview_products_model extends App_Model
         return implode(',', array_fill(0, max(1, (int)$n), '?'));
     }
 
-    // Gộp nguồn từ cột DB hoặc JSON; chuẩn hoá UPPER + TRIM (không dùng REGEXP_REPLACE)
+    // Gộp nguồn từ cột DB hoặc JSON; chuẩn hoá UPPER + TRIM
     private function _order_source_key_expr($alias = 'o')
     {
         return "
@@ -29,13 +29,13 @@ class Pancake_overview_products_model extends App_Model
     ";
     }
 
-    // Gom theo tên: dùng UPPER + TRIM, bỏ REGEXP_REPLACE (không collapse spaces phức tạp trên 5.x)
+    // Gom theo tên: dùng UPPER + TRIM
     private function _name_key_expr($alias = 'd')
     {
         return "UPPER(TRIM(COALESCE({$alias}.product_name, '')))";
     }
 
-    // Khoá khách hàng: loại ký tự phổ biến khỏi số điện thoại bằng REPLACE xếp lớp (MySQL 5.x không có REGEXP_REPLACE)
+    // Khoá khách hàng: loại ký tự phổ biến khỏi số điện thoại bằng REPLACE xếp lớp
     private function _customer_key_expr()
     {
         // Loại các ký tự hay gặp: khoảng trắng, -, +, (, ), ., /
@@ -566,7 +566,7 @@ class Pancake_overview_products_model extends App_Model
         return $rows;
     }
 
-    /* ======================== Repeat-rate Combo ======================== */
+    /* ======================== Phân tích tỷ lệ mua lại combo theo từng sản phẩm ======================== */
     public function get_combo_repeat_rate_breakdown(
         string $start_date,
         string $end_date,
@@ -655,7 +655,7 @@ class Pancake_overview_products_model extends App_Model
         return $rows;
     }
 
-
+    /* ======================== Phân tích tỷ lệ mua lại combo theo tổng thể cho dashboard trên cùng ======================== */
     public function get_combo_repeat_rate_overall(
         string $start_date,
         string $end_date,

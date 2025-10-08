@@ -51,7 +51,7 @@ hooks()->add_action('admin_init', function () {
         // Tạo menu cha
         $CI->app_menu->add_sidebar_menu_item('pancake-sync-parent', [
             'name'     => _l('POS Pancake'),
-            'icon'     => 'fa fa-sync',
+            'icon'     => 'fa-solid fa-cart-shopping',
             'position' => 30,
         ]);
 

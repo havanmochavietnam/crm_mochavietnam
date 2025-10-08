@@ -26,9 +26,9 @@ class Pancake_sync_customers extends AdminController
         $this->apiKey = get_option(self::PANCAKE_API_KEY_OPTION) ?: "fde1951a7d0e4c3b976aedb1776e731e";
     }
 
+    // INDEX
     public function index()
     {
-        // ĐƠN GIẢN HÓA: Chỉ lấy các tham số cần thiết
         $filters = [
             'page_number' => (int)($this->input->get('page_number') ?: 1),
             'page_size'   => (int)($this->input->get('page_size') ?: 30),
@@ -62,6 +62,7 @@ class Pancake_sync_customers extends AdminController
         $this->load->view('pancake_sync/customers', $data);
     }
 
+    // LẤY DANH SÁCH KHÁCH HÀNG
     private function getCustomersFromApi(array $filters = []): array
     {
         if (empty($this->apiKey) || empty($this->shopId)) {
@@ -104,6 +105,7 @@ class Pancake_sync_customers extends AdminController
         ];
     }
 
+    // HÀM ĐỒNG BỘ
     public function sync()
     {
         $all_customers = [];
@@ -130,8 +132,7 @@ class Pancake_sync_customers extends AdminController
         redirect(admin_url('pancake_sync/pancake_sync_customers'));
     }
 
-
-    // Các hàm getUniqueCustomers và setupPagination giữ nguyên, không cần thay đổi
+    // Hàm getUniqueCustomers và setupPagination
     private function getUniqueCustomers(array $customers): array
     {
         $unique_customers = [];
@@ -145,41 +146,34 @@ class Pancake_sync_customers extends AdminController
         return $unique_customers;
     }
 
-    /**
-     * Configures and initializes the CodeIgniter Pagination library.
-     * Generates Bootstrap-compatible HTML markup.
-     * @param int $totalRows Total number of items
-     * @param int $pageSize  Number of items per page
-     * @return string The generated HTML links for pagination
-     */
+    // SETUP PAGINATE THEO THƯ VIỆN CỦA SOURCE
     private function setupPagination(int $totalRows, int $pageSize): string
     {
         $config = [
             'base_url'             => admin_url('pancake_sync/pancake_sync_customers'),
             'total_rows'           => $totalRows,
             'per_page'             => $pageSize,
-            'page_query_string'    => true,      // Use ?page_number=...
+            'page_query_string'    => true,
             'query_string_segment' => 'page_number',
-            'use_page_numbers'     => true,      // Use actual page numbers (1, 2, 3...)
-            'reuse_query_string'   => true,      // IMPORTANT: Keeps other query params (like search) when changing pages
+            'use_page_numbers'     => true,
+            'reuse_query_string'   => true,
 
-            // --- HTML Customization for Bootstrap ---
             'full_tag_open'        => '<nav aria-label="Page navigation"><ul class="pagination">',
             'full_tag_close'       => '</ul></nav>',
 
-            'first_link'           => '&laquo;', // First
+            'first_link'           => '&laquo;',
             'first_tag_open'       => '<li class="page-item">',
             'first_tag_close'      => '</li>',
 
-            'last_link'            => '&raquo;', // Last
+            'last_link'            => '&raquo;',
             'last_tag_open'        => '<li class="page-item">',
             'last_tag_close'       => '</li>',
 
-            'next_link'            => '&gt;',   // Next
+            'next_link'            => '&gt;',
             'next_tag_open'        => '<li class="page-item">',
             'next_tag_close'       => '</li>',
 
-            'prev_link'            => '&lt;',   // Previous
+            'prev_link'            => '&lt;',
             'prev_tag_open'        => '<li class="page-item">',
             'prev_tag_close'       => '</li>',
 
@@ -189,7 +183,7 @@ class Pancake_sync_customers extends AdminController
             'num_tag_open'         => '<li class="page-item">',
             'num_tag_close'        => '</li>',
 
-            'attributes'           => ['class' => 'page-link'], // Add class to all <a> tags
+            'attributes'           => ['class' => 'page-link'],
         ];
 
         $this->pagination->initialize($config);

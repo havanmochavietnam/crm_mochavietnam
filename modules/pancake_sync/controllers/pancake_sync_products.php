@@ -24,9 +24,9 @@ class Pancake_sync_products extends AdminController
         $this->apiKey = get_option(self::PANCAKE_API_KEY_OPTION) ?: "fde1951a7d0e4c3b976aedb1776e731e";
     }
 
+    // INDEX CHO TRANG CONTROLLER
     public function index()
     {
-        // ĐƠN GIẢN HÓA: Chỉ lấy các tham số cần thiết
         $filters = [
             'page_number' => (int)($this->input->get('page_number') ?: 1),
             'page_size'   => (int)($this->input->get('page_size') ?: 30),
@@ -60,6 +60,7 @@ class Pancake_sync_products extends AdminController
         $this->load->view('pancake_sync/products', $data);
     }
 
+    // LẤY THỒN TIN SẢN PHẨM
     private function getProductsFromApi(array $filters = []): array
     {
         if (empty($this->apiKey) || empty($this->shopId)) {
@@ -79,7 +80,6 @@ class Pancake_sync_products extends AdminController
 
         $url = "{$this->apiUrl}/shops/{$this->shopId}/products/variations?" . http_build_query($queryParams);
 
-        // Phần cURL giữ nguyên...
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true, CURLOPT_HTTPHEADER => ["Accept: application/json"],
@@ -102,6 +102,7 @@ class Pancake_sync_products extends AdminController
         ];
     }
 
+    // ĐỒNG BỘ SẢN PHẨM
     public function sync()
     {
         $all_products = [];
@@ -118,7 +119,6 @@ class Pancake_sync_products extends AdminController
         } while (count($products_on_page) === $pageSize);
 
         if (!empty($all_products)) {
-            // gọi model qua alias
             $synced_count = $this->pancake_products->sync_products($all_products);
             set_alert('success', 'Đồng bộ ' . $synced_count . ' sản phẩm về database thành công!');
         } else {
@@ -128,8 +128,7 @@ class Pancake_sync_products extends AdminController
         redirect(admin_url('pancake_sync/pancake_sync_products'));
     }
 
-
-    // Các hàm getUniqueCustomers và setupPagination giữ nguyên, không cần thay đổi
+    // Hàm getUniqueCustomers và setupPagination
     private function getUniqueProducts(array $products): array
     {
         $unique_products = [];
@@ -143,13 +142,7 @@ class Pancake_sync_products extends AdminController
         return $unique_products;
     }
 
-    /**
-     * Configures and initializes the CodeIgniter Pagination library.
-     * Generates Bootstrap-compatible HTML markup.
-     * @param int $totalRows Total number of items
-     * @param int $pageSize  Number of items per page
-     * @return string The generated HTML links for pagination
-     */
+    // PHÂN TRANG THEO THƯ VIỆN SOURCE
     private function setupPagination(int $totalRows, int $pageSize): string
     {
         $config = [
