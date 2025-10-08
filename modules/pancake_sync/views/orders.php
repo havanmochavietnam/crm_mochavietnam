@@ -2726,7 +2726,7 @@
                                                                             <td class="tw-px-4 tw-py-3 tw-border tw-border-gray-300 tw-text-center">
                                                                                 <?= html_escape($name ?: ($isCombo ? 'COMBO' : '')) ?>
                                                                                 <?php if ($isCombo): ?>
-                                                                                    <span class="tw-ml-2 tw-text-xs tw-font-medium tw-bg-gray-100 tw-rounded-full tw-px-2 tw-py-0.5">Combo</span>
+                                                                                    <span class="tw-ml-2 tw-text-xs tw-font-medium tw-bg-green-100 tw-rounded-full tw-px-2 tw-py-0.5">Combo</span>
                                                                                 <?php endif; ?>
                                                                                 <?php if ($isGift): ?>
                                                                                     <span></span>
