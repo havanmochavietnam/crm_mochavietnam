@@ -627,17 +627,17 @@
                         </div>
                     </div>
                     <div class="metric">
-                        <div class="ico blue"><i class="fa-solid fa-boxes-stacked"></i></div>
-                        <div>
-                            <div class="label">Số lượng SP chốt</div>
-                            <div class="value num"><?= number_format($gross_product_count, 0, ',', '.'); ?></div>
-                        </div>
-                    </div>
-                    <div class="metric">
                         <div class="ico purple"><i class="fa-solid fa-sack-dollar"></i></div>
                         <div>
                             <div class="label">Doanh thu</div>
                             <div class="value money"><?= number_format($revenue_confirmed, 0, ',', '.'); ?></div>
+                        </div>
+                    </div>
+                    <div class="metric">
+                        <div class="ico blue"><i class="fa-solid fa-boxes-stacked"></i></div>
+                        <div>
+                            <div class="label">Số lượng SP chốt</div>
+                            <div class="value num"><?= number_format($product_quantity_confirmed ?? 0, 0, ',', '.'); ?></div>
                         </div>
                     </div>
                     <div class="metric">
@@ -1133,7 +1133,7 @@
         <div class="section">
             <div class="section-head">
                 <div class="section-title">
-                    <span class="icon"><i class="fa-solid fa-headset"></i></span>
+                    <span class="icon"><i class="fa-solid fa-phone"></i></span>
                     Hiệu suất theo Sale
                 </div>
                 <div class="section-sub">Gom theo nhân sự Sale · Doanh thu, doanh số, đơn chốt, SL hàng chốt, GTTB (lọc theo khoảng thời gian đã xác nhận).</div>

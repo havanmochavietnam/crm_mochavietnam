@@ -67,16 +67,9 @@ class Pancake_overview_products_model extends App_Model
     ";
     }
 
-
     /* ======================== Tổng doanh thu ======================== */
-    public function get_total_revenue_had_status_in_range(
-        string $start_date,
-        string $end_date,
-        int $status = 1, // giữ để tương thích, KHÔNG dùng nữa
-        array $exclude_sources = ['Tiktok', 'Shopee', 'CTV'],
-        bool $exclude_gifts = true, // giữ để tương thích, KHÔNG dùng
-        string $tz_offset_sql = 'INTERVAL 7 HOUR' // giữ để tương thích, KHÔNG dùng
-    ): float {
+    public function get_total_revenue_had_status_in_range(string $start_date, string $end_date, array $exclude_sources = ['Tiktok', 'Shopee', 'CTV']): float
+    {
         $orders  = db_prefix() . 'pancake_orders';
 
         $startDT = $start_date . ' 00:00:00';
@@ -125,17 +118,8 @@ class Pancake_overview_products_model extends App_Model
     }
 
     /* ======================== Tổng thể sản phẩm lẻ(có lọc ≥ lần 2) ======================== */
-    public function get_product_revenue_breakdown(
-        string $start_date,
-        string $end_date,
-        int $status = 1,                                   // giữ để tương thích, KHÔNG dùng
-        array $exclude_sources = ['Tiktok', 'Shopee', 'Affiliate'],
-        bool $exclude_gifts = true,                        // giữ để tương thích, KHÔNG dùng
-        string $tz_offset_sql = 'INTERVAL 7 HOUR',         // giữ để tương thích, KHÔNG dùng
-        bool $exclude_first = false,
-        int $limit = 100,
-        int $offset = 0
-    ): array {
+    public function get_product_revenue_breakdown(string $start_date, string $end_date, array $exclude_sources = ['Tiktok', 'Shopee', 'Affiliate'], bool $exclude_first = false, int $limit = 100, int $offset = 0): array
+    {
         $orders  = db_prefix() . 'pancake_orders';
         $details = db_prefix() . 'pancake_order_details';
 
@@ -365,17 +349,8 @@ class Pancake_overview_products_model extends App_Model
 
 
     /* ======================== Tổng thể Combo (có lọc ≥ lần 2) ======================== */
-    public function get_combo_revenue_breakdown(
-        string $start_date,
-        string $end_date,
-        int $status = 1,                                   // giữ để tương thích, KHÔNG dùng
-        array $exclude_sources = ['Tiktok', 'Shopee', 'Affiliate'],
-        bool $exclude_gifts = true,                        // giữ để tương thích, KHÔNG dùng
-        string $tz_offset_sql = 'INTERVAL 7 HOUR',         // giữ để tương thích, KHÔNG dùng
-        bool $exclude_first = false,
-        int $limit = 100,
-        int $offset = 0
-    ): array {
+    public function get_combo_revenue_breakdown(string $start_date, string $end_date, array $exclude_sources = ['Tiktok', 'Shopee', 'Affiliate'], bool $exclude_first = false, int $limit = 100, int $offset = 0): array
+    {
         $orders  = db_prefix() . 'pancake_orders';
         $details = db_prefix() . 'pancake_order_details';
 
@@ -595,10 +570,7 @@ class Pancake_overview_products_model extends App_Model
     public function get_combo_repeat_rate_breakdown(
         string $start_date,
         string $end_date,
-        int $status = 1,
         array $exclude_sources = ['Tiktok', 'Shopee', 'CTV'],
-        bool $exclude_gifts = true,
-        string $tz_offset_sql = 'INTERVAL 7 HOUR',
         int $repeat_threshold = 2,
         int $limit = 100,
         int $offset = 0
@@ -609,70 +581,60 @@ class Pancake_overview_products_model extends App_Model
         $startDT = $start_date . ' 00:00:00';
         $endDT   = $end_date   . ' 23:59:59';
 
+        // Nguồn cần loại (để chống rỗng)
         $exclude_sources = array_values(array_filter($exclude_sources, fn($x) => $x !== null && $x !== ''));
         if (empty($exclude_sources)) $exclude_sources = ['__NO_SOURCE__'];
         $ph = $this->placeholders(count($exclude_sources));
 
+        // Chỉ lấy combo, KHÔNG loại quà tặng (is_gift) nữa
         $whereCombo = "d.is_combo = 1";
-        if ($exclude_gifts) $whereCombo .= " AND (d.is_gift IS NULL OR d.is_gift = 0)";
 
-        $nameKey = $this->_name_key_expr('d');
-        $custKey = $this->_customer_key_expr();
+        $nameKey = $this->_name_key_expr('d');   // khóa sản phẩm (đã có sẵn trong model của bạn)
+        $custKey = $this->_customer_key_expr();  // khóa khách hàng (đã có sẵn trong model của bạn)
 
         $sql = "
-            WITH c AS (
-                SELECT po2.pancake_order_id,
-                       MAX(DATE_ADD(h.updated_at, {$tz_offset_sql})) AS confirmed_at
-                FROM " . db_prefix() . "pancake_orders po2
-                JOIN JSON_TABLE(
-                    CASE WHEN JSON_VALID(po2.data) THEN po2.data ELSE JSON_ARRAY() END,
-                    '$.status_history[*]'
-                    COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                ) h ON h.status = ?
-                GROUP BY po2.pancake_order_id
-            ),
-            base AS (
-                SELECT
-                    {$nameKey} AS product_key,
-                    MIN(COALESCE(d.product_name, '')) AS product_name,
-                    o.pancake_order_id,
-                    {$custKey} AS customer_key
-                FROM {$orders} o
-                JOIN c ON c.pancake_order_id = o.pancake_order_id
-                JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
-                WHERE JSON_VALID(o.data) = 1
-                  AND c.confirmed_at BETWEEN ? AND ?
-                  AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
-                  AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
-                  AND {$whereCombo}
-                  AND {$custKey} IS NOT NULL
-                GROUP BY {$nameKey}, o.pancake_order_id, {$custKey}
-            ),
-            agg AS (
-                SELECT product_key, product_name, customer_key,
-                       COUNT(DISTINCT pancake_order_id) AS order_cnt
-                FROM base
-                GROUP BY product_key, product_name, customer_key
-            )
+        WITH base AS (
             SELECT
-                NULL AS product_id,
-                MIN(product_name) AS product_name,
-                COUNT(*) AS unique_buyers,
-                SUM(CASE WHEN order_cnt >= ? THEN 1 ELSE 0 END) AS repeat_buyers,
-                CASE
-                    WHEN COUNT(*) > 0
-                        THEN CAST(SUM(CASE WHEN order_cnt >= ? THEN 1 ELSE 0 END) AS DECIMAL(18,6))
-                             / CAST(COUNT(*) AS DECIMAL(18,6))
-                    ELSE 0
-                END AS repeat_rate
-            FROM agg
-            GROUP BY product_key
-            ORDER BY repeat_rate DESC, unique_buyers DESC
-            LIMIT ? OFFSET ?
-        ";
+                {$nameKey} AS product_key,
+                MIN(COALESCE(d.product_name, '')) AS product_name,
+                o.pancake_order_id,
+                {$custKey} AS customer_key
+            FROM {$orders} o
+            JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
+            WHERE JSON_VALID(o.data) = 1
+              AND o.time_status_submitted BETWEEN ? AND ?
+              AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
+              AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
+              AND {$whereCombo}
+              AND {$custKey} IS NOT NULL
+            GROUP BY {$nameKey}, o.pancake_order_id, {$custKey}
+        ),
+        agg AS (
+            SELECT
+                product_key, product_name, customer_key,
+                COUNT(DISTINCT pancake_order_id) AS order_cnt
+            FROM base
+            GROUP BY product_key, product_name, customer_key
+        )
+        SELECT
+            NULL AS product_id,
+            MIN(product_name) AS product_name,
+            COUNT(*) AS unique_buyers,
+            SUM(CASE WHEN order_cnt >= ? THEN 1 ELSE 0 END) AS repeat_buyers,
+            CASE
+                WHEN COUNT(*) > 0 THEN
+                    CAST(SUM(CASE WHEN order_cnt >= ? THEN 1 ELSE 0 END) AS DECIMAL(18,6))
+                    / CAST(COUNT(*) AS DECIMAL(18,6))
+                ELSE 0
+            END AS repeat_rate
+        FROM agg
+        GROUP BY product_key
+        ORDER BY repeat_rate DESC, unique_buyers DESC
+        LIMIT ? OFFSET ?
+    ";
 
         $bind = array_merge(
-            [$status, $startDT, $endDT],
+            [$startDT, $endDT],
             $exclude_sources,
             [$repeat_threshold, $repeat_threshold, (int)$limit, (int)$offset]
         );
@@ -689,8 +651,10 @@ class Pancake_overview_products_model extends App_Model
             $r['product_name']  = $r['product_name'] ?? '';
         }
         unset($r);
+
         return $rows;
     }
+
 
     public function get_combo_repeat_rate_overall(
         string $start_date,
@@ -774,64 +738,12 @@ class Pancake_overview_products_model extends App_Model
     /** Hôm nay */
     public function get_total_revenue_confirmed_today_from_details(
         array $exclude_sources = ['Tiktok', 'Shopee', 'Affiliate'],
-        string $tz_offset_sql = 'INTERVAL 7 HOUR'
     ): float {
         $today = date('Y-m-d');
         return $this->get_total_revenue_had_status_in_range(
             $today,
             $today,
-            1,
-            $exclude_sources,
-            true,
-            $tz_offset_sql
+            $exclude_sources
         );
-    }
-
-    /** Tuỳ chọn: số đơn distinct theo SP (non-combo) */
-    public function get_product_order_counts_distinct(
-        $start_date,
-        $end_date,
-        $status_val = 1,
-        $exclude_channels = [],
-        $exclude_gifts = true,
-        $tz_shift = 'INTERVAL 7 HOUR'
-    ) {
-        $orders  = db_prefix() . 'pancake_orders';
-        $details = db_prefix() . 'pancake_order_details';
-        $startDT = $start_date . ' 00:00:00';
-        $endDT   = $end_date   . ' 23:59:59';
-
-        $chPlace = '';
-        $bind = [$status_val, $startDT, $endDT];
-        if (!empty($exclude_channels)) {
-            $chPlace = $this->placeholders(count($exclude_channels));
-            $bind = array_merge($bind, $exclude_channels);
-        }
-
-        $sql = "
-            SELECT od.product_id,
-                   MIN(od.product_name) AS product_name,
-                   COUNT(DISTINCT po.pancake_order_id) AS orders
-            FROM {$details} od
-            JOIN {$orders} po ON po.pancake_order_id = od.pancake_order_id
-            JOIN (
-                SELECT po2.pancake_order_id
-                FROM {$orders} po2
-                JOIN JSON_TABLE(
-                    po2.data,'$.status_history[*]'
-                    COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                ) h ON h.status = ?
-                WHERE DATE_ADD(h.updated_at, {$tz_shift}) BETWEEN ? AND ?
-                GROUP BY po2.pancake_order_id
-            ) hr ON hr.pancake_order_id = po.pancake_order_id
-            WHERE JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.status_name')) NOT IN ('canceled','returned','returning')
-              AND od.is_combo = 0
-              " . ($exclude_gifts ? " AND (od.is_gift IS NULL OR od.is_gift = 0)" : "") . "
-              " . (!empty($exclude_channels) ? " AND JSON_UNQUOTE(JSON_EXTRACT(po.data, '$.order_sources_name')) NOT IN ({$chPlace})" : "") . "
-            GROUP BY od.product_id
-        ";
-
-        $q = $this->db->query($sql, $bind);
-        return is_object($q) ? ($q->result_array() ?: []) : [];
     }
 }

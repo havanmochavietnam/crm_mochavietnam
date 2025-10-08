@@ -20,21 +20,15 @@ class Pancake_overview_products extends AdminController
         $total_revenue = $this->overview->get_total_revenue_had_status_in_range(
             $date_from,
             $date_to,
-            1,
             ['Tiktok', 'Shopee', 'Affiliate'],
-            false,
-            'INTERVAL 7 HOUR'
         );
 
         // SẢN PHẨM (non-combo) — có lọc ≥ lần 2 nếu rep_only = true
         $products_metrics = $this->overview->get_product_revenue_breakdown(
             $date_from,
             $date_to,
-            1,
             ['Tiktok', 'Shopee', 'Affiliate'],
-            true,
-            'INTERVAL 7 HOUR',
-            $rep_only,     // <--- toggle
+            $rep_only,
             100,
             0
         );
@@ -46,11 +40,8 @@ class Pancake_overview_products extends AdminController
         $combos_revenue = $this->overview->get_combo_revenue_breakdown(
             $date_from,
             $date_to,
-            1,
             ['Tiktok', 'Shopee', 'Affiliate'],
-            true,
-            'INTERVAL 7 HOUR',
-            $rep_only,     // <--- toggle
+            $rep_only,
             100,
             0
         );
@@ -99,10 +90,7 @@ class Pancake_overview_products extends AdminController
             $repeat_rows = $this->overview->get_combo_repeat_rate_breakdown(
                 $date_from,
                 $date_to,
-                1,
                 ['Tiktok', 'Shopee', 'Affiliate'],
-                true,
-                'INTERVAL 7 HOUR',
                 2,
                 10000,
                 0

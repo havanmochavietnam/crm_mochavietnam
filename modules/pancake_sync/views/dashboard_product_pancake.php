@@ -276,7 +276,6 @@
                   <th class="sticky text-right" style="width:11%;">AOV</th>
                   <th class="sticky text-right" style="width:9%;">Tỷ lệ mua lại</th>
                   <th class="sticky text-right" style="width:9%;">TG mua lại TB (ngày)</th>
-                  <th class="sticky text-left" style="width:20%;">Mã đơn hàng</th>
                 </tr>
               </thead>
               <tbody>
@@ -318,7 +317,6 @@
                       <td class="product-value"><strong><?= number_format($aov, 0, ',', '.'); ?></strong></td>
                       <td class="product-value"><strong><?= is_null($rate) ? '—' : (number_format($rate, 2, ',', '.') . '%'); ?></strong></td>
                       <td class="product-value"><strong><?= is_null($avgd) ? '—' : number_format($avgd, 0, ',', '.'); ?></strong></td>
-                      <td class="product-value text-left"><small><?= htmlspecialchars($order_ids, ENT_QUOTES, 'UTF-8'); ?></small></td>
                     </tr>
                   <?php endforeach; ?>
                 <?php else: ?>
@@ -334,7 +332,6 @@
                   <th class="product-value"><strong><?= number_format($total_products_orders, 0, ',', '.'); ?></strong></th>
                   <th class="product-value"><strong><?= ($total_revenue > 0) ? number_format(($total_products_revenue * 100 / $total_revenue), 2, ',', '.') . '%' : '0%'; ?></strong></th>
                   <th class="product-value"><strong><?= ($total_products_orders > 0) ? number_format(($total_products_revenue / $total_products_orders), 0, ',', '.') : '—'; ?></strong></th>
-                  <th class="product-value"><strong>—</strong></th>
                   <th class="product-value"><strong>—</strong></th>
                   <th class="product-value"><strong>—</strong></th>
                 </tr>
