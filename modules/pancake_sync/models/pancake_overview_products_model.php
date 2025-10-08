@@ -659,10 +659,7 @@ class Pancake_overview_products_model extends App_Model
     public function get_combo_repeat_rate_overall(
         string $start_date,
         string $end_date,
-        int $status = 1,
         array $exclude_sources = ['Tiktok', 'Shopee', 'Affiliate'],
-        bool $exclude_gifts = true,
-        string $tz_offset_sql = 'INTERVAL 7 HOUR',
         int $repeat_threshold = 2
     ): array {
         $orders  = db_prefix() . 'pancake_orders';
@@ -671,79 +668,62 @@ class Pancake_overview_products_model extends App_Model
         $startDT = $start_date . ' 00:00:00';
         $endDT   = $end_date   . ' 23:59:59';
 
+        // Chuẩn bị danh sách nguồn loại bỏ
         $exclude_sources = array_values(array_filter($exclude_sources, fn($x) => $x !== null && $x !== ''));
         if (empty($exclude_sources)) $exclude_sources = ['__NO_SOURCE__'];
         $ph = $this->placeholders(count($exclude_sources));
 
+        // KHÔNG loại quà tặng: chỉ cần combo
         $whereCombo = "d.is_combo = 1";
-        if ($exclude_gifts) $whereCombo .= " AND (d.is_gift IS NULL OR d.is_gift = 0)";
 
+        // Khóa khách hàng hợp nhất (bạn đã có trong model)
         $custKey = $this->_customer_key_expr();
 
         $sql = "
-            WITH c AS (
-                SELECT po2.pancake_order_id,
-                       MAX(DATE_ADD(h.updated_at, {$tz_offset_sql})) AS confirmed_at
-                FROM {$orders} po2
-                JOIN JSON_TABLE(
-                    CASE WHEN JSON_VALID(po2.data) THEN po2.data ELSE JSON_ARRAY() END,
-                    '$.status_history[*]'
-                    COLUMNS (status INT PATH '$.status', updated_at DATETIME PATH '$.updated_at')
-                ) h ON h.status = ?
-                GROUP BY po2.pancake_order_id
-            ),
-            base AS (
-                SELECT
-                    d.product_id,
-                    o.pancake_order_id,
-                    {$custKey} AS customer_key
-                FROM {$orders} o
-                JOIN c ON c.pancake_order_id = o.pancake_order_id
-                JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
-                WHERE JSON_VALID(o.data) = 1
-                  AND c.confirmed_at BETWEEN ? AND ?
-                  AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
-                  AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
-                  AND {$whereCombo}
-                  AND {$custKey} IS NOT NULL
-            ),
-            agg AS (
-                SELECT product_id, customer_key,
-                       COUNT(DISTINCT pancake_order_id) AS order_cnt
-                FROM base
-                GROUP BY product_id, customer_key
-            )
+        WITH base AS (
+            /* Dùng time_status_submitted thay cho status history; DISTINCT để tránh trùng dòng chi tiết trong cùng đơn */
+            SELECT DISTINCT
+                d.product_id,
+                o.pancake_order_id,
+                {$custKey} AS customer_key
+            FROM {$orders} o
+            JOIN {$details} d ON d.pancake_order_id = o.pancake_order_id
+            WHERE JSON_VALID(o.data) = 1
+              AND o.time_status_submitted BETWEEN ? AND ?
+              AND (o.status_name NOT IN ('canceled','returned','returning') OR o.status_name IS NULL)
+              AND (o.order_sources_name NOT IN ({$ph}) OR o.order_sources_name IS NULL)
+              AND {$whereCombo}
+              AND {$custKey} IS NOT NULL
+        ),
+        agg AS (
+            /* Đếm số ĐƠN (distinct) theo (product_id, customer_key) */
             SELECT
-                COUNT(*) AS unique_customer_combo_pairs,
-                SUM(CASE WHEN order_cnt >= ? THEN 1 ELSE 0 END) AS repeat_customer_combo_pairs,
-                CASE
-                    WHEN COUNT(*) > 0
-                        THEN CAST(SUM(CASE WHEN order_cnt >= ? THEN 1 ELSE 0 END) AS DECIMAL(18,6))
-                             / CAST(COUNT(*) AS DECIMAL(18,6))
-                    ELSE 0
-                END AS repeat_rate
-            FROM agg
-        ";
+                product_id,
+                customer_key,
+                COUNT(DISTINCT pancake_order_id) AS order_cnt
+            FROM base
+            GROUP BY product_id, customer_key
+        )
+        SELECT
+            COUNT(*) AS unique_customer_combo_pairs,
+            SUM(CASE WHEN order_cnt >= ? THEN 1 ELSE 0 END) AS repeat_customer_combo_pairs,
+            CASE
+                WHEN COUNT(*) > 0 THEN
+                    CAST(SUM(CASE WHEN order_cnt >= ? THEN 1 ELSE 0 END) AS DECIMAL(18,6))
+                    / CAST(COUNT(*) AS DECIMAL(18,6))
+                ELSE 0
+            END AS repeat_rate
+        FROM agg
+    ";
 
-        $bind = array_merge([$status, $startDT, $endDT], $exclude_sources, [$repeat_threshold, $repeat_threshold]);
-        $row  = $this->db->query($sql, $bind)->row_array() ?: [];
+        $bind = array_merge([$startDT, $endDT], $exclude_sources, [$repeat_threshold, $repeat_threshold]);
+
+        $row = $this->db->query($sql, $bind)->row_array() ?: [];
 
         return [
             'unique_customer_combo_pairs' => (int)($row['unique_customer_combo_pairs'] ?? 0),
             'repeat_customer_combo_pairs' => (int)($row['repeat_customer_combo_pairs'] ?? 0),
             'repeat_rate'                 => (float)($row['repeat_rate'] ?? 0),
         ];
-    }
-
-    /** Hôm nay */
-    public function get_total_revenue_confirmed_today_from_details(
-        array $exclude_sources = ['Tiktok', 'Shopee', 'Affiliate'],
-    ): float {
-        $today = date('Y-m-d');
-        return $this->get_total_revenue_had_status_in_range(
-            $today,
-            $today,
-            $exclude_sources
-        );
     }
 }

@@ -133,10 +133,7 @@ class Pancake_overview_products extends AdminController
             $combo_repeat_overall = $this->overview->get_combo_repeat_rate_overall(
                 $date_from,
                 $date_to,
-                1,
                 ['Tiktok', 'Shopee', 'Affiliate'],
-                true,
-                'INTERVAL 7 HOUR',
                 2
             );
         }
