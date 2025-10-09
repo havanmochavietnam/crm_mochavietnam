@@ -10,7 +10,7 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
     $calls = [];
     $base = strtotime(date('Y-m-d 09:00:00'));
     for ($i = 1; $i <= 10; $i++) {
-        $ts = date('Y-m-d H:i:s', $base + ($i * 137)); // lệch nhau chút cho vui mắt
+        $ts = date('Y-m-d H:i:s', $base + ($i * 137));
         $status = ['Thành công','Nhỡ','Bận','Thất bại'][($i % 4)];
         $direction = ($i % 2 === 0) ? 'Inbound' : 'Outbound';
         $calls[] = [
@@ -25,11 +25,10 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
             'talk_duration'   => sprintf('00:0%d:%02d', ($i%6), ($i*7)%60),
             'total_duration'  => sprintf('00:%02d:%02d', 1+($i%5), ($i*11)%60),
             'call_id'         => 'CALL-2025-'.str_pad((string)$i, 6, '0', STR_PAD_LEFT),
-            // các cột mở rộng
             'direction'       => $direction,
             'agent'           => 'Agent #'.(($i%5)+1),
             'ring_seconds'    => (string)(2 + ($i%6)),
-            'queue_seconds'    => (string)(($i%4)*3),
+            'queue_seconds'   => (string)(($i%4)*3),
             'ended_by'        => ($status==='Thành công') ? 'Agent' : 'Hệ thống',
             'cost'            => (int)(850 + ($i%5)*120),
             'campaign'        => 'Chiến dịch Q'.(($i%3)+1),
@@ -43,7 +42,7 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
 ?>
 
 <?php init_head(); ?>
-<link rel="stylesheet" href="<?= module_dir_url('mbo_sync', 'assets/css/mbo_view.css'); ?>?v=<?= time(); ?>" />
+<link rel="stylesheet" href="<?= module_dir_url('call_sync', 'assets/css/call_sync.css'); ?>?v=<?= time(); ?>" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.7.0/styles/overlayscrollbars.min.css" />
 
 <div id="wrapper">
@@ -64,8 +63,7 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
               </div>
 
               <div class="header-actions">
-                <!-- Tìm kiếm nhanh theo từ khóa -->
-                <form action="<?= admin_url('pancake_sync/call_logs'); ?>" method="get" class="search-wrapper">
+                <form action="<?= admin_url('call_sync/call_logs'); ?>" method="get" class="search-wrapper">
                   <span class="search-icon"><i class="fa fa-search"></i></span>
                   <input type="text"
                          name="q"
@@ -75,15 +73,14 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
                   <button type="submit" class="search-button">Tìm kiếm</button>
                 </form>
 
-                <!-- Ví dụ nút đồng bộ / import -->
-                <a href="<?= admin_url('pancake_sync/call_logs/sync'); ?>" class="sync-button">
+                <a href="<?= admin_url('call_sync/call_logs/sync'); ?>" class="sync-button">
                   <i class="fa fa-refresh" aria-hidden="true"></i> Đồng bộ
                 </a>
               </div>
             </div>
 
-            <!-- Bộ lọc ngày & tham số -->
-            <form action="<?= admin_url('pancake_sync/call_logs'); ?>" method="get" class="filters-bar">
+            <!-- Bộ lọc -->
+            <form action="<?= admin_url('call_sync/call_logs'); ?>" method="get" class="filters-bar">
               <div class="filters-grid">
                 <div class="form-group">
                   <label>Từ ngày</label>
@@ -136,7 +133,7 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
 
                 <div class="filter-actions">
                   <button type="submit" class="btn btn-primary">Lọc</button>
-                  <a class="btn btn-outline" href="<?= admin_url('pancake_sync/call_logs'); ?>">Đặt lại</a>
+                  <a class="btn btn-outline" href="<?= admin_url('call_sync/call_logs'); ?>">Đặt lại</a>
                 </div>
               </div>
             </form>
@@ -146,7 +143,6 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
               <table class="table table-pancake table-bordered table-striped table-sticky">
                 <thead>
                   <tr>
-                    <!-- 2 cột trái sticky -->
                     <th class="sticky-col sticky-col-1 text-center">STT</th>
                     <th class="sticky-col sticky-col-2">Thời gian</th>
 
@@ -161,7 +157,6 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
                     <th>Thời lượng gọi</th>
                     <th>Mã cuộc gọi</th>
 
-                    <!-- cột mở rộng (5-10 cột) -->
                     <th>Hướng gọi</th>
                     <th>Agent</th>
                     <th>Ring (s)</th>
@@ -182,7 +177,6 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
                 ?>
                 <?php foreach ($calls as $row): ?>
                   <tr>
-                    <!-- 2 cột trái sticky -->
                     <td class="sticky-col sticky-col-1 text-center"><?= $stt++; ?></td>
                     <td class="sticky-col sticky-col-2"><?= date('d/m/Y H:i:s', strtotime($row['time'])) ?></td>
 
@@ -215,7 +209,6 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
                     <td class="text-right"><?= html_escape($row['total_duration']) ?></td>
                     <td><code><?= html_escape($row['call_id']) ?></code></td>
 
-                    <!-- mở rộng -->
                     <td><?= html_escape($row['direction']) ?></td>
                     <td><?= html_escape($row['agent']) ?></td>
                     <td class="text-right"><?= html_escape($row['ring_seconds']) ?></td>
@@ -262,8 +255,6 @@ if (!isset($calls) || !is_array($calls) || empty($calls)) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.7.0/browser/overlayscrollbars.browser.es6.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const { OverlayScrollbars } = OverlayScrollbarsGlobal;
-
   // Auto fill last 7 days nếu chưa có filter
   const s = document.querySelector('input[name="start_date"]');
   const e = document.querySelector('input[name="end_date"]');
@@ -276,8 +267,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const wrap = document.getElementById('scrollableTable');
-  if (wrap) {
-    OverlayScrollbars(wrap, { scrollbars: { theme: 'os-theme-dark' } });
+  if (wrap && typeof OverlayScrollbars !== 'undefined') {
+    try {
+      OverlayScrollbars(wrap, { scrollbars: { theme: 'os-theme-dark' } });
+    } catch (err) {
+      // không block nếu plugin gặp lỗi
+      console.warn('OverlayScrollbars init failed', err);
+    }
   }
 });
 </script>

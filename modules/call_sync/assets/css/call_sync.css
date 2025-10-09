@@ -1,0 +1,355 @@
+/* Layout container */
+#wrapper {
+  padding: 20px;
+}
+
+.card-modern {
+  border: 1px solid #e3e6f0;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  height: calc(100vh - 100px); /* Chiều cao tối đa bằng viewport */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-modern-body {
+  padding: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Quan trọng: ngăn chặn tràn */
+}
+
+/* Header (title + search) */
+.card-modern-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: nowrap;
+  flex-shrink: 0; /* Không bị co lại */
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.search-input {
+  width: 280px;
+  max-width: 38vw;
+}
+
+/* Filter form */
+.filters-bar {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin: 14px 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  flex-shrink: 0; /* Không bị co lại */
+}
+
+.filters-bar .form-group {
+  margin-bottom: 0;
+}
+
+/* Table container - QUAN TRỌNG: Thêm thanh cuộn */
+.table-container {
+  overflow: auto;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #e6e6e6;
+  flex: 1; /* Chiếm không gian còn lại */
+  max-height: calc(100vh - 350px); /* Giới hạn chiều cao tối đa */
+  position: relative;
+}
+
+/* Sticky table */
+.table-sticky {
+  border-collapse: separate;
+  border-spacing: 0;
+  min-width: 1200px;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.sticky-col {
+  position: sticky;
+  position: -webkit-sticky;
+  left: 0;
+  background: #fff;
+  z-index: 3;
+  border-right: 1px solid #e9ecef;
+}
+
+.sticky-col-1 {
+  width: 60px;
+  left: 0;
+  text-align: center;
+}
+
+.sticky-col-2 {
+  width: 180px;
+  left: 60px;
+}
+
+.table-sticky thead .sticky-col {
+  z-index: 5;
+  background: #f8f9fc; /* Giữ màu nền khi sticky */
+}
+
+.table th,
+.table td {
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 10px 12px;
+}
+
+.table th {
+  background: #f8f9fc;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+/* Style cho type_call */
+.call-direction-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  min-width: 80px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.call-inbound {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  border: 1px solid #1e7e34;
+}
+
+.call-outbound {
+  background: linear-gradient(135deg, #007bff, #17a2b8);
+  color: white;
+  border: 1px solid #0056b3;
+}
+
+/* Style cho trạng thái cuộc gọi */
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  min-width: 100px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.status-success {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+  border: 1px solid #1e7e34;
+}
+
+.status-no-answer {
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  color: white;
+  border: 1px solid #d39e00;
+}
+
+.status-busy {
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+  color: white;
+  border: 1px solid #545b62;
+}
+
+.status-default {
+  background: linear-gradient(135deg, #e9ecef, #dee2e6);
+  color: #495057;
+  border: 1px solid #ced4da;
+}
+
+.badge-audio {
+  background-color: #5bc0de;
+  color: #fff;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.badge-audio:hover {
+  background-color: #31b0d5;
+}
+
+/* audio popup */
+.audio-popup {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.audio-popup-content {
+  background: #fff;
+  padding: 18px 20px;
+  border-radius: 12px;
+  width: 380px;
+  max-width: 96%;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.audio-popup-content h5 {
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.close-popup {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+  background: none;
+  border: none;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-popup:hover {
+  color: #000;
+  background: #f8f9fa;
+  border-radius: 50%;
+}
+
+/* Pagination */
+.pagination-container {
+  flex-shrink: 0; /* Không bị co lại */
+  margin-top: 15px;
+}
+
+/* Custom scrollbar cho table container */
+.table-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* responsive adjustments */
+@media (max-width: 900px) {
+  .card-modern {
+    height: auto; /* Trên mobile không cố định chiều cao */
+    min-height: calc(100vh - 100px);
+  }
+  
+  .card-modern-header {
+    flex-wrap: wrap;
+  }
+
+  .header-actions .search-input {
+    width: 100%;
+    max-width: none;
+  }
+
+  .filters-bar {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .sticky-col-2 {
+    display: none;
+  }
+
+  .call-direction-badge {
+    padding: 4px 10px;
+    font-size: 11px;
+    min-width: 70px;
+  }
+
+  .status-badge {
+    padding: 4px 10px;
+    font-size: 11px;
+    min-width: 80px;
+  }
+  
+  .table-container {
+    max-height: none; /* Trên mobile không giới hạn chiều cao */
+  }
+}
+
+@media (max-width: 768px) {
+  #wrapper {
+    padding: 10px;
+  }
+  
+  .card-modern-body {
+    padding: 12px;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+}
+
+/* Loading state */
+.table-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Empty state */
+.table-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
