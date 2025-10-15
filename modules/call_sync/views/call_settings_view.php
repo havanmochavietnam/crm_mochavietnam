@@ -18,36 +18,81 @@
               <div class="col-md-6">
                 <div class="card-modern">
                   <div class="card-modern-body">
-                    <form id="call-sync-settings-form" method="post" action="<?= admin_url('call_sync/call_settings/save'); ?>">
-                      <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
-                        value="<?= $this->security->get_csrf_hash(); ?>">
+                    <form id="call-sync-settings-form" method="post" action="<?= admin_url('call_sync/call_settings/save'); ?>" autocomplete="off">
+                      <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+
+                      <h5 class="tw-mb-3"><i class="fa fa-sliders text-primary"></i> Cấu hình dịch vụ</h5>
 
                       <div class="form-group">
                         <label for="base_url">Base URL</label>
-                        <input type="text" id="base_url" name="base_url" class="form-control"
-                          value="<?= html_escape($token->base_url ?? ''); ?>"
-                          placeholder="">
+                        <input type="text" id="base_url" name="base_url" class="form-control" value="<?= html_escape($token->base_url ?? ''); ?>">
                       </div>
 
                       <div class="form-group">
                         <label for="service_name">Service Name</label>
-                        <input type="text" id="service_name" name="service_name" class="form-control"
-                          value="<?= html_escape($token->service_name ?? ''); ?>"
-                          placeholder="">
+                        <input type="text" id="service_name" name="service_name" class="form-control" value="<?= html_escape($token->service_name ?? ''); ?>">
                       </div>
 
                       <div class="form-group">
                         <label for="auth_user">Auth User</label>
-                        <input type="text" id="auth_user" name="auth_user" class="form-control"
-                          value="<?= html_escape($token->auth_user ?? ''); ?>"
-                          placeholder="">
+                        <input type="text" id="auth_user" name="auth_user" class="form-control" value="<?= html_escape($token->auth_user ?? ''); ?>" autocomplete="off">
                       </div>
 
                       <div class="form-group">
                         <label for="auth_key">Auth Key</label>
-                        <input type="text" id="auth_key" name="auth_key" class="form-control"
-                          value="<?= html_escape($token->auth_key ?? ''); ?>"
-                          placeholder="">
+                        <div class="input-group">
+                          <input type="password" id="auth_key" name="auth_key" class="form-control" value="<?= html_escape($token->auth_key ?? ''); ?>" autocomplete="new-password">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="toggleAuthKey" tabindex="-1" aria-label="Hiện/ẩn Auth Key">
+                              <i class="fa fa-eye"></i>
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+
+                      <hr>
+                      <h5 class="tw-mb-3"><i class="fa fa-feather text-info"></i> Token Lark</h5>
+
+                      <div class="form-group">
+                        <label for="lark_auth_endpoint">AuthEndpoint</label>
+                        <input type="text" id="lark_auth_endpoint" name="lark_auth_endpoint" class="form-control"
+                          value="<?= html_escape($token->lark_auth_endpoint ?? 'https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal/'); ?>"
+                          placeholder="https://open.larksuite.com/open-apis/auth/v3/tenant_access_token/internal/">
+                        <small class="text-muted">Endpoint để lấy <code>tenant_access_token</code>.</small>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="lark_app_id">AppId</label>
+                        <input type="text" id="lark_app_id" name="lark_app_id" class="form-control" value="<?= html_escape($token->lark_app_id ?? ''); ?>" placeholder="cli_xxxxxxxxxxxxxxxxx" autocomplete="off">
+                      </div>
+
+                      <div class="form-group">
+                        <label for="lark_app_secret">AppSecret</label>
+                        <div class="input-group">
+                          <input type="password" id="lark_app_secret" name="lark_app_secret" class="form-control" value="<?= html_escape($token->lark_app_secret ?? ''); ?>" placeholder="************************" autocomplete="new-password">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" id="toggleSecret" tabindex="-1" aria-label="Hiện/ẩn AppSecret">
+                              <i class="fa fa-eye"></i>
+                            </button>
+                          </span>
+                        </div>
+                        <small class="text-muted">Nhấn biểu tượng mắt để hiện/ẩn giá trị.</small>
+                      </div>
+
+                      <!-- LƯU CẢ BANG BITable TARGET TRONG FORM luôn -->
+                      <hr>
+                      <h5 class="tw-mb-3"><i class="fa fa-table text-info"></i> Bitable Target</h5>
+                      <div class="form-group">
+                        <label for="bitable_app_token">App Token</label>
+                        <input type="text" id="bitable_app_token" name="bitable_app_token" class="form-control"
+                          value="<?= html_escape($token->bitable_app_token ?: 'X20AblnVNaP6mbseIIplCo7RgWq'); ?>"
+                          placeholder="Bitable App Token">
+                      </div>
+                      <div class="form-group">
+                        <label for="bitable_table_id">Table ID</label>
+                        <input type="text" id="bitable_table_id" name="bitable_table_id" class="form-control"
+                          value="<?= html_escape($token->bitable_table_id ?: 'tblRA8n77fO2eKxF'); ?>"
+                          placeholder="Bitable Table ID">
                       </div>
 
                       <button type="submit" class="btn btn-primary">Lưu cài đặt</button>
@@ -56,18 +101,18 @@
                 </div>
               </div>
 
-              <!-- CỘT PHẢI: ĐỒNG BỘ NHANH + LỊCH SỬ -->
+              <!-- CỘT PHẢI: ĐẨY LARK + TRẠNG THÁI + LỊCH SỬ -->
               <div class="col-md-6">
                 <div class="card-modern">
                   <div class="card-modern-body">
-                    <h5><i class="fa fa-sync text-success"></i> Công cụ đồng bộ</h5>
-                    <p class="text-muted tw-mt-2">
-                      Thực hiện đồng bộ dữ liệu ngay lập tức giữa hệ thống của bạn và MBO API.
-                    </p>
+                    <h5 class="tw-mb-3"><i class="fa fa-cloud-upload text-info"></i> Đồng bộ & đẩy lên Lark</h5>
+                    <p class="text-muted tw-mt-2">Hệ thống sẽ lưu cấu hình (lấy mới tenant token) rồi mới tiến hành đồng bộ và đẩy lên Lark.</p>
 
-                    <button type="button" id="btnSyncNow" class="btn btn-success tw-mt-2">
-                      <i class="fa fa-refresh"></i> Đồng bộ ngay
+                    <button type="button" id="btnSyncNowPushLark" class="btn btn-info">
+                      <i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark
                     </button>
+
+                    <div id="lock-status" class="tw-mt-2 text-muted"></div>
 
                     <hr>
                     <h5><i class="fa fa-history text-info"></i> Lịch sử đồng bộ gần đây</h5>
@@ -77,6 +122,9 @@
                           <div class="log-item <?= $log['status'] == 'success' ? 'text-success' : 'text-danger'; ?>">
                             [<?= _dt($log['date']); ?>]
                             <?= ucfirst($log['sync_type']); ?> - <?= $log['records_synced']; ?> bản ghi (<?= $log['status']; ?>)
+                            <?php if (!empty($log['message'])): ?>
+                              <div class="text-muted"><?= html_escape($log['message']); ?></div>
+                            <?php endif; ?>
                           </div>
                         <?php endforeach; ?>
                       <?php else: ?>
@@ -105,53 +153,55 @@
     background-color: #fff;
     transition: all 0.2s ease;
   }
-
-  .card-modern:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  }
-
-  .card-modern-body {
-    padding: 25px;
-  }
-
+  .card-modern:hover { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); }
+  .card-modern-body { padding: 25px; }
   .sync-log-box {
     background: #f8f9fa;
     border-radius: 6px;
     padding: 10px 15px;
-    max-height: 220px;
+    max-height: 260px;
     overflow-y: auto;
     font-size: 13px;
     border: 1px solid #e1e1e1;
   }
-
-  .log-item {
-    border-bottom: 1px solid #e1e1e1;
-    padding: 6px 0;
-  }
-
-  .log-item:last-child {
-    border-bottom: none;
-  }
+  .log-item { border-bottom: 1px solid #e1e1e1; padding: 6px 0; }
+  .log-item:last-child { border-bottom: none; }
+  .tw-mb-3 { margin-bottom: 12px; }
+  .tw-mt-2 { margin-top: 8px; }
 </style>
 
 <script>
   $(function() {
+    // Toggle secret inputs
+    $('#toggleSecret').on('click', function () {
+      const $input = $('#lark_app_secret');
+      const isPwd = $input.attr('type') === 'password';
+      $input.attr('type', isPwd ? 'text' : 'password');
+      $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+    });
+    $('#toggleAuthKey').on('click', function () {
+      const $input = $('#auth_key');
+      const isPwd = $input.attr('type') === 'password';
+      $input.attr('type', isPwd ? 'text' : 'password');
+      $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+    });
 
-    // Gửi form lưu token
+    // Submit form (save only)
     $('#call-sync-settings-form').on('submit', function(e) {
       e.preventDefault();
       const form = $(this);
       $.post(form.attr('action'), form.serialize())
         .done(function(res) {
-          // nếu server trả JSON string
           let data = res;
-          try {
-            data = (typeof res === 'string') ? JSON.parse(res) : res;
-          } catch (e) {}
+          try { data = (typeof res === 'string') ? JSON.parse(res) : res; } catch (e) {}
           if (data.csrf_name && data.csrf_hash) {
             $('input[name="' + data.csrf_name + '"]').val(data.csrf_hash);
           }
-          alert_float('success', 'Đã lưu cài đặt!');
+          if (data.success) {
+            alert_float('success', data.message || 'Đã lưu cài đặt!');
+          } else {
+            alert_float('danger', data.message || 'Lưu thất bại');
+          }
         })
         .fail(function(xhr) {
           if (xhr.status === 419 || xhr.status === 403) {
@@ -162,36 +212,90 @@
         });
     });
 
-    // Giả lập đồng bộ
-    $('#btnSyncNow').on('click', function() {
+    // Hiển thị trạng thái lock
+    function renderLocks(locks) {
+      const m = locks['manual_push_lark'];
+      const cdb = locks['cron_sync_db'];
+      const clk = locks['cron_sync_lark'];
+      const fmt = (x) => x.locked ? `ĐANG CHẠY (đến ${x.locked_until})` : 'Rảnh';
+      $('#lock-status').html(
+        `<div><strong>Tiến trình thủ công:</strong> ${fmt(m)}</div>
+         <div><strong>Cron DB:</strong> ${fmt(cdb)}</div>
+         <div><strong>Cron Lark:</strong> ${fmt(clk)}</div>`
+      );
+    }
+    function pollLocks() {
+      $.get("<?= admin_url('call_sync/call_settings/lock_status'); ?>")
+        .done(function(res){
+          try { res = (typeof res === 'string') ? JSON.parse(res) : res; } catch(e){}
+          if (res && res.success && res.locks) renderLocks(res.locks);
+        });
+    }
+    pollLocks();
+    setInterval(pollLocks, 7000);
+
+    // Đồng bộ + đẩy Lark: LƯU TRƯỚC -> rồi mới sync
+    $('#btnSyncNowPushLark').on('click', function() {
       const $btn = $(this);
       const logBox = $('#sync-log');
       const time = new Date().toLocaleString();
 
-      $btn.prop('disabled', true).text('Đang đồng bộ...');
-      logBox.prepend(`<div class="log-item text-info temp-sync">[${time}] Đang đồng bộ dữ liệu...</div>`);
+      // Build payload SAVE (lưu cả Bitable target + get tenant token)
+      const saveData = $('#call-sync-settings-form').serialize();
 
-      $.post("<?= admin_url('call_sync/call_settings/sync_now'); ?>", {})
-        .done(function(res) {
-          try {
-            res = (typeof res === 'string') ? JSON.parse(res) : res;
-          } catch (e) {}
-          $('.temp-sync').remove();
-          if (res.success) {
-            logBox.prepend(`<div class="log-item text-success">[${time}] ✅ Đồng bộ hoàn tất - ${res.inserted || 0} bản ghi</div>`);
-            alert_float('success', 'Đã đồng bộ: ' + (res.inserted || 0) + ' bản ghi.');
-          } else {
-            logBox.prepend(`<div class="log-item text-danger">[${time}] ❌ Đồng bộ thất bại: ${res.message || 'Lỗi'}</div>`);
-            alert_float('danger', res.message || 'Đồng bộ thất bại');
+      $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang lưu & lấy token...');
+      logBox.prepend(`<div class="log-item text-info temp-sync-lark">[${time}] Đang lưu cấu hình & lấy token Lark...</div>`);
+
+      $.post("<?= admin_url('call_sync/call_settings/save'); ?>", saveData)
+        .done(function(res){
+          try { res = (typeof res === 'string') ? JSON.parse(res) : res; } catch(e){}
+
+          // update CSRF
+          if (res.csrf_name && res.csrf_hash) {
+            $('input[name="' + res.csrf_name + '"]').val(res.csrf_hash);
           }
+
+          if (!res.success) {
+            $('.temp-sync-lark').remove();
+            alert_float('danger', res.message || 'Lưu cấu hình thất bại');
+            $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
+            return;
+          }
+
+          // SAVE ok -> gọi sync_now_push_lark
+          $btn.html('<i class="fa fa-spinner fa-spin"></i> Đang đồng bộ & đẩy lên Lark...');
+          const appToken = $('#bitable_app_token').val().trim();
+          const tableId  = $('#bitable_table_id').val().trim();
+
+          $.post("<?= admin_url('call_sync/call_settings/sync_now_push_lark'); ?>", {
+            app_token: appToken,
+            table_id: tableId
+          })
+          .done(function(r2){
+            try { r2 = (typeof r2 === 'string') ? JSON.parse(r2) : r2; } catch(e){}
+            $('.temp-sync-lark').remove();
+            if (r2.success) {
+              logBox.prepend(`<div class="log-item text-success">[${time}] ✅ Đồng bộ xong: ${r2.inserted || 0} bản ghi, đẩy Lark: ${r2.pushed || 0} bản ghi</div>`);
+              alert_float('success', `Đã đẩy Lark: ${r2.pushed || 0} bản ghi`);
+            } else {
+              logBox.prepend(`<div class="log-item text-danger">[${time}] ❌ Lỗi đẩy Lark: ${r2.message || 'Lỗi'}</div>`);
+              alert_float('danger', r2.message || 'Đồng bộ + đẩy Lark thất bại');
+            }
+            pollLocks();
+          })
+          .fail(function(){
+            $('.temp-sync-lark').remove();
+            logBox.prepend(`<div class="log-item text-danger">[${time}] ❌ Lỗi gọi API đồng bộ + đẩy Lark.</div>`);
+            alert_float('danger', 'Lỗi gọi API đồng bộ + đẩy Lark');
+          })
+          .always(function(){
+            $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
+          });
         })
-        .fail(function() {
-          $('.temp-sync').remove();
-          logBox.prepend(`<div class="log-item text-danger">[${time}] ❌ Lỗi gọi API đồng bộ.</div>`);
-          alert_float('danger', 'Lỗi gọi API đồng bộ');
-        })
-        .always(function() {
-          $btn.prop('disabled', false).text('Đồng bộ ngay');
+        .fail(function(){
+          $('.temp-sync-lark').remove();
+          alert_float('danger', 'Lỗi gọi API lưu cấu hình');
+          $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
         });
     });
   });

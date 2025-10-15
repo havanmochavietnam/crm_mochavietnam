@@ -30,13 +30,25 @@ function callSyncModuleActivation()
         PRIMARY KEY (id)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
 
-    // Bảng lưu token
+    // Bảng lưu token dịch vụ tổng đài
     $CI->db->query("CREATE TABLE IF NOT EXISTS {$prefix}call_token (
         id INT(11) NOT NULL AUTO_INCREMENT,
         base_url VARCHAR(1000) NOT NULL,
         service_name VARCHAR(255) DEFAULT NULL,
         auth_user VARCHAR(255) DEFAULT NULL,
         auth_key VARCHAR(255) DEFAULT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;");
+
+    $CI->db->query("CREATE TABLE IF NOT EXISTS {$prefix}call_lark_token (
+        id INT(11) NOT NULL AUTO_INCREMENT,
+        auth_endpoint VARCHAR(1000) NOT NULL,
+        app_id VARCHAR(255) NOT NULL,
+        app_secret VARCHAR(255) NOT NULL,
+        tenant_access_token VARCHAR(1024) DEFAULT NULL,
+        token_expires_at DATETIME DEFAULT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
@@ -78,6 +90,8 @@ function callSyncModuleUninstall()
 
     $CI->db->query("DROP TABLE IF EXISTS {$prefix}call_sync_logs");
     $CI->db->query("DROP TABLE IF EXISTS {$prefix}call_token");
+    // ✅ Drop bảng Lark (mới thêm)
+    $CI->db->query("DROP TABLE IF EXISTS {$prefix}call_lark_token");
     $CI->db->query("DROP TABLE IF EXISTS {$prefix}call_history");
 
     // remove options

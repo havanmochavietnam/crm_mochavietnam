@@ -187,3 +187,10 @@ $route['survey/(:num)/(:any)'] = 'surveys/participate/index/$1/$2';
 if (file_exists(APPPATH . 'config/my_routes.php')) {
     include_once(APPPATH . 'config/my_routes.php');
 }
+
+$route['call_cron']                = 'call_cron/index';
+$route['call_cron/refresh_token']  = 'call_cron/refresh_token';
+$route['call_cron/sync_db']        = 'call_cron/sync_db';
+$route['call_cron/sync_db/(:num)'] = 'call_cron/sync_db/$1';
+$route['call_cron/run']            = 'call_cron/run';
+$route['call_cron/run/(:num)']     = 'call_cron/run/$1';
