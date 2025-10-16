@@ -89,24 +89,6 @@ class Call_settings extends AdminController
         redirect(admin_url('call_sync/call_settings'));
     }
 
-    public function sync_now()
-    {
-        if (!has_permission('call_sync', '', 'view')) {
-            echo json_encode(['success' => false, 'message' => 'access_denied']);
-            return;
-        }
-
-        $opts = [];
-        if ($this->input->post('DateStart')) $opts['DateStart'] = $this->input->post('DateStart', true);
-        if ($this->input->post('DateEnd'))   $opts['DateEnd']   = $this->input->post('DateEnd', true);
-        if ($this->input->post('PageSize'))  $opts['PageSize']  = (int)$this->input->post('PageSize', true);
-        if ($this->input->post('maxPages'))  $opts['maxPages']  = (int)$this->input->post('maxPages', true);
-        $opts += ['DateStart' => '2025-08-01T00:00:00', 'DateEnd' => '2025-12-31T23:59:59'];
-
-        $res = $this->call_sync_model->sync_range($opts);
-        echo json_encode($res);
-    }
-
     public function sync_now_push_lark()
     {
         if (!has_permission('call_sync', '', 'view')) {
@@ -127,12 +109,11 @@ class Call_settings extends AdminController
         }
 
         try {
-            $opts = [];
-            if ($this->input->post('DateStart')) $opts['DateStart'] = $this->input->post('DateStart', true);
-            if ($this->input->post('DateEnd'))   $opts['DateEnd']   = $this->input->post('DateEnd', true);
-            if ($this->input->post('PageSize'))  $opts['PageSize']  = (int)$this->input->post('PageSize', true);
-            if ($this->input->post('maxPages'))  $opts['maxPages']  = (int)$this->input->post('maxPages', true);
-            $opts += ['DateStart' => '2025-08-01T00:00:00', 'DateEnd' => '2025-12-31T23:59:59'];
+            // Đồng bộ dữ liệu trong ngày hôm nay
+            $opts = [
+                'DateStart' => date('Y-m-d\T00:00:00'),
+                'DateEnd'   => date('Y-m-d\T23:59:59'),
+            ];
 
             // Target Lark
             $appToken = $this->input->post('app_token', true);
@@ -159,25 +140,12 @@ class Call_settings extends AdminController
                 'batch_size'      => 120,
                 'retry'           => ['times' => 3, 'sleep' => 2],
                 'datetime_format' => 'c',
-            ]);
+            ], 'manual');
 
             echo json_encode($res);
         } finally {
             $this->call_sync_model->release_job_lock($lockName);
         }
-    }
-
-    public function lock_status()
-    {
-        if (!has_permission('call_sync', '', 'view')) {
-            echo json_encode(['success' => false, 'message' => 'access_denied']);
-            return;
-        }
-        $locks = $this->call_sync_model->get_locks_status([
-            'manual_push_lark',
-            'cron_full_sync',
-        ]);
-        echo json_encode(['success'=>true,'locks'=>$locks]);
     }
 
     private function bitable_field_map_current(): array
@@ -197,74 +165,30 @@ class Call_settings extends AdminController
             'Tổng thời gian gọi'  => 'total_call_time',
         ];
     }
-    
+
     /**
      * =================================================================
-     * HÀM DÀNH CHO CRON JOB
-     * URL để gọi: your-domain.com/admin/call_sync/cron_run
+     * HÀM MỚI: Cung cấp log cho AJAX real-time
      * =================================================================
      */
-    public function cron_run()
+    public function fetch_logs_ajax()
     {
-        // (Tùy chọn) Dòng này để đảm bảo cron chỉ chạy được từ command line, tăng bảo mật.
-        // if (!is_cli()) {
-        //     echo "This script can only be accessed via the command line.";
-        //     return;
-        // }
-
-        $lockName = 'cron_full_sync';
-        // Khóa job trong 15 phút (900 giây) để tránh việc chạy chồng chéo
-        if (!$this->call_sync_model->acquire_job_lock($lockName, 900)) {
-            echo "Another full sync process is already running. Exiting.\n";
-            $this->call_sync_model->log_event('cron', 'skipped', 0, 'Job is locked');
+        if (!has_permission('call_sync', '', 'view')) {
+            echo json_encode([]); // Trả về mảng rỗng nếu không có quyền
             return;
         }
-
-        echo "Starting cron job: Full Sync (DB + Lark)...\n";
-        try {
-            // 1. Cấu hình khoảng thời gian cần đồng bộ
-            // Mặc định: đồng bộ dữ liệu của ngày hôm qua và hôm nay để không bỏ sót.
-            $opts = [
-                'DateStart' => date('Y-m-d\T00:00:00', strtotime('-1 day')),
-                'DateEnd'   => date('Y-m-d\T23:59:59'),
-                'PageSize'  => 500, // Kéo mỗi lần 500 bản ghi
-            ];
-
-            // 2. Lấy cấu hình Bitable target đã lưu trong DB
-            $target = $this->call_sync_model->get_bitable_target();
-            if (empty($target['app_token']) || empty($target['table_id'])) {
-                 $msg = "Bitable app_token or table_id is not configured.";
-                 echo $msg . "\n";
-                 $this->call_sync_model->log_event('cron', 'failed', 0, $msg);
-                 // Không return vội, vẫn giải phóng lock ở finally
-            } else {
-                // 3. Cấu hình cho việc đẩy dữ liệu lên Lark
-                $larkOpts = [
-                    'app_token'   => $target['app_token'],
-                    'table_id'    => $target['table_id'],
-                    'field_map'   => $this->bitable_field_map_current(),
-                    'field_types' => $this->useDisplayDuration ? [] : [
-                        'Thời gian đàm thoại' => 'number',
-                        'Tổng thời gian gọi'  => 'number',
-                    ],
-                ];
-
-                // 4. Gọi hàm chính trong model để thực hiện đồng bộ và đẩy đi
-                // Tham số cuối 'cron' để ghi log cho đúng loại công việc
-                $res = $this->call_sync_model->sync_range_and_push_to_lark($opts, $larkOpts, 'cron');
-
-                if ($res['success']) {
-                    echo "Cron job completed successfully.\n";
-                    echo " - Records inserted to DB: " . ($res['inserted'] ?? 0) . "\n";
-                    echo " - Records pushed to Lark: " . ($res['pushed'] ?? 0) . "\n";
-                } else {
-                    echo "Cron job failed. Reason: " . ($res['message'] ?? 'Unknown error') . "\n";
-                }
-            }
-        } finally {
-            // 5. Luôn luôn giải phóng lock sau khi chạy xong
-            $this->call_sync_model->release_job_lock($lockName);
-            echo "Cron job finished. Lock released.\n";
+        
+        // Lấy 10 log gần nhất từ model
+        $logs = $this->call_sync_model->get_logs(10);
+        
+        // Định dạng lại ngày tháng để JavaScript có thể hiển thị đẹp
+        foreach ($logs as &$log) {
+            $log['formatted_date'] = _dt($log['date']);
         }
+        unset($log); // Hủy tham chiếu sau vòng lặp
+
+        // Trả về dữ liệu dưới dạng JSON
+        header('Content-Type: application/json');
+        echo json_encode($logs);
     }
 }

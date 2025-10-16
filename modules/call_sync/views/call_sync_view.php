@@ -5,6 +5,17 @@ $title = $title ?? 'Nhật ký cuộc gọi';
 $total = isset($total) ? (int)$total : null;
 $calls = is_array($calls) ? $calls : [];
 $pagination = $pagination ?? '';
+
+// === HÀM HELPER ĐỂ CHUYỂN ĐỔI GIÂY SANG HH:MM:SS ===
+if (!function_exists('seconds_to_hms')) {
+    function seconds_to_hms($seconds) {
+        $seconds = (int)$seconds;
+        $h = floor($seconds / 3600);
+        $m = floor(($seconds % 3600) / 60);
+        $s = $seconds % 60;
+        return sprintf('%02d:%02d:%02d', $h, $m, $s);
+    }
+}
 ?>
 
 <?php init_head(); ?>
@@ -16,7 +27,6 @@ $pagination = $pagination ?? '';
     <div class="col-md-12">
       <div class="card-modern">
         <div class="card-modern-body">
-          <!-- Header -->
           <div class="card-modern-header">
             <div>
               <h4 class="no-margin">
@@ -36,7 +46,6 @@ $pagination = $pagination ?? '';
 
           <hr />
 
-          <!-- Filter bar -->
           <form action="<?= admin_url('call_sync'); ?>" method="get" class="filters-bar" role="search">
             <div class="form-group">
               <label>Từ ngày</label>
@@ -81,7 +90,6 @@ $pagination = $pagination ?? '';
             </div>
           </form>
 
-          <!-- Table -->
           <div id="scrollableTable" class="table-container">
             <table class="table table-sticky table-bordered">
               <thead>
@@ -95,8 +103,8 @@ $pagination = $pagination ?? '';
                   <th>Đầu số</th>
                   <th>Số nhận</th>
                   <th>Trạng thái</th>
-                  <th>Thời lượng (s)</th>
-                  <th>Tổng thời gian (s)</th>
+                  <th>Thời lượng (HH:MM:SS)</th>
+                  <th>Tổng thời gian (HH:MM:SS)</th>
                   <th>File ghi âm</th>
                 </tr>
               </thead>
@@ -112,8 +120,6 @@ $pagination = $pagination ?? '';
                       <td class="text-center">
                         <?php if (!empty($row['link_file'])): ?>
                           <button type="button" class="badge-audio btn-play" data-src="<?= html_escape($row['link_file']); ?>">Nghe</button>
-                        <?php else: ?>
-                          <span class="text-muted"></span>
                         <?php endif; ?>
                       </td>
                       <td>
@@ -146,8 +152,8 @@ $pagination = $pagination ?? '';
                         }
                         ?>
                       </td>
-                      <td class="text-right"><?= (int)($row['real_call_time'] ?? 0); ?></td>
-                      <td class="text-right"><?= (int)($row['total_call_time'] ?? 0); ?></td>
+                      <td class="text-right"><?= seconds_to_hms($row['real_call_time'] ?? 0); ?></td>
+                      <td class="text-right"><?= seconds_to_hms($row['total_call_time'] ?? 0); ?></td>
                       <td>
                         <?php if (!empty($row['link_file'])): ?>
                           <a href="<?= html_escape($row['link_file']); ?>" target="_blank" rel="noopener">File</a>
@@ -166,7 +172,6 @@ $pagination = $pagination ?? '';
             </table>
           </div>
 
-          <!-- Pagination -->
           <?php if (!empty($pagination)): ?>
             <div class="text-center" style="margin-top:15px;"><?= $pagination ?></div>
           <?php endif; ?>
@@ -177,7 +182,6 @@ $pagination = $pagination ?? '';
   </div>
 </div>
 
-<!-- Audio popup (modal-like) -->
 <div id="audioPopup" class="audio-popup" aria-hidden="true">
   <div class="audio-popup-content" role="dialog" aria-modal="true" aria-label="Nghe ghi âm">
     <span class="close-popup" title="Đóng">&times;</span>
@@ -190,36 +194,23 @@ $pagination = $pagination ?? '';
 <?php init_tail(); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/2.7.0/browser/overlayscrollbars.browser.es6.min.js"></script>
 <script>
+  // ... (Phần JavaScript giữ nguyên không đổi) ...
   document.addEventListener('DOMContentLoaded', function() {
-    // OverlayScrollbars for the table container
     try {
-      const {
-        OverlayScrollbars
-      } = OverlayScrollbarsGlobal;
+      const { OverlayScrollbars } = OverlayScrollbarsGlobal;
       const wrap = document.getElementById('scrollableTable');
-      if (wrap) OverlayScrollbars(wrap, {
-        scrollbars: {
-          theme: 'os-theme-dark'
-        }
-      });
-    } catch (e) {
-      // ignore if OverlayScrollbars not loaded
-      console.warn('OverlayScrollbars init failed', e);
-    }
+      if (wrap) OverlayScrollbars(wrap, { scrollbars: { theme: 'os-theme-dark' } });
+    } catch (e) { console.warn('OverlayScrollbars init failed', e); }
 
-    // Popup audio elements
     const popup = document.getElementById('audioPopup');
     const audioPlayer = document.getElementById('audioPlayer');
     const closeBtn = popup ? popup.querySelector('.close-popup') : null;
 
-    // Safe guard
     function openPopup(src) {
       if (!popup || !audioPlayer) return;
       audioPlayer.src = src;
       audioPlayer.currentTime = 0;
-      audioPlayer.play().catch(() => {
-        /* autoplay may be prevented - ignore */
-      });
+      audioPlayer.play().catch(() => {});
       popup.style.display = 'flex';
       popup.setAttribute('aria-hidden', 'false');
     }
@@ -232,7 +223,6 @@ $pagination = $pagination ?? '';
       popup.setAttribute('aria-hidden', 'true');
     }
 
-    // Attach click on play buttons
     document.querySelectorAll('.btn-play').forEach(btn => {
       btn.addEventListener('click', function(ev) {
         ev.preventDefault();
@@ -241,19 +231,12 @@ $pagination = $pagination ?? '';
       });
     });
 
-    // Close handlers
     if (closeBtn) {
-      closeBtn.addEventListener('click', function() {
-        closePopup();
-      });
+      closeBtn.addEventListener('click', function() { closePopup(); });
     }
-    // click outside to close
     window.addEventListener('click', function(e) {
-      if (!popup) return;
-      if (e.target === popup) closePopup();
+      if (popup && e.target === popup) closePopup();
     });
-
-    // Escape key to close
     window.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closePopup();
     });

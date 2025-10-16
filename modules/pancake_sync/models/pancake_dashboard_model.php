@@ -30,8 +30,8 @@ class Pancake_dashboard_model extends App_Model
     /* ==================== DASHBOARD (TỔNG QUAN) ==================== */
     public function get_dashboard_metrics($start_date, $end_date, $only_today = false)
     {
-        $tableOrders  = db_prefix() . 'pancake_orders';          // = tblpancake_orders
-        $tableDetails = db_prefix() . 'pancake_order_details';   // = tblpancake_order_details
+        $tableOrders  = db_prefix() . 'pancake_orders';
+        $tableDetails = db_prefix() . 'pancake_order_details';
 
         $startDT = $start_date . ' 00:00:00';
         $endDT   = $end_date   . ' 23:59:59';
@@ -46,7 +46,6 @@ class Pancake_dashboard_model extends App_Model
     ";
 
         if ($only_today) {
-            // FAST PATH: các chỉ số chốt dùng time_status_submitted; created/canceled/removed dùng created_at
             $sql = "
             SELECT
                 -- In-range (trùng Today khi only_today = true)
@@ -91,7 +90,6 @@ class Pancake_dashboard_model extends App_Model
             return $this->db->query($sql, $bind)->row_array() ?: [];
         }
 
-        // NON-FAST: confirmed_at = time_status_submitted; revenue & sales theo đúng cột
         $sql = "
         SELECT
             /* Today (theo submitted) */
@@ -104,7 +102,7 @@ class Pancake_dashboard_model extends App_Model
                      THEN ex.revenue ELSE 0 END) AS revenue_confirmed_today,      -- SUM(total_order_amount)
 
             SUM(CASE WHEN DATE(ex.confirmed_at) = CURDATE()
-                      AND ex.status_name NOT IN ('canceled','returned','returning')
+                      AND ex.status_name NOT IN ('new')
                      THEN ex.sales ELSE 0 END) AS sales_volume_confirmed_today,   -- SUM(total_price)
 
             SUM(CASE WHEN DATE(ex.confirmed_at) = CURDATE()
@@ -176,95 +174,74 @@ class Pancake_dashboard_model extends App_Model
     /* ==================== DASHBOARD THEO KÊNH ==================== */
     public function get_channel_metrics($start_date, $end_date, $only_today = false)
     {
-        $tableOrders  = db_prefix() . 'pancake_orders';          // tblpancake_orders
-        $tableDetails = db_prefix() . 'pancake_order_details';   // tblpancake_order_details
+        $tableOrders  = db_prefix() . 'pancake_orders';      // tblpancake_orders
+        $tableDetails = db_prefix() . 'pancake_order_details'; // tblpancake_order_details
 
         $startDT = $start_date . ' 00:00:00';
         $endDT   = $end_date   . ' 23:59:59';
 
         // Tổng SL theo đơn (quantity) từ bảng chi tiết
         $qtySub = "
-        SELECT
-            pod.pancake_order_id AS order_id,
-            SUM(COALESCE(pod.quantity, 0)) AS qty
-        FROM {$tableDetails} pod
-        GROUP BY pod.pancake_order_id
+    SELECT
+        pod.pancake_order_id AS order_id,
+        SUM(COALESCE(pod.quantity, 0)) AS qty
+    FROM {$tableDetails} pod
+    GROUP BY pod.pancake_order_id
     ";
 
-        // Subquery chung: lấy thẳng từ cột SQL (chỉ còn JSON cho UID & order_count nếu chưa có cột)
+        // Subquery chung
         $sub = "
-        SELECT
-            po.pancake_order_id AS order_id,
-            po.time_status_submitted AS confirmed_at,
-            TRIM(COALESCE(po.order_sources_name, '')) AS channel_raw,  -- tên kênh từ DB
-            po.status_name,
-
-            CAST(COALESCE(po.total_order_amount, 0) AS DECIMAL(18,2)) AS revenue,   -- Doanh thu
-            CAST(COALESCE(po.total_price,       0) AS DECIMAL(18,2)) AS sales,     -- Doanh số
-            CAST(COALESCE(po.total_discount,    0) AS DECIMAL(18,2)) AS discount,  -- Chiết khấu (cấp đơn)
-            CAST(COALESCE(q.qty, 0)             AS DECIMAL(18,2))    AS quantity,  -- Tổng hàng chốt
-
-            {$this->_customer_uid_expr()}         AS customer_uid,
-            {$this->_customer_order_count_expr()} AS cust_order_count
-        FROM {$tableOrders} po
-        LEFT JOIN ( {$qtySub} ) q ON q.order_id = po.pancake_order_id
+    SELECT
+        po.pancake_order_id AS order_id,
+        po.time_status_submitted AS confirmed_at,
+        TRIM(COALESCE(po.order_sources_name, '')) AS channel_raw,
+        po.status_name,
+        CAST(COALESCE(po.total_order_amount, 0) AS DECIMAL(18,2)) AS revenue,
+        CAST(COALESCE(po.total_price,        0) AS DECIMAL(18,2)) AS sales,
+        CAST(COALESCE(po.total_discount,     0) AS DECIMAL(18,2)) AS discount,
+        CAST(COALESCE(q.qty, 0)               AS DECIMAL(18,2)) AS quantity,
+        {$this->_customer_uid_expr()}           AS customer_uid,
+        {$this->_customer_order_count_expr()} AS cust_order_count
+    FROM {$tableOrders} po
+    LEFT JOIN ( {$qtySub} ) q ON q.order_id = po.pancake_order_id
     ";
 
-        // Query chính (lọc theo đơn đã chốt)
-        if ($only_today) {
-            $sql = "
-            SELECT
-                ex.channel_raw,
-                SUM(ex.revenue)  AS revenue,
-                SUM(ex.sales)    AS sales,
-                SUM(ex.discount) AS discount,
-                COUNT(*)         AS orders,
-                SUM(ex.quantity) AS quantity,
-                COUNT(DISTINCT CASE WHEN ex.cust_order_count IN (0,1)  THEN ex.customer_uid END) AS cust_new,
-                COUNT(DISTINCT CASE WHEN ex.cust_order_count NOT IN (0,1) THEN ex.customer_uid END) AS cust_returning
-            FROM ( {$sub} WHERE confirmed_at BETWEEN ? AND ? ) ex
-            WHERE ex.status_name NOT IN ('canceled','returned','returning')
-            GROUP BY ex.channel_raw
-        ";
-            $rows = $this->db->query($sql, [$startDT, $endDT])->result_array() ?: [];
-        } else {
-            $sql = "
-            SELECT
-                ex.channel_raw,
-                SUM(ex.revenue)  AS revenue,
-                SUM(ex.sales)    AS sales,
-                SUM(ex.discount) AS discount,
-                COUNT(*)         AS orders,
-                SUM(ex.quantity) AS quantity,
-                COUNT(DISTINCT CASE WHEN ex.cust_order_count IN (0,1)  THEN ex.customer_uid END) AS cust_new,
-                COUNT(DISTINCT CASE WHEN ex.cust_order_count NOT IN (0,1) THEN ex.customer_uid END) AS cust_returning
-            FROM ( {$sub} ) ex
-            WHERE ex.status_name NOT IN ('canceled','returned','returning')
-              AND ex.confirmed_at BETWEEN ? AND ?
-            GROUP BY ex.channel_raw
-        ";
-            $rows = $this->db->query($sql, [$startDT, $endDT])->result_array() ?: [];
-        }
+        // LOẠI BỎ CẤU TRÚC IF/ELSE, DÙNG CHUNG MỘT CÂU LỆNH SQL ĐÚNG
+        $sql = "
+    SELECT
+        ex.channel_raw,
+        SUM(ex.revenue)  AS revenue,
+        SUM(ex.sales)    AS sales,
+        SUM(ex.discount) AS discount,
+        COUNT(*)         AS orders,
+        SUM(ex.quantity) AS quantity,
+        COUNT(DISTINCT CASE WHEN ex.cust_order_count IN (0,1)  THEN ex.customer_uid END) AS cust_new,
+        COUNT(DISTINCT CASE WHEN ex.cust_order_count NOT IN (0,1) THEN ex.customer_uid END) AS cust_returning
+    FROM ( {$sub} ) ex
+    WHERE ex.status_name NOT IN ('canceled','returned','returning')
+      AND ex.confirmed_at BETWEEN ? AND ?
+    GROUP BY ex.channel_raw
+    ";
 
-        // Chuẩn hoá & alias kênh (Affiliate -> CTV; gom hoa/thường/khoảng trắng)
+        // Luôn chạy câu lệnh này
+        $rows = $this->db->query($sql, [$startDT, $endDT])->result_array() ?: [];
+
+        // Phần xử lý dữ liệu sau đó giữ nguyên không đổi
         $out = [];
 
-        // alias theo lowercase
         $channel_alias = [
             'affiliate' => 'CTV',
             'ctv'       => 'CTV',
-            // thêm alias khác nếu bạn muốn gộp vào 1 kênh
         ];
 
         foreach ($rows as $r) {
             $raw = isset($r['channel_raw']) ? trim((string)$r['channel_raw']) : '';
             $key = ($raw !== '') ? $raw : 'Khác';
 
-            // chuẩn hoá để tra alias: lowercase + gọn khoảng trắng
             $norm = preg_replace('/\s+/u', ' ', mb_strtolower($key, 'UTF-8'));
             $norm = trim($norm);
             if (isset($channel_alias[$norm])) {
-                $key = $channel_alias[$norm]; // 'Affiliate' hoặc 'ctv' -> 'CTV'
+                $key = $channel_alias[$norm];
             }
 
             if (!isset($out[$key])) {
@@ -292,7 +269,6 @@ class Pancake_dashboard_model extends App_Model
             $out[$key]['cust_returning'] += (int)($r['cust_returning'] ?? 0);
         }
 
-        // Fill kênh thiếu & tính AOV
         $defaults = ['CTV', 'Facebook', 'Shopee', 'Zalo', 'Tiktok', 'Woocommerce', 'Hotline', 'LadiPage', 'Khác'];
         foreach ($defaults as $c) {
             if (!isset($out[$c])) {

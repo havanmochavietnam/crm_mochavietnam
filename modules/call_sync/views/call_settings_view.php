@@ -103,7 +103,7 @@
                       </div>
                       <hr>
                       <h5 class="tw-mb-3"><i class="fa fa-cloud-upload text-info"></i> Đồng bộ & đẩy lên Lark</h5>
-                      <p class="text-muted tw-mt-2">Hệ thống sẽ lưu cấu hình (lấy mới tenant token) rồi mới tiến hành đồng bộ và đẩy lên Lark.</p>
+                      <p class="text-muted tw-mt-2">Đồng bộ dữ liệu trong ngày hôm nay và đẩy các bản ghi mới lên Lark.</p>
 
                       <button type="button" id="btnSyncNowPushLark" class="btn btn-info">
                         <i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark
@@ -114,19 +114,7 @@
                       <hr>
                       <h5><i class="fa fa-history text-info"></i> Lịch sử đồng bộ gần đây</h5>
                       <div id="sync-log" class="sync-log-box">
-                        <?php if (!empty($logs)): ?>
-                          <?php foreach ($logs as $log): ?>
-                            <div class="log-item <?= $log['status'] == 'success' ? 'text-success' : 'text-danger'; ?>">
-                              [<?= _dt($log['date']); ?>]
-                              <?= ucfirst($log['sync_type']); ?> - <?= $log['records_synced']; ?> bản ghi (<?= $log['status']; ?>)
-                              <?php if (!empty($log['message'])): ?>
-                                <div class="text-muted"><?= html_escape($log['message']); ?></div>
-                              <?php endif; ?>
-                            </div>
-                          <?php endforeach; ?>
-                        <?php else: ?>
-                          <div class="log-item text-muted">Chưa có lịch sử đồng bộ...</div>
-                        <?php endif; ?>
+                          <div class="log-item text-muted">Đang tải lịch sử...</div>
                       </div>
                     </div>
                   </div>
@@ -182,8 +170,57 @@
 </style>
 
 <script>
-// ... (Phần JavaScript giữ nguyên không đổi) ...
 $(function() {
+  // === BẮT ĐẦU PHẦN CODE MỚI CHO REAL-TIME LOG ===
+
+  // Hàm để tránh lỗi XSS khi hiển thị dữ liệu từ server
+  function escapeHtml(text) {
+    if (typeof text !== 'string') return '';
+    var map = {
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+  }
+
+  // Hàm chính để cập nhật bảng log
+  function updateSyncLog() {
+    $.get("<?= admin_url('call_sync/call_settings/fetch_logs_ajax'); ?>")
+      .done(function(data) {
+        const logBox = $('#sync-log');
+        logBox.empty(); // Xóa log cũ
+
+        if (data && data.length > 0) {
+          data.forEach(function(log) {
+            const statusClass = log.status === 'success' ? 'text-success' : 'text-danger';
+            const type = log.sync_type ? escapeHtml(log.sync_type.charAt(0).toUpperCase() + log.sync_type.slice(1)) : 'N/A';
+            let messageHtml = log.message ? `<div class="text-muted">${escapeHtml(log.message)}</div>` : '';
+            
+            const logHtml = `
+              <div class="log-item ${statusClass}">
+                [${log.formatted_date}]
+                ${type} - ${log.records_synced} bản ghi (${log.status})
+                ${messageHtml}
+              </div>
+            `;
+            logBox.append(logHtml);
+          });
+        } else {
+          logBox.html('<div class="log-item text-muted">Chưa có lịch sử đồng bộ...</div>');
+        }
+      })
+      .fail(function() {
+         console.error("Không thể tải lịch sử đồng bộ.");
+      });
+  }
+
+  // Chạy lần đầu tiên ngay khi tải trang
+  updateSyncLog();
+  // Thiết lập bộ đếm thời gian: cứ 15 giây sẽ gọi hàm updateSyncLog một lần
+  setInterval(updateSyncLog, 15000); 
+
+  // === KẾT THÚC PHẦN CODE MỚI ===
+
+
   // Toggle secret inputs
   $('#toggleSecret').on('click', function() {
     const $input = $('#lark_app_secret');
@@ -218,77 +255,62 @@ $(function() {
         }
       })
       .fail(function(xhr) {
-        if (xhr.status === 419 || xhr.status === 403) {
-          alert_float('danger', 'Phiên đã hết hạn. Vui lòng tải lại trang và thử lại.');
-        } else {
-          alert_float('danger', 'Lưu thất bại');
-        }
+        alert_float('danger', 'Lưu thất bại. Vui lòng kiểm tra lại.');
       });
   });
 
   // Đồng bộ + đẩy Lark: LƯU TRƯỚC -> rồi mới sync
   $('#btnSyncNowPushLark').on('click', function() {
     const $btn = $(this);
-    const logBox = $('#sync-log');
-    const time = new Date().toLocaleString();
-
-    // Build payload SAVE (lưu cả Bitable target + get tenant token)
     const saveData = $('#call-sync-settings-form').serialize();
 
     $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang lưu & lấy token...');
-    logBox.prepend(`<div class="log-item text-info temp-sync-lark">[${time}] Đang lưu cấu hình & lấy token Lark...</div>`);
-
+    
     $.post("<?= admin_url('call_sync/call_settings/save'); ?>", saveData)
       .done(function(res) {
         try {
           res = (typeof res === 'string') ? JSON.parse(res) : res;
         } catch (e) {}
 
-        // update CSRF
         if (res.csrf_name && res.csrf_hash) {
           $('input[name="' + res.csrf_name + '"]').val(res.csrf_hash);
         }
 
         if (!res.success) {
-          $('.temp-sync-lark').remove();
           alert_float('danger', res.message || 'Lưu cấu hình thất bại');
           $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
+          updateSyncLog();
           return;
         }
 
-        // SAVE ok -> gọi sync_now_push_lark
         $btn.html('<i class="fa fa-spinner fa-spin"></i> Đang đồng bộ & đẩy lên Lark...');
         const appToken = $('#bitable_app_token').val().trim();
         const tableId = $('#bitable_table_id').val().trim();
 
         $.post("<?= admin_url('call_sync/call_settings/sync_now_push_lark'); ?>", {
             app_token: appToken,
-            table_id: tableId
+            table_id: tableId,
+            '<?= $this->security->get_csrf_token_name(); ?>': $('input[name="<?= $this->security->get_csrf_token_name(); ?>"]').val()
           })
           .done(function(r2) {
-            try {
-              r2 = (typeof r2 === 'string') ? JSON.parse(r2) : r2;
-            } catch (e) {}
-            $('.temp-sync-lark').remove();
+            try { r2 = (typeof r2 === 'string') ? JSON.parse(r2) : r2; } catch (e) {}
+            
             if (r2.success) {
-              logBox.prepend(`<div class="log-item text-success">[${time}] ✅ Đồng bộ xong: ${r2.inserted || 0} bản ghi, đẩy Lark: ${r2.pushed || 0} bản ghi</div>`);
-              alert_float('success', `Đã đẩy Lark: ${r2.pushed || 0} bản ghi`);
+              alert_float('success', `Đã đồng bộ và đẩy Lark: ${r2.pushed || 0} bản ghi`);
             } else {
-              logBox.prepend(`<div class="log-item text-danger">[${time}] ❌ Lỗi đẩy Lark: ${r2.message || 'Lỗi'}</div>`);
               alert_float('danger', r2.message || 'Đồng bộ + đẩy Lark thất bại');
             }
           })
           .fail(function() {
-            $('.temp-sync-lark').remove();
-            logBox.prepend(`<div class="log-item text-danger">[${time}] ❌ Lỗi gọi API đồng bộ + đẩy Lark.</div>`);
             alert_float('danger', 'Lỗi gọi API đồng bộ + đẩy Lark');
           })
           .always(function() {
             $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
+            // Gọi hàm cập nhật log ngay sau khi hoàn tất để thấy kết quả ngay lập tức
+            setTimeout(updateSyncLog, 500);
           });
       })
       .fail(function() {
-        $('.temp-sync-lark').remove();
         alert_float('danger', 'Lỗi gọi API lưu cấu hình');
         $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
       });
