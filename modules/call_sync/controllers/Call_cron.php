@@ -48,18 +48,13 @@ class Call_cron extends CI_Controller
         ];
     }
 
-    /**
-     * B1: Chỉ làm mới tenant token (ghi log 'lark_token')
-     * CLI:    php index.php call_cron/refresh_token
-     * HTTP:   /index.php/call_cron/refresh_token?key=...
-     */
     public function refresh_token()
     {
-        if (!$this->_allowed()) return $this->_json(['success'=>false,'message'=>'forbidden'], 403);
+        if (!$this->_allowed()) return $this->_json(['success' => false, 'message' => 'forbidden'], 403);
 
         $job = 'cron_refresh_token';
         if (!$this->call_sync_model->acquire_job_lock($job, 60)) {
-            return $this->_json(['success'=>false, 'message'=>'job_locked']);
+            return $this->_json(['success' => false, 'message' => 'job_locked']);
         }
 
         try {
@@ -70,18 +65,13 @@ class Call_cron extends CI_Controller
         }
     }
 
-    /**
-     * B2: Chỉ đồng bộ DB (không đẩy Lark).
-     * CLI:  php index.php call_cron/sync_db [minutes]
-     * HTTP: /index.php/call_cron/sync_db/10?key=...
-     */
     public function sync_db($minutes = 10)
     {
-        if (!$this->_allowed()) return $this->_json(['success'=>false,'message'=>'forbidden'], 403);
+        if (!$this->_allowed()) return $this->_json(['success' => false, 'message' => 'forbidden'], 403);
 
         $job = 'cron_sync_db';
         if (!$this->call_sync_model->acquire_job_lock($job, 300)) {
-            return $this->_json(['success'=>false, 'message'=>'job_locked']);
+            return $this->_json(['success' => false, 'message' => 'job_locked']);
         }
 
         try {
@@ -96,29 +86,21 @@ class Call_cron extends CI_Controller
         }
     }
 
-    /**
-     * B3: Đồng bộ DB + đẩy Lark (nếu có bitable target trong DB).
-     * CLI:  php index.php call_cron/run [minutes]
-     * HTTP: /index.php/call_cron/run/10?key=...
-     */
     public function run($minutes = 10)
     {
-        if (!$this->_allowed()) return $this->_json(['success'=>false,'message'=>'forbidden'], 403);
+        if (!$this->_allowed()) return $this->_json(['success' => false, 'message' => 'forbidden'], 403);
 
         $job = 'cron_sync_pipeline';
-        if (!$this->call_sync_model->acquire_job_lock($job, max(300, (int)$minutes*60))) {
-            return $this->_json(['success'=>false, 'message'=>'job_locked']);
+        if (!$this->call_sync_model->acquire_job_lock($job, max(300, (int)$minutes * 60))) {
+            return $this->_json(['success' => false, 'message' => 'job_locked']);
         }
 
         try {
-            // B1) Token trước
             $tok = $this->call_sync_model->ensure_lark_token_logged(false);
             if (!$tok['success']) {
-                // vẫn tiếp tục sync DB để lưu lịch sử (tuỳ business, có thể return luôn)
-                $this->call_sync_model->log_event('cron', 'failed', 0, 'Cannot ensure Lark token: '.$tok['message']);
+                $this->call_sync_model->log_event('cron', 'failed', 0, 'Cannot ensure Lark token: ' . $tok['message']);
             }
 
-            // B2) Nếu chưa cấu hình Bitable target => chỉ sync DB
             $target = $this->call_sync_model->get_bitable_target();
             $opts   = $this->_build_window_opts((int)$minutes, 200, 0);
 
@@ -128,7 +110,6 @@ class Call_cron extends CI_Controller
                 return $this->_json($res);
             }
 
-            // B3) Có target -> sync + push Lark
             $fieldMap = [
                 'Thời gian'           => 'call_date',
                 'Ghi âm'              => 'link_file',
@@ -143,15 +124,14 @@ class Call_cron extends CI_Controller
                 'Thời gian đàm thoại' => 'real_call_time',
                 'Tổng thời gian gọi'  => 'total_call_time',
             ];
-            $fieldTypes = []; // để hiển thị HH:MM:SS đã hậu xử lý thành text
-
+            $fieldTypes = [];
             $res = $this->call_sync_model->sync_range_and_push_to_lark($opts, [
                 'app_token'       => $target['app_token'],
                 'table_id'        => $target['table_id'],
                 'field_map'       => $fieldMap,
                 'field_types'     => $fieldTypes,
                 'batch_size'      => 120,
-                'retry'           => ['times'=>3,'sleep'=>2],
+                'retry'           => ['times' => 3, 'sleep' => 2],
                 'datetime_format' => 'c',
             ], 'cron');
 

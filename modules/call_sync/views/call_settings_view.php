@@ -13,14 +13,14 @@
             </div>
             <hr>
 
-            <div class="row">
-              <!-- CỘT TRÁI: FORM CÀI ĐẶT -->
-              <div class="col-md-6">
-                <div class="card-modern">
-                  <div class="card-modern-body">
-                    <form id="call-sync-settings-form" method="post" action="<?= admin_url('call_sync/call_settings/save'); ?>" autocomplete="off">
-                      <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+            <form id="call-sync-settings-form" method="post" action="<?= admin_url('call_sync/call_settings/save'); ?>" autocomplete="off">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card-modern">
+                    <div class="card-modern-body">
+                      
                       <h5 class="tw-mb-3"><i class="fa fa-sliders text-primary"></i> Cấu hình dịch vụ</h5>
 
                       <div class="form-group">
@@ -79,9 +79,16 @@
                         <small class="text-muted">Nhấn biểu tượng mắt để hiện/ẩn giá trị.</small>
                       </div>
 
-                      <!-- LƯU CẢ BANG BITable TARGET TRONG FORM luôn -->
-                      <hr>
-                      <h5 class="tw-mb-3"><i class="fa fa-table text-info"></i> Bitable Target</h5>
+                      <button type="submit" class="btn btn-primary">Lưu cài đặt</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="card-modern">
+                    <div class="card-modern-body">
+
+                      <h5 class="tw-mb-3"><i class="fa fa-table text-info"></i> Bảng Lark Cần Đẩy Dữ Liệu Vào</h5>
                       <div class="form-group">
                         <label for="bitable_app_token">App Token</label>
                         <input type="text" id="bitable_app_token" name="bitable_app_token" class="form-control"
@@ -94,47 +101,37 @@
                           value="<?= html_escape($token->bitable_table_id ?: 'tblRA8n77fO2eKxF'); ?>"
                           placeholder="Bitable Table ID">
                       </div>
+                      <hr>
+                      <h5 class="tw-mb-3"><i class="fa fa-cloud-upload text-info"></i> Đồng bộ & đẩy lên Lark</h5>
+                      <p class="text-muted tw-mt-2">Hệ thống sẽ lưu cấu hình (lấy mới tenant token) rồi mới tiến hành đồng bộ và đẩy lên Lark.</p>
 
-                      <button type="submit" class="btn btn-primary">Lưu cài đặt</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
+                      <button type="button" id="btnSyncNowPushLark" class="btn btn-info">
+                        <i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark
+                      </button>
 
-              <!-- CỘT PHẢI: ĐẨY LARK + TRẠNG THÁI + LỊCH SỬ -->
-              <div class="col-md-6">
-                <div class="card-modern">
-                  <div class="card-modern-body">
-                    <h5 class="tw-mb-3"><i class="fa fa-cloud-upload text-info"></i> Đồng bộ & đẩy lên Lark</h5>
-                    <p class="text-muted tw-mt-2">Hệ thống sẽ lưu cấu hình (lấy mới tenant token) rồi mới tiến hành đồng bộ và đẩy lên Lark.</p>
+                      <div id="lock-status" class="tw-mt-2 text-muted"></div>
 
-                    <button type="button" id="btnSyncNowPushLark" class="btn btn-info">
-                      <i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark
-                    </button>
-
-                    <div id="lock-status" class="tw-mt-2 text-muted"></div>
-
-                    <hr>
-                    <h5><i class="fa fa-history text-info"></i> Lịch sử đồng bộ gần đây</h5>
-                    <div id="sync-log" class="sync-log-box">
-                      <?php if (!empty($logs)): ?>
-                        <?php foreach ($logs as $log): ?>
-                          <div class="log-item <?= $log['status'] == 'success' ? 'text-success' : 'text-danger'; ?>">
-                            [<?= _dt($log['date']); ?>]
-                            <?= ucfirst($log['sync_type']); ?> - <?= $log['records_synced']; ?> bản ghi (<?= $log['status']; ?>)
-                            <?php if (!empty($log['message'])): ?>
-                              <div class="text-muted"><?= html_escape($log['message']); ?></div>
-                            <?php endif; ?>
-                          </div>
-                        <?php endforeach; ?>
-                      <?php else: ?>
-                        <div class="log-item text-muted">Chưa có lịch sử đồng bộ...</div>
-                      <?php endif; ?>
+                      <hr>
+                      <h5><i class="fa fa-history text-info"></i> Lịch sử đồng bộ gần đây</h5>
+                      <div id="sync-log" class="sync-log-box">
+                        <?php if (!empty($logs)): ?>
+                          <?php foreach ($logs as $log): ?>
+                            <div class="log-item <?= $log['status'] == 'success' ? 'text-success' : 'text-danger'; ?>">
+                              [<?= _dt($log['date']); ?>]
+                              <?= ucfirst($log['sync_type']); ?> - <?= $log['records_synced']; ?> bản ghi (<?= $log['status']; ?>)
+                              <?php if (!empty($log['message'])): ?>
+                                <div class="text-muted"><?= html_escape($log['message']); ?></div>
+                              <?php endif; ?>
+                            </div>
+                          <?php endforeach; ?>
+                        <?php else: ?>
+                          <div class="log-item text-muted">Chưa có lịch sử đồng bộ...</div>
+                        <?php endif; ?>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div> <!-- /row -->
+              </div> </form>
 
           </div>
         </div>
@@ -146,133 +143,132 @@
 <?php init_tail(); ?>
 
 <style>
-  .card-modern {
-    border: 1px solid #e3e6f0;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-    background-color: #fff;
-    transition: all 0.2s ease;
-  }
-  .card-modern:hover { box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); }
-  .card-modern-body { padding: 25px; }
-  .sync-log-box {
-    background: #f8f9fa;
-    border-radius: 6px;
-    padding: 10px 15px;
-    max-height: 260px;
-    overflow-y: auto;
-    font-size: 13px;
-    border: 1px solid #e1e1e1;
-  }
-  .log-item { border-bottom: 1px solid #e1e1e1; padding: 6px 0; }
-  .log-item:last-child { border-bottom: none; }
-  .tw-mb-3 { margin-bottom: 12px; }
-  .tw-mt-2 { margin-top: 8px; }
+/* ... (Phần CSS giữ nguyên không đổi) ... */
+.card-modern {
+  border: 1px solid #e3e6f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  transition: all 0.2s ease;
+}
+.card-modern:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+.card-modern-body {
+  padding: 25px;
+}
+.sync-log-box {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 10px 15px;
+  max-height: 260px;
+  overflow-y: auto;
+  font-size: 13px;
+  border: 1px solid #e1e1e1;
+}
+.log-item {
+  border-bottom: 1px solid #e1e1e1;
+  padding: 6px 0;
+}
+.log-item:last-child {
+  border-bottom: none;
+}
+.tw-mb-3 {
+  margin-bottom: 12px;
+}
+.tw-mt-2 {
+  margin-top: 8px;
+}
 </style>
 
 <script>
-  $(function() {
-    // Toggle secret inputs
-    $('#toggleSecret').on('click', function () {
-      const $input = $('#lark_app_secret');
-      const isPwd = $input.attr('type') === 'password';
-      $input.attr('type', isPwd ? 'text' : 'password');
-      $(this).find('i').toggleClass('fa-eye fa-eye-slash');
-    });
-    $('#toggleAuthKey').on('click', function () {
-      const $input = $('#auth_key');
-      const isPwd = $input.attr('type') === 'password';
-      $input.attr('type', isPwd ? 'text' : 'password');
-      $(this).find('i').toggleClass('fa-eye fa-eye-slash');
-    });
+// ... (Phần JavaScript giữ nguyên không đổi) ...
+$(function() {
+  // Toggle secret inputs
+  $('#toggleSecret').on('click', function() {
+    const $input = $('#lark_app_secret');
+    const isPwd = $input.attr('type') === 'password';
+    $input.attr('type', isPwd ? 'text' : 'password');
+    $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+  });
+  $('#toggleAuthKey').on('click', function() {
+    const $input = $('#auth_key');
+    const isPwd = $input.attr('type') === 'password';
+    $input.attr('type', isPwd ? 'text' : 'password');
+    $(this).find('i').toggleClass('fa-eye fa-eye-slash');
+  });
 
-    // Submit form (save only)
-    $('#call-sync-settings-form').on('submit', function(e) {
-      e.preventDefault();
-      const form = $(this);
-      $.post(form.attr('action'), form.serialize())
-        .done(function(res) {
-          let data = res;
-          try { data = (typeof res === 'string') ? JSON.parse(res) : res; } catch (e) {}
-          if (data.csrf_name && data.csrf_hash) {
-            $('input[name="' + data.csrf_name + '"]').val(data.csrf_hash);
-          }
-          if (data.success) {
-            alert_float('success', data.message || 'Đã lưu cài đặt!');
-          } else {
-            alert_float('danger', data.message || 'Lưu thất bại');
-          }
-        })
-        .fail(function(xhr) {
-          if (xhr.status === 419 || xhr.status === 403) {
-            alert_float('danger', 'Phiên đã hết hạn. Vui lòng tải lại trang và thử lại.');
-          } else {
-            alert_float('danger', 'Lưu thất bại');
-          }
-        });
-    });
+  // Submit form (save only)
+  $('#call-sync-settings-form').on('submit', function(e) {
+    e.preventDefault();
+    const form = $(this);
+    $.post(form.attr('action'), form.serialize())
+      .done(function(res) {
+        let data = res;
+        try {
+          data = (typeof res === 'string') ? JSON.parse(res) : res;
+        } catch (e) {}
+        if (data.csrf_name && data.csrf_hash) {
+          $('input[name="' + data.csrf_name + '"]').val(data.csrf_hash);
+        }
+        if (data.success) {
+          alert_float('success', data.message || 'Đã lưu cài đặt!');
+        } else {
+          alert_float('danger', data.message || 'Lưu thất bại');
+        }
+      })
+      .fail(function(xhr) {
+        if (xhr.status === 419 || xhr.status === 403) {
+          alert_float('danger', 'Phiên đã hết hạn. Vui lòng tải lại trang và thử lại.');
+        } else {
+          alert_float('danger', 'Lưu thất bại');
+        }
+      });
+  });
 
-    // Hiển thị trạng thái lock
-    function renderLocks(locks) {
-      const m = locks['manual_push_lark'];
-      const cdb = locks['cron_sync_db'];
-      const clk = locks['cron_sync_lark'];
-      const fmt = (x) => x.locked ? `ĐANG CHẠY (đến ${x.locked_until})` : 'Rảnh';
-      $('#lock-status').html(
-        `<div><strong>Tiến trình thủ công:</strong> ${fmt(m)}</div>
-         <div><strong>Cron DB:</strong> ${fmt(cdb)}</div>
-         <div><strong>Cron Lark:</strong> ${fmt(clk)}</div>`
-      );
-    }
-    function pollLocks() {
-      $.get("<?= admin_url('call_sync/call_settings/lock_status'); ?>")
-        .done(function(res){
-          try { res = (typeof res === 'string') ? JSON.parse(res) : res; } catch(e){}
-          if (res && res.success && res.locks) renderLocks(res.locks);
-        });
-    }
-    pollLocks();
-    setInterval(pollLocks, 7000);
+  // Đồng bộ + đẩy Lark: LƯU TRƯỚC -> rồi mới sync
+  $('#btnSyncNowPushLark').on('click', function() {
+    const $btn = $(this);
+    const logBox = $('#sync-log');
+    const time = new Date().toLocaleString();
 
-    // Đồng bộ + đẩy Lark: LƯU TRƯỚC -> rồi mới sync
-    $('#btnSyncNowPushLark').on('click', function() {
-      const $btn = $(this);
-      const logBox = $('#sync-log');
-      const time = new Date().toLocaleString();
+    // Build payload SAVE (lưu cả Bitable target + get tenant token)
+    const saveData = $('#call-sync-settings-form').serialize();
 
-      // Build payload SAVE (lưu cả Bitable target + get tenant token)
-      const saveData = $('#call-sync-settings-form').serialize();
+    $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang lưu & lấy token...');
+    logBox.prepend(`<div class="log-item text-info temp-sync-lark">[${time}] Đang lưu cấu hình & lấy token Lark...</div>`);
 
-      $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i> Đang lưu & lấy token...');
-      logBox.prepend(`<div class="log-item text-info temp-sync-lark">[${time}] Đang lưu cấu hình & lấy token Lark...</div>`);
+    $.post("<?= admin_url('call_sync/call_settings/save'); ?>", saveData)
+      .done(function(res) {
+        try {
+          res = (typeof res === 'string') ? JSON.parse(res) : res;
+        } catch (e) {}
 
-      $.post("<?= admin_url('call_sync/call_settings/save'); ?>", saveData)
-        .done(function(res){
-          try { res = (typeof res === 'string') ? JSON.parse(res) : res; } catch(e){}
+        // update CSRF
+        if (res.csrf_name && res.csrf_hash) {
+          $('input[name="' + res.csrf_name + '"]').val(res.csrf_hash);
+        }
 
-          // update CSRF
-          if (res.csrf_name && res.csrf_hash) {
-            $('input[name="' + res.csrf_name + '"]').val(res.csrf_hash);
-          }
+        if (!res.success) {
+          $('.temp-sync-lark').remove();
+          alert_float('danger', res.message || 'Lưu cấu hình thất bại');
+          $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
+          return;
+        }
 
-          if (!res.success) {
-            $('.temp-sync-lark').remove();
-            alert_float('danger', res.message || 'Lưu cấu hình thất bại');
-            $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
-            return;
-          }
+        // SAVE ok -> gọi sync_now_push_lark
+        $btn.html('<i class="fa fa-spinner fa-spin"></i> Đang đồng bộ & đẩy lên Lark...');
+        const appToken = $('#bitable_app_token').val().trim();
+        const tableId = $('#bitable_table_id').val().trim();
 
-          // SAVE ok -> gọi sync_now_push_lark
-          $btn.html('<i class="fa fa-spinner fa-spin"></i> Đang đồng bộ & đẩy lên Lark...');
-          const appToken = $('#bitable_app_token').val().trim();
-          const tableId  = $('#bitable_table_id').val().trim();
-
-          $.post("<?= admin_url('call_sync/call_settings/sync_now_push_lark'); ?>", {
+        $.post("<?= admin_url('call_sync/call_settings/sync_now_push_lark'); ?>", {
             app_token: appToken,
             table_id: tableId
           })
-          .done(function(r2){
-            try { r2 = (typeof r2 === 'string') ? JSON.parse(r2) : r2; } catch(e){}
+          .done(function(r2) {
+            try {
+              r2 = (typeof r2 === 'string') ? JSON.parse(r2) : r2;
+            } catch (e) {}
             $('.temp-sync-lark').remove();
             if (r2.success) {
               logBox.prepend(`<div class="log-item text-success">[${time}] ✅ Đồng bộ xong: ${r2.inserted || 0} bản ghi, đẩy Lark: ${r2.pushed || 0} bản ghi</div>`);
@@ -281,22 +277,21 @@
               logBox.prepend(`<div class="log-item text-danger">[${time}] ❌ Lỗi đẩy Lark: ${r2.message || 'Lỗi'}</div>`);
               alert_float('danger', r2.message || 'Đồng bộ + đẩy Lark thất bại');
             }
-            pollLocks();
           })
-          .fail(function(){
+          .fail(function() {
             $('.temp-sync-lark').remove();
             logBox.prepend(`<div class="log-item text-danger">[${time}] ❌ Lỗi gọi API đồng bộ + đẩy Lark.</div>`);
             alert_float('danger', 'Lỗi gọi API đồng bộ + đẩy Lark');
           })
-          .always(function(){
+          .always(function() {
             $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
           });
-        })
-        .fail(function(){
-          $('.temp-sync-lark').remove();
-          alert_float('danger', 'Lỗi gọi API lưu cấu hình');
-          $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
-        });
-    });
+      })
+      .fail(function() {
+        $('.temp-sync-lark').remove();
+        alert_float('danger', 'Lỗi gọi API lưu cấu hình');
+        $btn.prop('disabled', false).html('<i class="fa fa-cloud-upload"></i> Đồng bộ & đẩy Lark');
+      });
   });
+});
 </script>

@@ -175,8 +175,7 @@ class Call_settings extends AdminController
         }
         $locks = $this->call_sync_model->get_locks_status([
             'manual_push_lark',
-            'cron_sync_db',
-            'cron_sync_lark',
+            'cron_full_sync',
         ]);
         echo json_encode(['success'=>true,'locks'=>$locks]);
     }
@@ -184,7 +183,7 @@ class Call_settings extends AdminController
     private function bitable_field_map_current(): array
     {
         return [
-            'Thời gian'           => 'call_date',
+            'Thời gian'          => 'call_date',
             'Ghi âm'              => 'link_file',
             'Hướng cuộc gọi'      => 'type_call',
             'Tên số gọi'          => 'caller_name',
@@ -197,5 +196,75 @@ class Call_settings extends AdminController
             'Thời gian đàm thoại' => 'real_call_time',
             'Tổng thời gian gọi'  => 'total_call_time',
         ];
+    }
+    
+    /**
+     * =================================================================
+     * HÀM DÀNH CHO CRON JOB
+     * URL để gọi: your-domain.com/admin/call_sync/cron_run
+     * =================================================================
+     */
+    public function cron_run()
+    {
+        // (Tùy chọn) Dòng này để đảm bảo cron chỉ chạy được từ command line, tăng bảo mật.
+        // if (!is_cli()) {
+        //     echo "This script can only be accessed via the command line.";
+        //     return;
+        // }
+
+        $lockName = 'cron_full_sync';
+        // Khóa job trong 15 phút (900 giây) để tránh việc chạy chồng chéo
+        if (!$this->call_sync_model->acquire_job_lock($lockName, 900)) {
+            echo "Another full sync process is already running. Exiting.\n";
+            $this->call_sync_model->log_event('cron', 'skipped', 0, 'Job is locked');
+            return;
+        }
+
+        echo "Starting cron job: Full Sync (DB + Lark)...\n";
+        try {
+            // 1. Cấu hình khoảng thời gian cần đồng bộ
+            // Mặc định: đồng bộ dữ liệu của ngày hôm qua và hôm nay để không bỏ sót.
+            $opts = [
+                'DateStart' => date('Y-m-d\T00:00:00', strtotime('-1 day')),
+                'DateEnd'   => date('Y-m-d\T23:59:59'),
+                'PageSize'  => 500, // Kéo mỗi lần 500 bản ghi
+            ];
+
+            // 2. Lấy cấu hình Bitable target đã lưu trong DB
+            $target = $this->call_sync_model->get_bitable_target();
+            if (empty($target['app_token']) || empty($target['table_id'])) {
+                 $msg = "Bitable app_token or table_id is not configured.";
+                 echo $msg . "\n";
+                 $this->call_sync_model->log_event('cron', 'failed', 0, $msg);
+                 // Không return vội, vẫn giải phóng lock ở finally
+            } else {
+                // 3. Cấu hình cho việc đẩy dữ liệu lên Lark
+                $larkOpts = [
+                    'app_token'   => $target['app_token'],
+                    'table_id'    => $target['table_id'],
+                    'field_map'   => $this->bitable_field_map_current(),
+                    'field_types' => $this->useDisplayDuration ? [] : [
+                        'Thời gian đàm thoại' => 'number',
+                        'Tổng thời gian gọi'  => 'number',
+                    ],
+                ];
+
+                // 4. Gọi hàm chính trong model để thực hiện đồng bộ và đẩy đi
+                // Tham số cuối 'cron' để ghi log cho đúng loại công việc
+                $res = $this->call_sync_model->sync_range_and_push_to_lark($opts, $larkOpts, 'cron');
+
+                if ($res['success']) {
+                    echo "Cron job completed successfully.\n";
+                    echo " - Records inserted to DB: " . ($res['inserted'] ?? 0) . "\n";
+                    echo " - Records pushed to Lark: " . ($res['pushed'] ?? 0) . "\n";
+                } else {
+                    echo "Cron job failed. Reason: " . ($res['message'] ?? 'Unknown error') . "\n";
+                }
+            }
+        } finally {
+            // 5. Luôn luôn giải phóng lock sau khi chạy xong
+            $this->call_sync_model->release_job_lock($lockName);
+            echo "Cron job finished. Lock released.\n";
+        }
     }
 }
