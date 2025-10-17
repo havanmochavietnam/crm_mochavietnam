@@ -103,8 +103,8 @@ if (!function_exists('seconds_to_hms')) {
                   <th>Đầu số</th>
                   <th>Số nhận</th>
                   <th>Trạng thái</th>
-                  <th>Thời lượng (HH:MM:SS)</th>
-                  <th>Tổng thời gian (HH:MM:SS)</th>
+                  <th>Thời lượng thực</th>
+                  <th>Tổng thời gian</th>
                   <th>File ghi âm</th>
                 </tr>
               </thead>

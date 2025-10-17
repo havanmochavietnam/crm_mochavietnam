@@ -124,6 +124,7 @@ class Call_sync_model extends App_Model
         return $this->db->get($this->token_table)->row();
     }
 
+    /* ============== LƯU TOKEN ============== */
     public function save_token($payload)
     {
         $exists = $this->get_token();
@@ -148,13 +149,13 @@ class Call_sync_model extends App_Model
         return $this->db->get($this->lark_table)->row();
     }
 
+    /* ============== UPDATE LARK ============== */
     public function upsert_lark_and_fetch_token(array $payload)
     {
         $auth_endpoint = trim($payload['lark_auth_endpoint'] ?? $payload['auth_endpoint'] ?? '');
         $app_id        = trim($payload['lark_app_id'] ?? $payload['app_id'] ?? '');
         $app_secret    = trim($payload['lark_app_secret'] ?? $payload['app_secret'] ?? '');
 
-        // Bitable target (tuỳ chọn)
         $bitable_app_token = trim($payload['bitable_app_token'] ?? '');
         $bitable_table_id  = trim($payload['bitable_table_id']  ?? '');
 
@@ -162,7 +163,6 @@ class Call_sync_model extends App_Model
             return ['success' => false, 'message' => 'Thiếu AuthEndpoint/AppId/AppSecret'];
         }
 
-        // Lấy tenant token trước
         $res = $this->call_api($auth_endpoint, [
             'app_id'     => $app_id,
             'app_secret' => $app_secret,
@@ -212,6 +212,7 @@ class Call_sync_model extends App_Model
         return ['success' => true, 'id' => $id, 'token' => $token, 'expires_at' => $expires_at, 'raw' => $decoded];
     }
 
+    /* ============== HÀM LẤY ID VÀ ID TABLE LARK ============== */
     public function get_bitable_target(): array
     {
         $cfg = $this->get_lark_config();
@@ -221,6 +222,7 @@ class Call_sync_model extends App_Model
         ];
     }
 
+    /* ============== LẤY LARK TENANT TOKEN ============== */
     public function get_lark_tenant_token($force_refresh = false)
     {
         $cfg = $this->get_lark_config();
@@ -236,7 +238,7 @@ class Call_sync_model extends App_Model
 
         $res = $this->call_api($cfg->auth_endpoint, ['app_id' => $cfg->app_id, 'app_secret' => $cfg->app_secret]);
         if (!$res['success']) {
-            return ['success'=>false,'message'=>$res['error'] ?: ('HTTP '.$res['http_code']),'token'=>null,'expires_at'=>null,'raw'=>$res['response'] ?? null];
+            return ['success' => false, 'message' => $res['error'] ?: ('HTTP ' . $res['http_code']), 'token' => null, 'expires_at' => null, 'raw' => $res['response'] ?? null];
         }
 
         $decoded = json_decode($res['response'], true);
@@ -244,13 +246,13 @@ class Call_sync_model extends App_Model
         $token  = $decoded['tenant_access_token'] ?? $decoded['tenantAccessToken'] ?? null;
         $expire = $decoded['expire'] ?? $decoded['ExpiresIn'] ?? null;
         if ($code !== 0 || empty($token)) {
-            return ['success'=>false,'message'=>'Lark error: '.($decoded['msg'] ?? 'unknown'),'token'=>null,'expires_at'=>null,'raw'=>$decoded];
+            return ['success' => false, 'message' => 'Lark error: ' . ($decoded['msg'] ?? 'unknown'), 'token' => null, 'expires_at' => null, 'raw' => $decoded];
         }
 
         $expires_at = is_numeric($expire) ? date('Y-m-d H:i:s', time() + (int)$expire) : null;
         $this->db->update($this->lark_table, ['tenant_access_token' => $token, 'token_expires_at' => $expires_at], ['id' => $cfg->id]);
 
-        return ['success'=>true,'token'=>$token,'expires_at'=>$expires_at,'message'=>'refreshed','raw'=>$decoded];
+        return ['success' => true, 'token' => $token, 'expires_at' => $expires_at, 'message' => 'refreshed', 'raw' => $decoded];
     }
 
     /* ======= THÊM: log tiện dụng cho controller ======= */
@@ -259,26 +261,25 @@ class Call_sync_model extends App_Model
         return $this->insert_sync_log($type, $count, $status, $message);
     }
 
-    /**
-     * Đảm bảo có tenant token (force nếu sắp hết hạn), đồng thời ghi log 'lark_token'
-     */
+    
+    //Đảm bảo có tenant token (force nếu sắp hết hạn), đồng thời ghi log 'lark_token'
     public function ensure_lark_token_logged(bool $force = false): array
     {
         $cfg = $this->get_lark_config();
         if (!$cfg) {
             $this->log_event('lark_token', 'failed', 0, 'Missing Lark config');
-            return ['success'=>false,'message'=>'Missing Lark config'];
+            return ['success' => false, 'message' => 'Missing Lark config'];
         }
 
         // Nếu không force thì thử xài cache
         $tok = $this->get_lark_tenant_token(false);
-        $need = (!$tok['success'] || empty($tok['token']) || empty($tok['expires_at']) || strtotime($tok['expires_at']) <= time()+60);
+        $need = (!$tok['success'] || empty($tok['token']) || empty($tok['expires_at']) || strtotime($tok['expires_at']) <= time() + 60);
         if ($force || $need) {
             $tok = $this->get_lark_tenant_token(true);
         }
 
         if ($tok['success']) {
-            $this->log_event('lark_token', 'success', 0, 'Token ok until '.$tok['expires_at'].' ('.$tok['message'].')');
+            $this->log_event('lark_token', 'success', 0, 'Token ok until ' . $tok['expires_at'] . ' (' . $tok['message'] . ')');
         } else {
             $this->log_event('lark_token', 'failed', 0, $tok['message'] ?? 'refresh failed');
         }
@@ -291,6 +292,7 @@ class Call_sync_model extends App_Model
         return $this->db->order_by('date', 'DESC')->limit((int)$limit)->get($this->logs_table)->result_array();
     }
 
+    /* ============== CẬP NHẬT LOGS LÊN DB ============== */
     protected function insert_sync_log($sync_type, $count, $status = 'success', $message = null)
     {
         $row = [
@@ -339,7 +341,8 @@ class Call_sync_model extends App_Model
         if (!$token) return ['success' => false, 'message' => 'Token not configured'];
 
         $endpoint  = rtrim($token->base_url, '/');
-        $pageSize  = (int)($opts['PageSize'] ?? 200); if ($pageSize <= 0) $pageSize = 200;
+        $pageSize  = (int)($opts['PageSize'] ?? 200);
+        if ($pageSize <= 0) $pageSize = 200;
         $maxPages  = (int)($opts['maxPages'] ?? 0);
         $pageIndex = (int)($opts['PageIndex'] ?? 1);
 
@@ -396,9 +399,18 @@ class Call_sync_model extends App_Model
                 $callDateConv = $callDate ? date('Y-m-d H:i:s', strtotime($callDate)) : null;
 
                 $src = implode('|', [
-                    $callKey, $callDateConv, $callerNumber, $callerName, $headNumber,
-                    $receiveNumber, $status, $totalCallTime, $realCallTime, $linkFile,
-                    $gsmPort, $typeCall
+                    $callKey,
+                    $callDateConv,
+                    $callerNumber,
+                    $callerName,
+                    $headNumber,
+                    $receiveNumber,
+                    $status,
+                    $totalCallTime,
+                    $realCallTime,
+                    $linkFile,
+                    $gsmPort,
+                    $typeCall
                 ]);
                 $uniqueKey = md5($src);
 
@@ -484,7 +496,7 @@ class Call_sync_model extends App_Model
         $tok = $this->get_lark_tenant_token(false);
         if (!$tok['success']) {
             $tok = $this->get_lark_tenant_token(true);
-            if (!$tok['success']) return ['success' => false, 'message' => 'Không lấy được tenant token Lark: '.$tok['message']];
+            if (!$tok['success']) return ['success' => false, 'message' => 'Không lấy được tenant token Lark: ' . $tok['message']];
         }
         $tenantToken = $tok['token'];
 
@@ -493,7 +505,7 @@ class Call_sync_model extends App_Model
         $fieldMap   = $larkOpts['field_map']  ?? [];
         $fieldTypes = $larkOpts['field_types'] ?? [];
         $batchSize  = (int)($larkOpts['batch_size'] ?? 120);
-        $retryCfg   = $larkOpts['retry'] ?? ['times'=>3,'sleep'=>2];
+        $retryCfg   = $larkOpts['retry'] ?? ['times' => 3, 'sleep' => 2];
         $dtFormat   = $larkOpts['datetime_format'] ?? 'c';
         if (!$appToken || !$tableId || empty($fieldMap)) return ['success' => false, 'message' => 'Thiếu app_token/table_id/field_map cho Lark'];
         if ($batchSize <= 0) $batchSize = 120;
@@ -502,7 +514,8 @@ class Call_sync_model extends App_Model
         if (!$token) return ['success' => false, 'message' => 'Token MBO chưa cấu hình'];
 
         $endpoint  = rtrim($token->base_url, '/');
-        $pageSize  = (int)($opts['PageSize'] ?? 200); if ($pageSize <= 0) $pageSize = 200;
+        $pageSize  = (int)($opts['PageSize'] ?? 200);
+        if ($pageSize <= 0) $pageSize = 200;
         $maxPages  = (int)($opts['maxPages'] ?? 0);
         $pageIndex = (int)($opts['PageIndex'] ?? 1);
 
@@ -538,7 +551,7 @@ class Call_sync_model extends App_Model
         $totalPages = $total > 0 ? (int)ceil($total / $pageSize) : 1;
         if ($maxPages > 0) $totalPages = min($totalPages, $maxPages);
 
-        $map_db_row_to_lark_fields = function(array $dbRow) use ($fieldMap, $dtFormat, $fieldTypes) {
+        $map_db_row_to_lark_fields = function (array $dbRow) use ($fieldMap, $dtFormat, $fieldTypes) {
             $fields = [];
             foreach ($fieldMap as $bitCol => $dbCol) {
                 $val = $dbRow[$dbCol] ?? null;
@@ -551,11 +564,13 @@ class Call_sync_model extends App_Model
                             $val = (strlen((string)$val) >= 13) ? (int)$val : ((int)$val * 1000);
                         } else {
                             $ts = strtotime((string)$val);
-                            if ($ts) $val = $ts * 1000; else continue 2;
+                            if ($ts) $val = $ts * 1000;
+                            else continue 2;
                         }
                         break;
                     case 'number':
-                        if (is_numeric($val)) $val = 0 + $val; else continue 2;
+                        if (is_numeric($val)) $val = 0 + $val;
+                        else continue 2;
                         break;
                     case 'text':
                     default:
@@ -591,9 +606,18 @@ class Call_sync_model extends App_Model
                 $callDateConv = $callDate ? date('Y-m-d H:i:s', strtotime($callDate)) : null;
 
                 $src = implode('|', [
-                    $callKey, $callDateConv, $callerNumber, $callerName, $headNumber,
-                    $receiveNumber, $status, $totalCallTime, $realCallTime, $linkFile,
-                    $gsmPort, $typeCall
+                    $callKey,
+                    $callDateConv,
+                    $callerNumber,
+                    $callerName,
+                    $headNumber,
+                    $receiveNumber,
+                    $status,
+                    $totalCallTime,
+                    $realCallTime,
+                    $linkFile,
+                    $gsmPort,
+                    $typeCall
                 ]);
                 $uniqueKey = md5($src);
 
@@ -648,7 +672,9 @@ class Call_sync_model extends App_Model
                 "PageSize"    => $pageSize
             ];
 
-            $attempt=0; $maxAttempt=2; $pageRes=null;
+            $attempt = 0;
+            $maxAttempt = 2;
+            $pageRes = null;
             while ($attempt <= $maxAttempt) {
                 $attempt++;
                 $pageRes = $this->call_api($endpoint, $payload);
@@ -672,10 +698,10 @@ class Call_sync_model extends App_Model
         if (!empty($larkPayloadRecords)) {
             $pushRes = $this->lark_batch_create_records($appToken, $tableId, $tenantToken, $larkPayloadRecords, $batchSize, $retryCfg);
             if (!$pushRes['success']) {
-                $this->insert_sync_log($syncType, $insertedTotal, 'failed', 'Push to Lark failed: '.$pushRes['message'].' | resp='.json_encode($pushRes['resp'] ?? null, JSON_UNESCAPED_UNICODE));
+                $this->insert_sync_log($syncType, $insertedTotal, 'failed', 'Push to Lark failed: ' . $pushRes['message'] . ' | resp=' . json_encode($pushRes['resp'] ?? null, JSON_UNESCAPED_UNICODE));
                 return [
                     'success'  => false,
-                    'message'  => 'Đồng bộ DB xong nhưng đẩy Lark lỗi: '.$pushRes['message'],
+                    'message'  => 'Đồng bộ DB xong nhưng đẩy Lark lỗi: ' . $pushRes['message'],
                     'inserted' => $insertedTotal,
                     'pushed'   => $pushRes['pushed'] ?? 0,
                     'raw'      => $lastDecoded,
@@ -690,7 +716,8 @@ class Call_sync_model extends App_Model
         return ['success' => true, 'inserted' => $insertedTotal, 'pushed' => $pushed, 'pages' => ($total > 0 ? (int)ceil($total / $pageSize) : 1), 'raw' => $lastDecoded];
     }
 
-    protected function lark_batch_create_records($appToken, $tableId, $tenantToken, array $records, $batchSize = 120, array $retryCfg = ['times'=>3,'sleep'=>2])
+    // TẠO CUỘC GỌI TRÊN LARK
+    protected function lark_batch_create_records($appToken, $tableId, $tenantToken, array $records, $batchSize = 120, array $retryCfg = ['times' => 3, 'sleep' => 2])
     {
         $url = "https://open.larksuite.com/open-apis/bitable/v1/apps/{$appToken}/tables/{$tableId}/records/batch_create";
         $pushed = 0;
@@ -710,11 +737,11 @@ class Call_sync_model extends App_Model
 
                 if (!$res['success']) {
                     $http = $res['http_code'] ?? 0;
-                    if (in_array($http, [429,500,502,503,504]) && $attempts <= $maxTimes) {
+                    if (in_array($http, [429, 500, 502, 503, 504]) && $attempts <= $maxTimes) {
                         sleep($sleepSec);
                         continue;
                     }
-                    return ['success' => false, 'message' => 'HTTP '.$http.' - '.($res['error'] ?? ''), 'pushed' => $pushed, 'resp' => $res['response'] ?? null];
+                    return ['success' => false, 'message' => 'HTTP ' . $http . ' - ' . ($res['error'] ?? ''), 'pushed' => $pushed, 'resp' => $res['response'] ?? null];
                 }
 
                 $resp = json_decode($res['response'], true);
@@ -729,7 +756,7 @@ class Call_sync_model extends App_Model
 
                 if ($attempts > $maxTimes) {
                     $msg = $resp['msg'] ?? 'unknown';
-                    return ['success' => false, 'message' => 'Lark error: '.$msg, 'pushed' => $pushed, 'resp' => $resp];
+                    return ['success' => false, 'message' => 'Lark error: ' . $msg, 'pushed' => $pushed, 'resp' => $resp];
                 }
 
                 sleep($sleepSec);
@@ -739,6 +766,7 @@ class Call_sync_model extends App_Model
         return ['success' => true, 'pushed' => $pushed];
     }
 
+    // TẠO JSON QUA LARK
     protected function lark_post_json($url, $jsonBody, $tenantToken)
     {
         $ch = curl_init();
@@ -774,6 +802,7 @@ class Call_sync_model extends App_Model
         return sprintf('%02d:%02d:%02d', $h, $m, $s);
     }
 
+    // TRANSLATE STATUS
     protected function status_vi($raw)
     {
         if ($raw === null) return '';
@@ -789,6 +818,7 @@ class Call_sync_model extends App_Model
         return $map[$v] ?? ($raw ?: '');
     }
 
+    // MAP BẢNG CHO CỤM THỜI GIAN ĐƯỢC ĐƯA LÊN VIEW
     protected function post_map_adjust_for_bitable(array $mapped, array $row)
     {
         // Thời gian => Y-m-d H:i:s
@@ -845,6 +875,7 @@ class Call_sync_model extends App_Model
         return (strtotime($row['locked_until']) >= strtotime($until) - 1);
     }
 
+    // CRON JOB CHO LOCAL
     public function release_job_lock($jobName): void
     {
         $this->db->delete($this->locks_table, ['job_name' => $jobName]);
@@ -853,9 +884,9 @@ class Call_sync_model extends App_Model
     public function get_job_lock($jobName): array
     {
         $row = $this->db->get_where($this->locks_table, ['job_name' => $jobName])->row_array();
-        if (!$row) return ['job_name'=>$jobName, 'locked'=>false, 'locked_until'=>null, 'seconds_left'=>0];
+        if (!$row) return ['job_name' => $jobName, 'locked' => false, 'locked_until' => null, 'seconds_left' => 0];
         $left = max(0, strtotime($row['locked_until']) - time());
-        return ['job_name'=>$jobName, 'locked'=>($left>0), 'locked_until'=>$row['locked_until'], 'seconds_left'=>$left];
+        return ['job_name' => $jobName, 'locked' => ($left > 0), 'locked_until' => $row['locked_until'], 'seconds_left' => $left];
     }
 
     public function get_locks_status(array $names): array
